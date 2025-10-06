@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace("_", "-", app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8" />
@@ -7,8 +7,8 @@
     <meta name="description" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if (file_exists(public_path("build/manifest.json")) || file_exists(public_path("hot")))
+        @vite(["resources/css/app.css", "resources/js/app.js"])
     @else
         <style></style>
     @endif
@@ -16,11 +16,11 @@
 </head>
 
 <body class="bg-gray-100 flex w-full">
-    @if (session('success'))
+    @if (session("success"))
         <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
         <script>
             Toastify({
-                text: "{{ session('success') }}",
+                text: "{{ session("success") }}",
                 duration: 3000,
                 close: true,
                 gravity: "top",
@@ -32,11 +32,11 @@
             }).showToast();
         </script>
     @endif
-    @if (session('error'))
+    @if (session("error"))
         <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
         <script>
             Toastify({
-                text: "{{ session('error') }}",
+                text: "{{ session("error") }}",
                 duration: 3000,
                 close: true,
                 gravity: "top",
@@ -68,74 +68,73 @@
     @endif
 
     <!-- side bar -->
-    <aside class="relative bg-[#ffffff] w-[20%] hidden lg:block">
+    <aside class="relative bg-[#ffffff] w-[20%] hidden lg:flex flex-col">
+        <!-- Logo -->
         <div class="">
-            <img src="{{ asset('assets/images/omegacitylogo.png') }}" alt="logo" class="">
+            <img src="{{ asset("assets/images/omegacitylogo.png") }}" alt="logo" class="">
         </div>
 
-        <nav class="text-white text-xs font-semibold">
-            <p class="text-gray-400 ml-12 font-sans text-[20px]">Admin Panel</p>
+        <!-- Navigation -->
+        <nav class="text-white text-xs font-semibold flex flex-col flex-grow">
+            <p class="text-gray-400 ml-12 font-sans text-[20px] mt-3">Admin Panel</p>
 
             <!-- Dashboard -->
-            <a href="{{ route('admin.dashboard') }}"
-                class="{{ request()->routeIs('admin.dashboard') ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans' : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans' }}">
-                <img src="{{ asset('assets/images/dashboard-svgrepo-com.svg') }}"
-                     class="w-6 h-6 {{ request()->routeIs('admin.dashboard') ? 'filter invert' : '' }}"
-                     alt="dashboard-icon">
-                <span class="pl-5 text-[13.5px] {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-[#222222B2]' }}">
+            <a href="{{ route("admin.dashboard") }}"
+                class="{{ request()->routeIs("admin.dashboard")
+                    ? "flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans"
+                    : "flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4" }}">
+                <img src="{{ asset("assets/images/dashboard-svgrepo-com.svg") }}"
+                    class="w-6 h-6 {{ request()->routeIs("admin.dashboard") ? "filter invert" : "" }}"
+                    alt="dashboard-icon">
+                <span
+                    class="pl-5 text-[13.5px] font-sans {{ request()->routeIs("admin.dashboard") ? "text-white" : "text-[#222222B2]" }}">
                     Dashboard
                 </span>
             </a>
 
             <!-- Transactions -->
             <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:bg-black hover:text-white rounded-l ml-6 mr-4 transition">
-                <img src="{{ asset('assets/images/transaction.svg') }}"
-                     class="w-6 h-6" alt="transactions-icon">
-                <span class="pl-5 text-[13.5px]">Transactions</span>
+                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
+                <img src="{{ asset("assets/images/transaction.svg") }}" class="w-6 h-6" alt="transactions-icon">
+                <span class="pl-5 text-[13.5px] font-sans ">Transactions</span>
             </a>
 
             <!-- Users -->
             <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:bg-black hover:text-white rounded-l ml-6 mr-4 transition">
-                <img src="{{ asset('assets/images/users.svg') }}"
-                     class="w-6 h-6" alt="users-icon">
-                <span class="pl-5 text-[13.5px]">Users</span>
+                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
+                <img src="{{ asset("assets/images/users.svg") }}" class="w-6 h-6" alt="users-icon">
+                <span class="pl-5 text-[13.5px] font-sans">Users</span>
             </a>
 
             <!-- Contacts -->
             <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:bg-black hover:text-white rounded-l ml-6 mr-4 transition">
-                <img src="{{ asset('assets/images/contacts.svg') }}"
-                     class="w-6 h-6" alt="contacts-icon">
-                <span class="pl-5 text-[13.5px]">Contacts</span>
+                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-105 transition-transform duration-200 rounded-l ml-6 mr-4">
+                <img src="{{ asset("assets/images/contacts.svg") }}" class="w-6 h-6" alt="contacts-icon">
+                <span class="pl-5 text-[13.5px] font-sans">Contacts</span>
             </a>
 
             <!-- Settings -->
             <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:bg-black hover:text-white rounded-l ml-6 mr-4 transition">
-                <img src="{{ asset('assets/images/settings.svg') }}"
-                     class="w-6 h-6" alt="settings-icon">
-                <span class="pl-5 text-[13.5px]">Settings</span>
+                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
+                <img src="{{ asset("assets/images/settings.svg") }}" class="w-6 h-6" alt="settings-icon">
+                <span class="pl-5 text-[13.5px] font-sans">Settings</span>
             </a>
 
-            <!-- Logout -->
-            <form method="POST" action="{{ route('admin.logout') }}"
-                class="flex items-center py-2 px-8 text-gray-600 mt-7 font-[bricolage]">
+            <!-- Logout (stick to bottom) -->
+            <form method="POST" action="{{ route("admin.logout") }}"
+                class="mt-auto flex items-center py-2 px-8 text-gray-800 font-sans mb-6">
                 @csrf
-                <button type="submit" class="flex items-start">
-                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M14.8308 14.9008L18.2526 10.9083C18.416 10.7219 18.4996 10.4866 18.4998 10.25C18.4998 10.0882 18.4608 9.92571 18.3816 9.77797C18.3464 9.71213 18.3033 9.64958 18.2526 9.59173L14.8308 5.59921C14.4714 5.17986 13.8401 5.13127 13.4208 5.49066C13.0015 5.85006 12.9529 6.48136 13.3123 6.90071L15.3257 9.24995L7.58103 9.24995C7.02875 9.24995 6.58103 9.69767 6.58103 10.25C6.58103 10.8022 7.02875 11.25 7.58103 11.25L15.3258 11.25L13.3123 13.5993C12.9529 14.0187 13.0015 14.65 13.4208 15.0094C13.8401 15.3688 14.4714 15.3202 14.8308 14.9008ZM8.49976 4.24994C9.05204 4.24994 9.49976 4.69765 9.49976 5.24994L9.49976 6.74994C9.49976 7.30222 9.94747 7.74994 10.4998 7.74994C11.052 7.74994 11.4998 7.30222 11.4998 6.74994L11.4998 5.24994C11.4998 3.59308 10.1566 2.24994 8.49976 2.24994L5.49976 2.24994C3.8429 2.24994 2.49976 3.59308 2.49976 5.24994L2.49976 15.2499C2.49976 16.9068 3.8429 18.2499 5.49976 18.2499L8.49976 18.2499C10.1566 18.2499 11.4998 16.9068 11.4998 15.2499L11.4998 13.7499C11.4998 13.1977 11.052 12.7499 10.4998 12.7499C9.94747 12.7499 9.49976 13.1977 9.49976 13.7499L9.49976 15.2499C9.49976 15.8022 9.05204 16.2499 8.49976 16.2499L5.49976 16.2499C4.94747 16.2499 4.49976 15.8022 4.49976 15.2499L4.49976 5.24994C4.49976 4.69765 4.94747 4.24994 5.49976 4.24994L8.49976 4.24994Z"
-                            fill="#B22234" />
-                    </svg>
-                    <span class="pl-5 text-[13.5px] text-[#B22234]">Log Out</span>
+                <button type="submit" class="flex items-center hover:scale-105 transition-transform duration-200">
+                    <img src="{{ asset("assets/images/logout.svg") }}" class="w-6 h-6" alt="logout-icon">
+                    <span class="pl-5 text-[13.5px] font-sans">Log Out</span>
                 </button>
             </form>
         </nav>
-
     </aside>
+    <!-- /side bar -->
+
+
+
     <!-- /side bar -->
 
     <div class="w-full flex flex-col h-screen overflow-y-hidden">
@@ -145,9 +144,7 @@
                 <p class=" text-[#222222] text-[30px] ml-4"></p>
                 <div class="flex items-center gap-2 mt-4">
                     <!-- Alert Icon -->
-                    <img src="{{ asset('assets/images/notifyicon.png') }}"
-                         alt="Alert"
-                         class="w-5 h-5">
+                    <img src="{{ asset("assets/images/notifyicon.png") }}" alt="Alert" class="w-5 h-5">
 
                     <!-- Username -->
                     <p class="text-[#222222] font-[bricolage] font-bold">
@@ -174,13 +171,13 @@
             <!-- Dropdown Nav -->
             <nav :class="isOpen ? 'flex' : 'hidden'" class="w-full flex flex-col pt-4">
 
-                <a href="{{ route('admin.dashboard') }}"
-                    class="{{ request()->routeIs('admin.dashboard') ? 'flex items-center py-2 pl-4 nav-item bg-gradient-to-r from-[#85BB3F] to-[#2B2B2B] text-white rounded-xl shadow-md font-[bricolage]' : 'flex items-center py-2 pl-4 nav-item text-gray-600 font-[bricolage]' }}">
-                    @if (request()->routeIs('admin.dashboard'))
+                <a href="{{ route("admin.dashboard") }}"
+                    class="{{ request()->routeIs("admin.dashboard") ? "flex items-center py-2 pl-4 nav-item bg-gradient-to-r from-[#85BB3F] to-[#2B2B2B] text-white rounded-xl shadow-md font-[bricolage]" : "flex items-center py-2 pl-4 nav-item text-gray-600 font-[bricolage]" }}">
+                    @if (request()->routeIs("admin.dashboard"))
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                             xmlns="http://www.w3.org/2000/svg" class="mr-3">
-                            <mask id="mask0_38_1068" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0"
-                                y="0" width="25" height="25">
+                            <mask id="mask0_38_1068" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
+                                width="25" height="25">
                                 <rect x="0.5" y="0.25" width="24" height="24" fill="white" />
                             </mask>
                             <g mask="url(#mask0_38_1068)">
@@ -210,11 +207,11 @@
                         </svg>
                     @endif
                     <span
-                        class="pl-5 text-[13.5px] {{ request()->routeIs('admin.dashboard') ? 'text-[#ffffff]' : 'text-[#222222B2]' }}">Dashboard</span>
+                        class="pl-5 text-[13.5px] {{ request()->routeIs("admin.dashboard") ? "text-[#ffffff]" : "text-[#222222B2]" }}">Dashboard</span>
                 </a>
 
 
-                <form method="POST" action="{{ route('admin.logout') }}"
+                <form method="POST" action="{{ route("admin.logout") }}"
                     class="flex items-center py-2 pl-4 nav-item text-[#B22234]">
                     @csrf
                     <button type="submit" class="flex items-center">
@@ -234,7 +231,7 @@
 
         <!-- content -->
         <div class="w-full flex flex-col overflow-y-scroll p-7">
-            @yield('content')
+            @yield("content")
         </div>
         <!-- /content -->
     </div>
@@ -244,7 +241,7 @@
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
-    @stack('scripts')
+    @stack("scripts")
 </body>
 
 </html>
