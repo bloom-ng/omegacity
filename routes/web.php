@@ -4,10 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\User\UserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Authentication Routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('loginform');
@@ -26,3 +27,5 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Add other admin routes here
 });
+
+Route::get('/', [UserController::class, 'HomePage'])->name('home');
