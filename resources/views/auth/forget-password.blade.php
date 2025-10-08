@@ -17,8 +17,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        justsansexbold: ['"just-sans-ex-bold"', 'sans-serif'],
-                        justsansexregular: ['"just-sans-regular"', 'sans-serif'],
+                        justbold: ['"just-sans-ex-bold"', 'sans-serif'],
+                        justregular: ['"just-sans-regular"', 'sans-serif'],
                         bricolage: ['"Bricolage Grotesque"', 'sans-serif'],
                     },
                 },
@@ -68,14 +68,14 @@
                         @csrf
                         <div class="flex flex-col gap-2">
                             <label for="email-mobile"
-                                class="text-md font-[justsansexregular] text-gray-700">Email Address</label>
+                                class="text-md font-[justregular] text-gray-700">Email Address</label>
                             <input type="email" name="email" id="email-mobile"
                                 class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"
                                 placeholder="example@gmail.com" required>
                         </div>
 
                         <button type="submit"
-                            class="w-full py-3 text-black font-[justsansexbold] rounded-full hover:opacity-90 transition"
+                            class="w-full py-3 text-black font-[justbold] rounded-full hover:opacity-90 transition"
                             style="background-color: #FACF07;">
                             Send reset link
                         </button>
@@ -89,7 +89,7 @@
             <div
                 class="flex flex-col gap-3 w-[90%] max-w-md justify-center items-center border border-gray-200 rounded-xl p-10 shadow-sm">
                 <h2 class="text-2xl font-bold pb-2 text-center">Forgot Password</h2>
-                <p class="font-[justsansexregular] text-gray-600 text-center mb-4">A reset link will be sent to your
+                <p class="font-[justregular] text-gray-600 text-center mb-4">A reset link will be sent to your
                     email address</p>
 
                 @if ($errors->any())
@@ -106,7 +106,7 @@
                 <form class="flex flex-col gap-5 w-full" method="POST" action="">
                     @csrf
                     <div class="flex flex-col gap-2 w-full">
-                        <label for="email" class="text-md font-[justsansexregular] text-gray-700">Email
+                        <label for="email" class="text-md font-[justregular] text-gray-700">Email
                             Address</label>
                         <input type="email" name="email" id="email"
                             class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"
@@ -115,7 +115,7 @@
 
                     <div class="flex flex-row justify-center mt-6">
                         <button type="submit"
-                            class="w-full py-3 text-black font-[justsansexbold] rounded-full hover:opacity-90 transition"
+                            class="w-full py-3 text-black font-[justbold] rounded-full hover:opacity-90 transition"
                             style="background-color: #FACF07;">
                             Send reset link
                         </button>

@@ -14,8 +14,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        justsansexbold: ['"just-sans-ex-bold"', 'sans-serif'],
-                        justsansexregular: ['"just-sans-regular"', 'sans-serif'],
+                        justbold: ['"just-sans-ex-bold"', 'sans-serif'],
+                        justregular: ['"just-sans-regular"', 'sans-serif'],
                     }
                 }
             }
@@ -46,7 +46,7 @@
             <div class="flex md:hidden flex-col justify-start items-center bg-black text-white h-full p-6 pt-10">
                 <div class="bg-white text-black rounded-xl p-6 w-full max-w-sm shadow-md mt-4">
                     <h2 class="text-xl font-bold text-center text-black">Welcome Back</h2>
-                    <p class="text-md font-[justsansexregular] text-gray-700 pb-3">
+                    <p class="text-md font-[justregular] text-gray-700 pb-3">
                         Please Login to access your account
                     </p>
 
@@ -68,7 +68,7 @@
 
                             <!-- Email -->
                             <div class="flex flex-col space-y-1">
-                                <label for="email-mobile" class="text-sm font-[justsansexregular] text-gray-600">Email
+                                <label for="email-mobile" class="text-sm font-[justregular] text-gray-600">Email
                                     Address</label>
                                 <input type="email" name="email" id="email-mobile"
                                     class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"
@@ -78,7 +78,7 @@
                             <!-- Password -->
                             <div class="flex flex-col space-y-1 relative mt-4">
                                 <label for="password-mobile"
-                                    class="text-sm font-[justsansexregular] text-gray-600">Password</label>
+                                    class="text-sm font-[justregular] text-gray-600">Password</label>
                                 <input type="password" name="password" id="password-mobile"
                                     class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"
                                     placeholder="password" required>
@@ -92,11 +92,11 @@
                                 <div class="flex flex-row items-center space-x-2">
                                     <input type="checkbox" name="remember" id="remember-mobile"
                                         class="accent-[#FACF07] w-4 h-4 border-2 border-[#FACF07] rounded focus:ring-2 focus:ring-offset-1 focus:ring-[#85BB3F]" />
-                                    <label for="remember-mobile" class="text-sm font-[justsansexregular]">Remember
+                                    <label for="remember-mobile" class="text-sm font-[justregular]">Remember
                                         me</label>
                                 </div>
 
-                                <div class="text-sm font-[justsansexregular] cursor-pointer hover:underline">
+                                <div class="text-sm font-[justregular] cursor-pointer hover:underline">
                                     <a href="{{ route("password.request") }}">Forgot password?</a>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                             <!-- Submit button -->
                             <div class="flex flex-row justify-center mt-8">
                                 <button type="submit"
-                                    class="w-full py-3 text-black font-[justsansexbold] rounded-full hover:opacity-90 transition"
+                                    class="w-full py-3 text-black font-[justbold] rounded-full hover:opacity-90 transition"
                                     style="background-color: #FACF07;">
                                     LOGIN
                                 </button>
@@ -122,7 +122,7 @@
                 <div>
                     <h2 class="text-xl text-center">Welcome Back</h2>
                 </div>
-                <p class="text-md pb-3 font-[justsansexregular]">Please Login to access your account</p>
+                <p class="text-md pb-3 font-[justregular]">Please Login to access your account</p>
                 <div class="flex flex-col gap-2 w-full justify-center">
                     @if ($errors->any())
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
@@ -140,7 +140,7 @@
                         <div class="flex flex-col gap-2 w-full px-16">
 
                             <div class="flex flex-col space-y-1">
-                                <label for="email" class="text-sm font-[justsansexregular] text-gray-600">Email
+                                <label for="email" class="text-sm font-[justregular] text-gray-600">Email
                                     Address</label>
                                 <input type="email" name="email" id="email"
                                     class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"
@@ -150,7 +150,7 @@
                             <!-- Password -->
                             <div class="flex flex-col space-y-1 relative mt-4">
                                 <label for="password"
-                                    class="text-sm font-[justsansexregular] text-gray-600">Password</label>
+                                    class="text-sm font-[justregular] text-gray-600">Password</label>
                                 <input type="password" name="password" id="password"
                                     class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"
                                     placeholder="password" required>
@@ -163,18 +163,18 @@
                                 <div class="flex flex-row items-center space-x-2">
                                     <input type="checkbox" name="remember" id="remember-desktop"
                                         class="accent-[#FACF07] w-4 h-4 border-2 border-[#FACF07] rounded focus:ring-2 focus:ring-offset-1 focus:ring-[#85BB3F]" />
-                                    <label for="remember-desktop" class="text-sm font-[justsansexregular]">Remember
+                                    <label for="remember-desktop" class="text-sm font-[justregular]">Remember
                                         me</label>
                                 </div>
 
-                                <div class="text-sm font-[justsansexregular] cursor-pointer hover:underline">
+                                <div class="text-sm font-[justregular] cursor-pointer hover:underline">
                                     <a href="{{ route("password.request") }}">Forgot password?</a>
                                 </div>
                             </div>
 
                             <div class="flex flex-row justify-center mt-8">
                                 <button type="submit"
-                                    class="w-full py-3 text-black font-[justsansexbold] rounded-full hover:opacity-90 transition"
+                                    class="w-full py-3 text-black font-[justbold] rounded-full hover:opacity-90 transition"
                                     style="background-color: #FACF07;">
                                     LOGIN
                                 </button>
