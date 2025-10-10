@@ -1,150 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Omega Properties</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        justbold: ['"just-sans-ex-bold"', 'sans-serif'],
-                        justregular: ['"just-sans-regular"', 'sans-serif'],
-                    }
-                }
-            }
+@include("users.header")
+<style>
+    @media (max-width: 640px) {
+        section .max-w-lg {
+            text-align: left !important;
+            padding-left: 1.5rem !important;
+            /* around Tailwind’s px-6 */
+            padding-right: 1.5rem !important;
         }
-    </script>
-</head>
+    }
+</style>
+
 
 <body class="bg-gray-50 text-gray-900">
 
     <!-- Navbar -->
-    <nav x-data="{ open: false }"
-        class="absolute top-5 left-1/2 transform -translate-x-1/2 w-11/12 md:w-4/5
-        bg-white/10 backdrop-blur-md border border-white/20
-        shadow-[0_8px_32px_0_rgba(31,38,135,0.1)]
-        rounded-full px-10 py-2 flex items-center justify-between z-50
-        transition-all duration-300">
-
-        <!-- Logo -->
-        <div class="flex items-center space-x-2">
-            <img src="{{ asset("assets/images/OmegaCityLogoYellow.png") }}" alt="Omega Logo" class=" md:h-16">
-        </div>
-
-        <!-- Desktop Links -->
-        <div class="hidden md:flex items-center space-x-8 text-black font-[justsansexregular]">
-            <a href="#" class="hover:text-yellow-400 transition">About</a>
-            <a href="#" class="hover:text-yellow-400 transition">Land</a>
-            <a href="#" class="hover:text-yellow-400 transition">Contact us</a>
-        </div>
-
-        <!-- Buy button (desktop) -->
-        <button
-            class="hidden md:block bg-yellow-400/90 hover:bg-yellow-500 text-black font-[justsansexbold] px-5 py-2 rounded-full shadow-lg transition">
-            Buy a land
-        </button>
-
-        <!-- Hamburger Button -->
-        <button @click="open = !open" class="md:hidden text-black focus:outline-none">
-            <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-            <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-
-        <!-- Mobile Menu -->
-        <div x-show="open" x-transition
-            class="absolute top-[70px] left-0 w-full bg-white/20 backdrop-blur-md border border-white/20 rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.1)] md:hidden py-4">
-            <div class="flex flex-col items-center space-y-4 text-black font-[justsansexregular]">
-                <a href="#" class="hover:text-yellow-400 transition">About</a>
-                <a href="#" class="hover:text-yellow-400 transition">Land</a>
-                <a href="#" class="hover:text-yellow-400 transition">Contact us</a>
-                <button
-                    class="bg-yellow-400/90 hover:bg-yellow-500 text-black font-[justsansexbold] px-5 py-2 rounded-full shadow-md transition">
-                    Buy a land
-                </button>
-            </div>
-        </div>
-    </nav>
-
+    @include("users.nav")
 
     <!-- Hero Section -->
-    <section class="flex flex-col justify-center min-h-[120vh] px-8 md:px-20 text-black bg-cover bg-center relative"
-        style="background-image: url('{{ asset("assets/images/fieldbgimage.png") }}');">
-        <div class="max-w-lg -mt-72 px-16">
-            <h1 class="text-4xl md:text-5xl font-[justregular] mb-4 leading-tight">
-                Secure your future<br>with land you can<br>afford, today.
-            </h1>
-            <button class="bg-black text-white px-6 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition">
-                Get started
-            </button>
-        </div>
+   <section
+    class="flex flex-col justify-center min-h-[120vh] px-8 md:px-20 text-black bg-cover bg-center relative"
+    style="background-image: url('{{ asset('assets/images/fieldbgimage.png') }}');">
 
-        <div class="absolute bottom-10 right-10 text-right">
-            <p class="text-lg font-[justregular] mb-3 text-left">Building wealth the smart way</p>
-            <div class="flex flex-wrap justify-start gap-2 max-w-sm">
-                <span
-                    class="bg-white/20 backdrop-blur- px-2 py-2 rounded-full text-sm font-[justregular] w-[20%] text-center">
-                    Land
-                </span>
-                <span
-                    class="bg-white/20 backdrop-blur- px-6 py-2 rounded-full text-sm font-[justregular] w-[38%] text-center">
-                    Omega city
-                </span>
-                <span
-                    class="bg-white/20 backdrop-blur- px-5 py-2 rounded-full text-sm font-[justregular] w-[38%] text-center">
-                    Real estate
-                </span>
-                <span
-                    class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full text-sm font-[justregular] w-[40%] text-center">
-                    Investment
-                </span>
-            </div>
-        </div>
+    <!-- Main text -->
+    <div class="max-w-lg -mt-72 md:px-16 px-6 text-center sm:text-left">
+        <h1 class="text-4xl md:text-5xl font-[justregular] mb-4 leading-tight">
+            Secure your future<br>with land you can<br>afford, today.
+        </h1>
+        <button class="bg-black text-white px-6 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition">
+            Get started
+        </button>
+    </div>
 
-
-    </section>
-
-
-   <!-- About Section -->
-<section class="bg-gray-50 py-10 md:py-16">
-    <div class="w-full px-4 sm:px-6 md:px-10 lg:px-20">
-        <h2
-            class="text-3xl sm:text-4xl md:text-5xl font-[justbold] leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900 text-center md:text-left md:px-16">
-            Omega City &amp; Properties
-            <img src="{{ asset('assets/images/OmegaCityBlack.png') }}" alt="Omega Icon"
-                class="inline w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 align-middle"> <br>
-            is your go-to brand in Nigeria<br class="hidden sm:block">
-            when it comes to purchasing<br class="hidden sm:block">
-            affordable land in Abuja
-            <img src="{{ asset('assets/images/imageland.png') }}" alt="Land Image"
-                class="inline-block w-20 sm:w-24 md:w-28 h-14 sm:h-16 md:h-20 object-cover rounded-md align-middle mt-2">
-        </h2>
-
-        <div
-            class="font-[justregular] block mt-4 text-gray-700 text-base sm:text-lg md:text-xl md:px-16 tracking-wide leading-relaxed text-center md:text-left">
-            <p>
-                We’re here to help you become a landowner in <br class="hidden sm:block"> Omega City, the finest city in Abuja.
-            </p>
-            <p class="mt-2">
-                Not in Abuja? <span class="font-bold">You can get a land with us</span>
-            </p>
+    <!-- Bottom text -->
+    <div class="absolute bottom-10 right-10 text-right sm:">
+        <p class="text-lg font-[justregular] mb-3 text-left">Building wealth the smart way</p>
+        <div class="flex flex-wrap justify-start gap-2 max-w-sm">
+            <span
+                class="bg-white/20 backdrop-blur- px-2 py-2 rounded-full text-sm font-[justregular] w-[20%] text-center">
+                Land
+            </span>
+            <span
+                class="bg-white/20 backdrop-blur- px-6 py-2 rounded-full text-sm font-[justregular] w-[38%] text-center">
+                Omega city
+            </span>
+            <span
+                class="bg-white/20 backdrop-blur- px-5 py-2 rounded-full text-sm font-[justregular] w-[38%] text-center">
+                Real estate
+            </span>
+            <span
+                class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full text-sm font-[justregular] w-[40%] text-center">
+                Investment
+            </span>
         </div>
     </div>
+
 </section>
+
+
+
+
+    <!-- About Section -->
+    <section class="bg-gray-50 py-10 md:py-16">
+        <div class="w-full px-4 sm:px-6 md:px-10 lg:px-20">
+            <h2
+                class="text-3xl sm:text-4xl md:text-5xl font-[justbold] leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900 text-center md:text-left md:px-16">
+                Omega City &amp; Properties
+                <img src="{{ asset("assets/images/OmegaCityBlack.png") }}" alt="Omega Icon"
+                    class="inline w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 align-middle"> <br>
+                is your go-to brand in Nigeria<br class="hidden sm:block">
+                when it comes to purchasing<br class="hidden sm:block">
+                affordable land in Abuja
+                <img src="{{ asset("assets/images/imageland.png") }}" alt="Land Image"
+                    class="inline-block w-20 sm:w-24 md:w-28 h-14 sm:h-16 md:h-20 object-cover rounded-md align-middle mt-2">
+            </h2>
+
+            <div
+                class="font-[justregular] block mt-4 text-gray-700 text-base sm:text-lg md:text-xl md:px-16 tracking-wide leading-relaxed text-center md:text-left">
+                <p>
+                    We’re here to help you become a landowner in <br class="hidden sm:block"> Omega City, the finest
+                    city in Abuja.
+                </p>
+                <p class="mt-2">
+                    Not in Abuja? <span class="font-bold">You can get a land with us</span>
+                </p>
+            </div>
+        </div>
+    </section>
 
 
 
@@ -349,44 +292,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
 
     <!-- Footer Section -->
-    <footer class="bg-gray-50 py-10 px-6 md:px-20 border-t border-gray-200">
-        <div class="flex flex-col md:flex-row items-center md:items-start justify-between space-y-10 md:space-y-0">
-
-            <!-- Left: Logo + Copyright -->
-            <div class="flex flex-col items-center md:items-start space-y-2 ">
-                <img src="{{ asset("assets/images/omegacitylogo.png") }}" alt="Omega Logo"
-                    class="w-28 md:w-44 object-contain" />
-
-                <p class="text-gray-700 text-sm text-center md:text-left">
-                    © {{ date("Y") }} Omega city & properties Nig. Ltd
-                </p>
-            </div>
-
-            <!-- Right: Links & Socials -->
-            <div class="flex flex-col md:flex-row items-center md:items-start md:space-x-20 space-y-10 md:space-y-0">
-
-                <!-- Omega City Links -->
-                <div class="text-center md:text-left">
-                    <h4 class="font-bold text-lg text-gray-900 mb-3">Omega City</h4>
-                    <ul class="space-y-2 text-gray-700">
-                        <li><a href="#" class="hover:text-gray-900 transition">About</a></li>
-                        <li><a href="#" class="hover:text-gray-900 transition">Land</a></li>
-                        <li><a href="#" class="hover:text-gray-900 transition">Contact us</a></li>
-                    </ul>
-                </div>
-
-                <!-- Socials -->
-                <div class="text-center md:text-left">
-                    <h4 class="font-bold text-lg text-gray-900 mb-3">Socials</h4>
-                    <ul class="space-y-2 text-gray-700">
-                        <li><a href="#" class="hover:text-gray-900 transition">Instagram</a></li>
-                        <li><a href="#" class="hover:text-gray-900 transition">Twitter</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </footer>
+    @include("users.footer")
 
 
 </body>

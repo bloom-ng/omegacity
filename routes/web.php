@@ -29,3 +29,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 Route::get('/', [UserController::class, 'HomePage'])->name('home');
+
+Route::get('/contact-us', [UserController::class, 'ContactUsPage'])->name('contact-us');
+Route::post('/contact-us', [UserController::class, 'ContactUsStore'])->name('store.contact-us');
+
