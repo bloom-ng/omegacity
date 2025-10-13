@@ -24,11 +24,11 @@
     style="background-image: url('{{ asset('assets/images/fieldbgimage.png') }}');">
 
     <!-- Main text -->
-    <div class="max-w-lg -mt-72 md:px-16 px-6 text-center sm:text-left">
+    <div class="max-w-lg -mt-72 md:px-16  px-6 text-center sm:text-left">
         <h1 class="text-4xl md:text-5xl font-[justregular] mb-4 leading-tight">
             Secure your future<br>with land you can<br>afford, today.
         </h1>
-        <button class="bg-black text-white px-6 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition">
+        <button class="bg-black text-white px-12 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition">
             Get started
         </button>
     </div>

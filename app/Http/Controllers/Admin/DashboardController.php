@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -17,6 +18,8 @@ class DashboardController extends Controller
             'total_revenue' => '£' . number_format(45678.90, 2)
         ];
 
-        return view('admin.dashboard', compact('stats'));
+        $contactList = ContactMessage::all();
+
+        return view('admin.dashboard', compact('stats', 'contactList'));
     }
 }
