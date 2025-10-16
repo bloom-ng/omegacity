@@ -120,6 +120,33 @@
                 <span class="pl-5 text-[13.5px] font-sans">Settings</span>
             </a>
 
+             <!-- Clients -->
+            <a href="{{ route('admin.clients.index') }}"
+                class="{{ request()->routeIs('admin.clients.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset('assets/images/client.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.clients.*') ? 'filter invert' : '' }}" alt="users-icon">
+                <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.clients.*') ? 'text-white' : 'text-[#222222B2]' }}">Clients</span>
+            </a>
+
+            <!-- Invoice -->
+            <a href="{{ route('admin.invoices.index') }}"
+                class="{{ request()->routeIs('admin.invoices.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset('assets/images/invoice.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.invoices.*') ? 'filter invert' : '' }}" alt="invoice-icon">
+                <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.invoices.*') ? 'text-white' : 'text-[#222222B2]' }}">Invoice</span>
+            </a>
+
+            <!-- Receipt -->
+            <a href="#"
+                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
+                <img src="{{ asset("assets/images/receipt-alt.svg") }}" class="w-6 h-6" alt="receipt-icon">
+                <span class="pl-5 text-[13.5px] font-sans">Receipt</span>
+            </a>
+
             <!-- Logout (stick to bottom) -->
             <form method="POST" action="{{ route("admin.logout") }}"
                 class="mt-auto flex items-center py-2 px-8 text-gray-800 font-sans mb-6">

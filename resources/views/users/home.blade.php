@@ -5,9 +5,28 @@
     @media (max-width: 640px) {
         section .max-w-lg {
             text-align: left !important;
-            padding-left: 1.5rem !important;
+            /* padding-left: 2rem !important; */
             /* around Tailwind’s px-6 */
-            padding-right: 1.5rem !important;
+            /* padding-right: 1.5rem !important; */
+        }
+    }
+
+    @media (max-width: 640px) {
+        .phone {
+            text-align: left !important;
+            padding-left: 3rem !important;
+            padding-bottom: 2rem !important;
+        }
+
+        .phone span {
+            padding: 5px !important;
+            font-size: 0.875rem;
+            /* slightly smaller text */
+        }
+
+        .phone p {
+            font-size: 1.25rem !important;
+            /* reduce heading size */
         }
     }
 </style>
@@ -19,44 +38,48 @@
     @include("users.nav")
 
     <!-- Hero Section -->
-   <section
-    class="flex flex-col justify-center min-h-[120vh] px-8 md:px-20 text-black bg-cover bg-center relative"
-    style="background-image: url('{{ asset('assets/images/fieldbgimage.png') }}');">
+    <section class="flex flex-col justify-center min-h-[120vh] px-8 md:px-20 text-black bg-cover bg-center relative"
+        style="background-image: url('{{ asset("assets/images/fieldbgimage.png") }}');">
 
-    <!-- Main text -->
-    <div class="max-w-lg -mt-72 md:px-16  px-6 text-center sm:text-left">
-        <h1 class="text-4xl md:text-5xl font-[justregular] mb-4 leading-tight">
-            Secure your future<br>with land you can<br>afford, today.
-        </h1>
-        <button class="bg-black text-white px-12 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition">
-            Get started
-        </button>
-    </div>
-
-    <!-- Bottom text -->
-    <div class="absolute bottom-10 right-10 text-right sm:">
-        <p class="text-lg font-[justregular] mb-3 text-left">Building wealth the smart way</p>
-        <div class="flex flex-wrap justify-start gap-2 max-w-sm">
-            <span
-                class="bg-white/20 backdrop-blur- px-2 py-2 rounded-full text-sm font-[justregular] w-[20%] text-center">
-                Land
-            </span>
-            <span
-                class="bg-white/20 backdrop-blur- px-6 py-2 rounded-full text-sm font-[justregular] w-[38%] text-center">
-                Omega city
-            </span>
-            <span
-                class="bg-white/20 backdrop-blur- px-5 py-2 rounded-full text-sm font-[justregular] w-[38%] text-center">
-                Real estate
-            </span>
-            <span
-                class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full text-sm font-[justregular] w-[40%] text-center">
-                Investment
-            </span>
+        <!-- Main text -->
+        <div class="max-w-lg -mt-72 md:px-16  px-6 text-center sm:text-left">
+            <h1 class="text-4xl md:text-5xl font-[justregular] mb-4 leading-tight">
+                Secure your future<br>with land you can<br>afford, today.
+            </h1>
+            <button class="bg-black text-white px-12 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition">
+                Get started
+            </button>
         </div>
-    </div>
 
-</section>
+        <!-- Bottom text -->
+        <div class="phone absolute bottom-5 right-10 text-right text-xl ">
+            <p class="text-3xl font-[justregular] mb-3 text-left">Building wealth the smart way</p>
+            <div class="flex flex-wrap justify-start gap-2 max-w-sm">
+                <span
+                    class="bg-white/20 backdrop-blur-none px-2 py-2 rounded-full font-[justregular] w-[20%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                    Land
+                </span>
+
+
+                <span
+                    class="bg-white/20 backdrop-blur-none px-6 py-2 rounded-full font-[justregular] w-[38%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                    Omega city
+                </span>
+
+                <span
+                    class="bg-white/20 backdrop-blur-none px-5 py-2 mt-2 rounded-full font-[justregular] w-[38%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                    Real estate
+                </span>
+
+                <span
+                    class="bg-white/20 backdrop-blur-none px-6 py-2 mt-2 rounded-full font-[justregular] w-[40%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                    Investment
+                </span>
+
+            </div>
+        </div>
+
+    </section>
 
 
 
@@ -65,19 +88,20 @@
     <section class="bg-gray-50 py-10 md:py-16">
         <div class="w-full px-4 sm:px-6 md:px-10 lg:px-20">
             <h2
-                class="text-3xl sm:text-4xl md:text-5xl font-[justbold] leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900 text-center md:text-left md:px-16">
+                class="text-2xl sm:text-3xl md:text-5xl font-[justbold] leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900
+             text-left md:text-left md:px-16">
                 Omega City &amp; Properties
                 <img src="{{ asset("assets/images/OmegaCityBlack.png") }}" alt="Omega Icon"
-                    class="inline w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 align-middle"> <br>
+                    class="inline w-7 sm:w-10 md:w-12 h-7 sm:h-10 md:h-12 align-middle"> <br>
                 is your go-to brand in Nigeria<br class="hidden sm:block">
                 when it comes to purchasing<br class="hidden sm:block">
                 affordable land in Abuja
                 <img src="{{ asset("assets/images/imageland.png") }}" alt="Land Image"
-                    class="inline-block w-20 sm:w-24 md:w-28 h-14 sm:h-16 md:h-20 object-cover rounded-md align-middle mt-2">
+                    class="inline-block w-16 sm:w-24 md:w-28 h-12 sm:h-16 md:h-20 object-cover rounded-md align-middle mt-2">
             </h2>
 
             <div
-                class="font-[justregular] block mt-4 text-gray-700 text-base sm:text-lg md:text-xl md:px-16 tracking-wide leading-relaxed text-center md:text-left">
+                class="font-[justregular] block mt-4 text-gray-700 text-lg sm:text-lg md:text-xl md:px-16 tracking-wide leading-relaxed text-left">
                 <p>
                     We’re here to help you become a landowner in <br class="hidden sm:block"> Omega City, the finest
                     city in Abuja.
@@ -88,6 +112,8 @@
             </div>
         </div>
     </section>
+
+
 
 
 
@@ -200,10 +226,16 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
         <div class="grid md:grid-cols-2 gap-10 items-start">
             <!-- Left Text -->
             <div>
-                <h2 class="text-5xl md:text-5xl font-[justsansexregular] text-gray-900 leading-tight mt-8">
-                    You too can <br>
-                    own a land in <br>
-                    Omega city
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-[justsansexregular] text-gray-900 leading-tight mt-8">
+                    <span class="block md:hidden">
+                        You too can own a <br>
+                        land in Omega city
+                    </span>
+                    <span class="hidden md:block">
+                        You too can <br>
+                        own a land in <br>
+                        Omega city
+                    </span>
                 </h2>
             </div>
 
@@ -215,7 +247,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">1</span>
                     </div>
-                    <h3 class="font-[justbold] text-xl text-black">Secure land</h3>
+                    <h3 class="font-[justbold] text-2xl text-black">Secure land</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         We offer you land in a highly secured area and environment.
                     </p>
@@ -229,7 +261,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">2</span>
                     </div>
-                    <h3 class="font-[justbold] text-xl text-black">Affordable</h3>
+                    <h3 class="font-[justbold] text-2xl text-black">Affordable</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         Become a landowner at an affordable price.
                     </p>
@@ -249,7 +281,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">3</span>
                     </div>
-                    <h3 class="font-[justbold] text-xl text-black">Spacious</h3>
+                    <h3 class="font-[justbold] text-2xl text-black">Spacious</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         Wide expanse of land for your dream property.
                     </p>
@@ -263,7 +295,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">4</span>
                     </div>
-                    <h3 class="font-[justbold] text-xl text-black">Prime Location</h3>
+                    <h3 class="font-[justbold] text-2xl text-black">Prime Location</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         Strategically located in fast-developing areas.
                     </p>
@@ -274,15 +306,19 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
             <!-- CTA Section (Bottom-Aligned) -->
             <div class="flex flex-col items-start justify-end gap-4 text-left h-full">
-                <p class="text-lg font-[justregular] text-gray-800">Let’s get you started today!</p>
-                <div class="flex gap-4">
+                <p class="text-3xl font-[justregular] text-gray-800">Let’s get you started today!</p>
+                <div class="flex gap-8">
                     <a href="#"
-                        class="bg-yellow-400 text-gray-900 font-semibold px-6 py-2 rounded-full hover:bg-yellow-500 transition">Buy
-                        a land</a>
+                        class="bg-yellow-400 text-gray-900 text-xl font-[justregular] px-14 py-2 rounded-full hover:bg-yellow-500 transition">
+                        Buy a land
+                    </a>
+
                     <a href="#"
-                        class="border border-gray-800 text-gray-900 font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition">Contact
-                        us</a>
+                        class="text-gray-900 font-semibold underline underline-offset-8 hover:text-yellow-500 transition mt-2">
+                        Contact us
+                    </a>
                 </div>
+
             </div>
         </div>
     </section>
