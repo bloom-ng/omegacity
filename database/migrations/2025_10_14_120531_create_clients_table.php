@@ -12,11 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
+            $table->id(); 
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->text('address')->nullable();
+            $table->string('address')->nullable();
+            $table->string('source')->nullable();
+            $table->string('budget_range')->nullable();
+            $table->foreignId('interested_land_id')->nullable()->constrained('land_listings')->nullOnDelete();
+            $table->date('follow_up_date')->nullable();
+            $table->text('remark')->nullable();
+            $table->string('status')->default('prospect');
             $table->timestamps();
             $table->softDeletes();
         });

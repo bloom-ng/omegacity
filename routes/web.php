@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LandListingController;
 
 // Authentication Routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('loginform');
@@ -28,9 +29,19 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Clients
     Route::resource('clients', ClientController::class);
+
+    // Land Listings
+    Route::resource('landlistings', LandListingController::class);
+
+    // Admin users
+    Route::resource('users', UserController::class);
 });
 
 // Public routes
-Route::get('/', [UserController::class, 'HomePage'])->name('home');
-Route::get('/contact-us', [UserController::class, 'ContactUsPage'])->name('contact-us');
-Route::post('/contact-us', [UserController::class, 'ContactUsStore'])->name('store.contact-us');
+Route::get('/', [App\Http\Controllers\User\UserController::class, 'HomePage'])
+    ->name('home');
+Route::get('/contact-us', [App\Http\Controllers\User\UserController::class, 'ContactUsPage'])
+    ->name('contact-us');
+Route::post('/contact-us', [App\Http\Controllers\User\UserController::class, 'ContactUsStore'])
+    ->name('store.contact-us');
+

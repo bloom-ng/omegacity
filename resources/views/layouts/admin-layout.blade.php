@@ -92,7 +92,20 @@
                 </span>
             </a>
 
-            <!-- Transactions -->
+            <!-- Land Listing -->
+            <a href="{{ route('admin.landlistings.index') }}"
+                class="{{ request()->routeIs('admin.landlistings.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset("assets/images/earth.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.landlistings.*') ? 'filter invert' : '' }}"
+                    alt="transactions-icon">
+                <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.landlistings.*') ? 'text-white' : 'text-[#222222B2]' }}">
+                    Land Listing
+                </span>
+            </a>
+
+             <!-- Transactions -->
             <a href="#"
                 class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
                 <img src="{{ asset("assets/images/transaction.svg") }}" class="w-6 h-6" alt="transactions-icon">
@@ -100,10 +113,13 @@
             </a>
 
             <!-- Users -->
-            <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
-                <img src="{{ asset("assets/images/users.svg") }}" class="w-6 h-6" alt="users-icon">
-                <span class="pl-5 text-[13.5px] font-sans">Users</span>
+            <a href="{{ route('admin.users.index') }}"
+                class="{{ request()->routeIs('admin.users.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset("assets/images/users.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.users.*') ? 'filter invert' : '' }}" alt="users-icon">
+                <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-[#222222B2]' }}">Users</span>
             </a>
 
             <!-- Contacts -->
@@ -149,11 +165,11 @@
 
             <!-- Logout (stick to bottom) -->
             <form method="POST" action="{{ route("admin.logout") }}"
-                class="mt-auto flex items-center py-2 px-8 text-gray-800 font-sans mb-6">
+                class="mt-7 flex items-center py-2 px-8 font-sans mb-4 text-red-600">
                 @csrf
                 <button type="submit" class="flex items-center hover:scale-105 transition-transform duration-200">
-                    <img src="{{ asset("assets/images/logout.svg") }}" class="w-6 h-6" alt="logout-icon">
-                    <span class="pl-5 text-[13.5px] font-sans">Log Out</span>
+                    <img src="{{ asset("assets/images/logout.svg") }}" class="w-6 h-6 " alt="logout-icon">
+                    <span class="pl-2 text-[13.5px] font-sans ">Log Out</span>
                 </button>
             </form>
         </nav>

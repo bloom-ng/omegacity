@@ -35,51 +35,50 @@
 <body class="bg-gray-50 text-gray-900">
 
     <!-- Navbar -->
+    
     @include("users.nav")
 
     <!-- Hero Section -->
-    <section class="flex flex-col justify-center min-h-[120vh] px-8 md:px-20 text-black bg-cover bg-center relative"
+    <section
+        class="relative flex flex-col items-center justify-center min-h-[120vh] bg-cover bg-center text-center text-black"
         style="background-image: url('{{ asset("assets/images/fieldbgimage.png") }}');">
-
-        <!-- Main text -->
-        <div class="max-w-lg -mt-72 md:px-16  px-6 text-center sm:text-left">
-            <h1 class="text-4xl md:text-5xl font-[justregular] mb-4 leading-tight">
-                Secure your future<br>with land you can<br>afford, today.
-            </h1>
-            <button class="bg-black text-white px-12 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition">
-                Get started
-            </button>
+        <!-- Main content -->
+        <div class="max-w-2xl ">
+            <h1 class="text-4xl md:text-6xl font-[justregular] mb-6 leading-tight"> Secure a land you can afford with
+                Omega city & properties </h1> <button
+                class="bg-black text-white px-12 py-3 rounded-full font-[justregular] hover:bg-gray-800 transition duration-300">
+                Contact Us </button>
         </div>
 
-        <!-- Bottom text -->
-        <div class="phone absolute bottom-5 right-10 text-right text-xl ">
-            <p class="text-3xl font-[justregular] mb-3 text-left">Building wealth the smart way</p>
-            <div class="flex flex-wrap justify-start gap-2 max-w-sm">
-                <span
-                    class="bg-white/20 backdrop-blur-none px-2 py-2 rounded-full font-[justregular] w-[20%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+        <!-- Bottom black bar -->
+        <div class="absolute bottom-0 w-full bg-black text-white py-7 px-6">
+            <div
+                class="grid grid-cols-2 md:flex md:flex-nowrap items-center justify-center gap-4 max-w-5xl mx-auto text-center">
+                <!-- Text -->
+                <p
+                    class="col-span-2 md:col-span-1 text-lg md:text-2xl font-[justregular] mb-2 md:mb-0 md:mr-6 whitespace-nowrap">
+                    Building wealth the smart way
+                </p>
+
+                <!-- Tags -->
+                <span class="bg-white text-black px-6 py-2 rounded-full font-[justregular] text-center shadow-md">
                     Land
                 </span>
-
-
-                <span
-                    class="bg-white/20 backdrop-blur-none px-6 py-2 rounded-full font-[justregular] w-[38%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                <span class="bg-white text-black px-6 py-2 rounded-full font-[justregular] text-center shadow-md">
                     Omega city
                 </span>
-
-                <span
-                    class="bg-white/20 backdrop-blur-none px-5 py-2 mt-2 rounded-full font-[justregular] w-[38%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                <span class="bg-white text-black px-6 py-2 rounded-full font-[justregular] text-center shadow-md">
                     Real estate
                 </span>
-
-                <span
-                    class="bg-white/20 backdrop-blur-none px-6 py-2 mt-2 rounded-full font-[justregular] w-[40%] text-center border-l-2 border-r-2 border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                <span class="bg-white text-black px-6 py-2 rounded-full font-[justregular] text-center shadow-md">
                     Investment
                 </span>
-
             </div>
         </div>
 
     </section>
+
+
 
 
 
