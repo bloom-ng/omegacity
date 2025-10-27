@@ -44,4 +44,8 @@ Route::get('/contact-us', [App\Http\Controllers\User\UserController::class, 'Con
     ->name('contact-us');
 Route::post('/contact-us', [App\Http\Controllers\User\UserController::class, 'ContactUsStore'])
     ->name('store.contact-us');
+Route::get('/land', [App\Http\Controllers\User\UserController::class, 'LandPage'])
+    ->name('land');
+Route::get('/landlisting', [App\Http\Controllers\User\UserController::class, 'LandListingPage'])
+    ->name('landlisting');
 

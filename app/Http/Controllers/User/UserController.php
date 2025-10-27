@@ -30,4 +30,14 @@ class UserController extends Controller
     {
         return view("users.contact-us");
     }
+
+    public function LandPage()
+    {
+        return view("users.land");
+    }
+
+    public function LandListingPage()
+    {
+        return view("users.landlisting");
+    }
 }
