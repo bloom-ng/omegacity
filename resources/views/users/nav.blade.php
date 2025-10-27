@@ -10,9 +10,9 @@
 
     <!-- Desktop Links -->
     <div class="text-sm lg:text-base hidden md:flex items-center space-x-4 md:space-x-6 lg:space-x-12 text-black font-just">
-        <a href="#" class="hover:text-yellow-400 transition">About</a>
-        <a href="/land" class="hover:text-yellow-400 transition">Land</a>
-        <a href="{{ route("contact-us") }}" class="hover:text-yellow-400 transition">Contact us</a>
+        <a href="#" class="hover:text-yellow-400 transition {{ request()->is('about') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">About</a>
+        <a href="/land" class="hover:text-yellow-400 transition {{ request()->is('land') || request()->is('landlisting') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Land</a>
+        <a href="{{ route("contact-us") }}" class="hover:text-yellow-400 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
         <!-- Buy button (desktop) -->
         <button
             class="hidden md:block bg-yellow-400/90 hover:bg-yellow-500 text-black font-just px-10 lg:px-12 py-2 rounded-full transition">
@@ -40,9 +40,9 @@
 
     <!-- Menu Links -->
     <div class="flex flex-col items-start space-y-6 px-6 text-black font-just text-lg">
-        <a href="#" class="hover:text-yellow-500 transition">About</a>
-        <a href="#" class="hover:text-yellow-500 transition">Land</a>
-        <a href="{{ route('contact-us') }}" class="hover:text-yellow-500 transition">Contact us</a>
+        <a href="#" class="hover:text-yellow-500 transition {{ request()->is('about') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">About</a>
+        <a href="/land" class="hover:text-yellow-500 transition {{ request()->is('land') || request()->is('landlisting') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Land</a>
+        <a href="{{ route('contact-us') }}" class="hover:text-yellow-500 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
         <!-- Buy a Land Button -->
         <div class="w-full flex justify-center pb-3 mt-2">
             <button
