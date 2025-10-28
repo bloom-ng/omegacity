@@ -13,15 +13,11 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-              $table->string('receipt_number')->unique();
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
-             $table->string('description');
             $table->date('date');
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+            $table->text('invoice_items');
             $table->decimal('tax', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->default(0);
-            $table->decimal('total', 10, 2);
             $table->timestamps();
         });
     }

@@ -50,11 +50,21 @@
                                     {{ $user->email }}
                                 </td>
                                 <td class="py-3 px-6 text-center">
-                                    <span
-                                        class="{{ $user->role === "admin" ? "bg-purple-200 text-purple-600" : "bg-blue-200 text-blue-600" }} py-1 px-3 rounded-full text-xs">
+                                    @php
+                                        $roleName = strtolower($user->role->name ?? "");
+                                        $roleColors = [
+                                            "accountant" => "bg-red-200 text-red-600",
+                                            "agent" => "bg-green-200 text-green-600",
+                                            "admin" => "bg-blue-200 text-blue-600",
+                                        ];
+                                        $colorClass = $roleColors[$roleName] ?? "bg-yellow-200 text-yellow-600";
+                                    @endphp
+
+                                    <span class="{{ $colorClass }} py-1 px-3 rounded-full text-xs font-semibold">
                                         {{ ucfirst($user->role->name) }}
                                     </span>
                                 </td>
+
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
                                         <a href="{{ route("admin.users.edit", $user) }}"

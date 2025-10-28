@@ -2,28 +2,45 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\LandListing;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
 
 class ClientController extends Controller
 {
     /**
      * Display a listing of the clients.
      */
-    public function index()
-    {
-        $clients = Client::latest()->paginate(10);
-        return view('admin.clients.index', compact('clients'));
+    public function index(Request $request)
+{
+    $query = Client::with('interestedLand');
+
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+
+        $query->where(function ($q) use ($search) {
+            $q->where('first_name', 'like', "%{$search}%")
+              ->orWhere('last_name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('phone', 'like', "%{$search}%")
+              ->orWhere('address', 'like', "%{$search}%");
+        });
     }
+
+    $clients = $query->latest()->paginate(10)->withQueryString();
+
+    return view('admin.clients.index', compact('clients'));
+}
+
 
     /**
      * Show the form for creating a new client.
      */
     public function create()
     {
-        return view('admin.clients.create');
+        $land_listings = LandListing::all();
+        return view('admin.clients.create', compact('land_listings'));
     }
 
     /**
@@ -32,10 +49,17 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|string|max:20',
-            'address' => 'required|string',
+            'first_name'         => 'required|string|max:255',
+            'last_name'          => 'required|string|max:255',
+            'email'              => 'nullable|email|max:255',
+            'phone'              => 'nullable|string|max:20',
+            'address'            => 'nullable|string|max:255',
+            'source'             => 'nullable|string|max:255',
+            'budget_range'       => 'nullable|string|max:255',
+            'interested_land_id' => 'nullable|exists:land_listings,id',
+            'follow_up_date'     => 'nullable|date',
+            'remark'             => 'nullable|string',
+            'status'             => 'required|in:prospect,active,closed',
         ]);
 
         Client::create($validated);
@@ -57,7 +81,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        return view('admin.clients.edit', compact('client'));
+        $land_listings = LandListing::all();
+        return view('admin.clients.edit', compact('client', 'land_listings'));
     }
 
     /**
@@ -66,16 +91,23 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string',
+            'first_name'         => 'required|string|max:255',
+            'last_name'          => 'required|string|max:255',
+            'email'              => 'nullable|email|max:255',
+            'phone'              => 'nullable|string|max:20',
+            'address'            => 'nullable|string|max:255',
+            'source'             => 'nullable|string|max:255',
+            'budget_range'       => 'nullable|string|max:255',
+            'interested_land_id' => 'nullable|exists:land_listings,id',
+            'follow_up_date'     => 'nullable|date',
+            'remark'             => 'nullable|string',
+            'status'             => 'required|in:prospect,active,closed',
         ]);
 
         $client->update($validated);
 
         return redirect()->route('admin.clients.index')
-            ->with('success', 'Client updated successfully');
+            ->with('success', 'Client updated successfully.');
     }
 
     /**
@@ -84,7 +116,8 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         $client->delete();
+
         return redirect()->route('admin.clients.index')
-            ->with('success', 'Client deleted successfully');
+            ->with('success', 'Client deleted successfully.');
     }
 }

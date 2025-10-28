@@ -18,7 +18,7 @@
                         <option value="">Select Client</option>
                         @foreach ($clients as $client)
                             <option value="{{ $client->id }}" @if (old("client_id") == $client->id) selected @endif>
-                                {{ $client->name }}</option>
+                                {{ $client->first_name }} {{ $client->last_name }}</option>
                         @endforeach
                     </select>
                     @error("client_id")
@@ -71,7 +71,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 
                                 </div>
-                                <input type="number" name="items[0][price]" min="0" step="0.01" required
+                                <input type="number" name="items[0][price]"  required
                                     class="w-full border border-gray-300 rounded-md pl-7 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                 </div>
             </div>
             <div class="col-span-2">
-                <input type="number" name="items[{itemCount}][tax]" min="0" max="100" value="0" step="0.01"
+                <input type="number" name="items[${itemCount}][tax]" min="0" max="100" value="0" step="0.01"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
             </div>
             <div class="col-span-1 flex items-end">
@@ -228,7 +228,7 @@
                 document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)}`;
                 document.getElementById('tax').textContent = `${totalTax.toFixed(2)}`;
                 document.getElementById('discount-amount').textContent = `-${discount.toFixed(2)}`;
-                document.getElementById('total').textContent = `${total.toFixed(2)}`;
+                document.getElementById('total').textContent = `${total}`;
             }
 
             function attachEventListeners() {

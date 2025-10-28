@@ -30,11 +30,12 @@ class Client extends Model
         'deleted_at',
     ];
 
-     // Relationships
-    public function landInterest()
+    // Relationships
+    public function interestedLand()
     {
         return $this->belongsTo(LandListing::class, 'interested_land_id');
     }
+
 
     public function invoices()
     {

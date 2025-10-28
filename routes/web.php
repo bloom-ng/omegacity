@@ -24,8 +24,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('invoices', InvoiceController::class);
     Route::post('invoices/{invoice}/mark-as-paid', [InvoiceController::class, 'markAsPaid'])
          ->name('invoices.markAsPaid');
-    Route::get('invoices/{invoice}/print', [InvoiceController::class, 'print'])
-         ->name('invoices.print');
+   
+    Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'generatePDF'])
+         ->name('invoices.pdf');
 
     // Clients
     Route::resource('clients', ClientController::class);

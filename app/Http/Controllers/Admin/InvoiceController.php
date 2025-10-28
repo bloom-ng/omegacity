@@ -4,20 +4,37 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Client;
 use App\Models\Invoice;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\View;
 
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        $invoices = Invoice::paginate(10);
-        return view('admin.invoice.index', compact('invoices'));
+        $search = $request->input('search');
+
+        $invoices = Invoice::with('client')
+            ->when($search, function ($query, $search) {
+                $query->whereHas('client', function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                        ->orWhere('last_name', 'like', "%{$search}%");
+                })
+                    ->orWhere('invoice_items', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->appends(['search' => $search]);
+
+        return view('admin.invoice.index', compact('invoices', 'search'));
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -31,53 +48,42 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreInvoiceRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'date' => 'required|date',
+            'discount' => 'nullable|numeric|min:0',
+            'items' => 'required|array|min:1',
+            'items.*.description' => 'required|string',
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.price' => 'required|numeric|min:0',
+        ]);
 
-        // Calculate totals
-        $subtotal = 0;
-        $totalTax = 0;
-
-        foreach ($data['items'] as $item) {
-            $itemSubtotal = $item['quantity'] * $item['price'];
-            $itemTax = $itemSubtotal * ($item['tax'] / 100);
-            $subtotal += $itemSubtotal;
-            $totalTax += $itemTax;
-        }
-
+        $subtotal = collect($data['items'])->sum(fn($item) => $item['price'] * $item['quantity']);
+        $tax = $request->input('tax', 0);
         $discount = $data['discount'] ?? 0;
-        $total = $subtotal + $totalTax - $discount;
+        $total = ($subtotal + $tax) - $discount;
 
-        // Create invoice
+
         $invoice = Invoice::create([
             'client_id' => $data['client_id'],
             'date' => $data['date'],
+            'invoice_items' => json_encode($data['items']),
+            'tax' => $tax,
             'discount' => $discount,
-            'total' => $total,
-            'description' => 'Invoice for ' . now()->format('F Y'),
-            'quantity' => 0,
-            'price' => 0,
-            'tax' => $totalTax,
         ]);
 
-        // Create items
-        foreach ($data['items'] as $item) {
-            $itemSubtotal = $item['quantity'] * $item['price'];
-            $itemTax = $itemSubtotal * ($item['tax'] / 100);
-
-            $invoice->items()->create([
-                'description' => $item['description'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-                'tax' => $itemTax,
-                'total' => $itemSubtotal + $itemTax,
-            ]);
-        }
-
-        return redirect()->route('admin.invoices.index')
-            ->with('success', 'Invoice created successfully!');
+        return redirect()
+            ->route('admin.invoices.index')
+            ->with('success', 'Invoice created successfully!')
+            ->with('subtotal', $subtotal)
+            ->with('total', $total);
     }
+
+
+
+
 
 
     /**
@@ -85,7 +91,8 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        $invoice->load('client');
+        return view('admin.invoice.show', compact('invoice'));
     }
 
     /**
@@ -93,22 +100,71 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        //
+        $clients = Client::all();
+        return view('admin.invoice.edit', compact('invoice', 'clients'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInvoiceRequest $request, Invoice $invoice)
+    public function update(Request $request, Invoice $invoice)
     {
-        //
+        $data = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'date' => 'required|date',
+            'discount' => 'nullable|numeric|min:0',
+            'items' => 'required|array|min:1',
+            'items.*.description' => 'required|string',
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.price' => 'required|numeric|min:0',
+            'items.*.tax' => 'nullable|numeric|min:0|max:100',
+        ]);
+
+        $subtotal = collect($data['items'])->sum(fn($item) => $item['price'] * $item['quantity']);
+        $totalTax = collect($data['items'])->sum(
+            fn($item) => ($item['price'] * $item['quantity']) * (($item['tax'] ?? 0) / 100)
+        );
+        $discount = $data['discount'] ?? 0;
+        $total = ($subtotal + $totalTax) - $discount;
+
+        $invoice->update([
+            'client_id' => $data['client_id'],
+            'date' => $data['date'],
+            'invoice_items' => json_encode($data['items']),
+            'tax' => $totalTax,
+            'discount' => $discount,
+        ]);
+
+        return redirect()
+            ->route('admin.invoices.index')
+            ->with('success', 'Invoice updated successfully!')
+            ->with('subtotal', $subtotal)
+            ->with('total', $total);
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->delete();
+
+        return redirect()->route('admin.invoices.index')
+            ->with('success', 'Invoice deleted successfully!');
+    }
+
+    /**
+     * Generate PDF for the specified invoice.
+     */
+    public function generatePDF(Invoice $invoice)
+    {
+        $invoice->load('client');
+
+        $pdf = PDF::loadView('admin.invoice.pdf', compact('invoice'));
+
+        return $pdf->stream('invoice-' . $invoice->created_at->format('Ymd') . $invoice->id . '.pdf');
     }
 }
