@@ -7,25 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Forgot Password - {{ config('app.name', 'Admin Panel') }}</title>
 
-    <!-- Fonts & Tailwind -->
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700&display=swap"
-        rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        justbold: ['"just-sans-ex-bold"', 'sans-serif'],
-                        justregular: ['"just-sans-regular"', 'sans-serif'],
-                        bricolage: ['"Bricolage Grotesque"', 'sans-serif'],
-                    },
-                },
-            },
-        };
-    </script>
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
@@ -68,7 +50,7 @@
                         @csrf
                         <div class="flex flex-col gap-2">
                             <label for="email-mobile"
-                                class="text-md font-[justregular] text-gray-700">Email Address</label>
+                                class="text-md font-just text-gray-700">Email Address</label>
                             <input type="email" name="email" id="email-mobile"
                                 class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"
                                 placeholder="example@gmail.com" required>
@@ -89,7 +71,7 @@
             <div
                 class="flex flex-col gap-3 w-[90%] max-w-md justify-center items-center border border-gray-200 rounded-xl p-10 shadow-sm">
                 <h2 class="text-2xl font-bold pb-2 text-center">Forgot Password</h2>
-                <p class="font-[justregular] text-gray-600 text-center mb-4">A reset link will be sent to your
+                <p class="font-just text-gray-600 text-center mb-4">A reset link will be sent to your
                     email address</p>
 
                 @if ($errors->any())
@@ -106,7 +88,7 @@
                 <form class="flex flex-col gap-5 w-full" method="POST" action="">
                     @csrf
                     <div class="flex flex-col gap-2 w-full">
-                        <label for="email" class="text-md font-[justregular] text-gray-700">Email
+                        <label for="email" class="text-md font-just text-gray-700">Email
                             Address</label>
                         <input type="email" name="email" id="email"
                             class="border border-gray-300 rounded-md p-3 w-full focus:ring-2 focus:ring-[#FACF07] focus:outline-none"

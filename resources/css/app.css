@@ -9,22 +9,23 @@
     --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
+    --font-just: "JUST Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
     @font-face {
-        font-family: "just-sans-ex-bold";
-        src: url("../fonts/just-sans-ex-bold.otf") format("opentype");
+        font-family: "JUST Sans";
+        src: url("../fonts/JUST Sans Regular.woff2") format("woff2"),
+             url("../fonts/JUST Sans Regular.woff") format("woff");
         font-weight: 400;
         font-style: normal;
     }
-
 
     @font-face {
-        font-family: "just-sans-regular";
-        src: url("../fonts/just-sans-regular.otf") format("opentype");
-        font-weight: 400;
+        font-family: "JUST Sans";
+        src: url("../fonts/JUST Sans ExBold.woff2") format("woff2"),
+             url("../fonts/JUST Sans ExBold.woff") format("woff");
+        font-weight: 800;
         font-style: normal;
     }
-
 }

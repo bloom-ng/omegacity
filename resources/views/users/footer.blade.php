@@ -1,4 +1,4 @@
-<footer class="bg-gray-50 py-10 px-6 md:px-20 border-t border-gray-200">
+<footer class="bg-[#FCFCFC] md:bg-[#F3F3F3] py-10 px-6 md:px-20">
   <div class="flex flex-col md:flex-row items-start justify-between space-y-10 md:space-y-0">
 
     <!-- Left: Logo -->
