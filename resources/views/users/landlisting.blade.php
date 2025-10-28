@@ -11,22 +11,26 @@
     <section class="relative bg-[#F3F3F3] md:py-10">
         <div class="relative w-full overflow-hidden">
             <!-- Slides -->
+            @php
+                $photos = $landlisting->photos ?? [];
+                $photos = is_array($photos) ? $photos : [];
+                if (count($photos) === 0) {
+                    $photos = [asset('assets/images/landImage.png')];
+                }
+            @endphp
             <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
-                <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/carouselimage1.png") }}" class="w-full h-[90vh] object-cover"
-                        alt="Omega Land 1">
-                </div>
-                <div class="w-full flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
-                        class="w-full h-[90vh] object-cover" alt="Omega Land 2">
-                </div>
-                <div class="w-full flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=1200&q=80"
-                        class="w-full h-[90vh] object-cover" alt="Omega Land 3">
-                </div>
+                @foreach ($photos as $idx => $photo)
+                    @php
+                        $src = \Illuminate\Support\Str::startsWith($photo, ['http://','https://']) ? $photo : asset($photo);
+                    @endphp
+                    <div class="w-full flex-shrink-0">
+                        <img src="{{ $src }}" class="w-full h-[90vh] object-cover" alt="Slide {{ $idx + 1 }}">
+                    </div>
+                @endforeach
             </div>
 
             <!-- Arrows -->
+            @if(count($photos) > 1)
             <button id="prev"
                 class="absolute top-1/2 left-6 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center
                         bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border border-gray-200">
@@ -38,6 +42,7 @@
                         bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border border-gray-200">
                 &#10095;
             </button>
+            @endif
 
         </div>
 
@@ -47,9 +52,9 @@
                 <span class="font-bold text-lg">Now selling</span> — A plot of land in Omega City 350Sq.ft
             </p> -->
             <div class="flex gap-2">
-                <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
-                <span class="dot w-4 h-4 rounded-full bg-gray-500"></span>
-                <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
+                @foreach ($photos as $i => $photo)
+                    <span class="dot w-4 h-4 rounded-full {{ $i === 0 ? 'bg-gray-500' : 'bg-gray-300' }}"></span>
+                @endforeach
             </div>
         </div>
     </section>
@@ -235,11 +240,14 @@
         });
     }
 
-    document.getElementById('next').onclick = () => showSlide(index + 1);
-    document.getElementById('prev').onclick = () => showSlide(index - 1);
-
-    // Auto slide every 5s
-    setInterval(() => showSlide(index + 1), 50000);
+    if (slides.length > 1) {
+        const nextBtn = document.getElementById('next');
+        const prevBtn = document.getElementById('prev');
+        if (nextBtn) nextBtn.onclick = () => showSlide(index + 1);
+        if (prevBtn) prevBtn.onclick = () => showSlide(index - 1);
+        // Auto slide every 50s (matches previous timing)
+        setInterval(() => showSlide(index + 1), 50000);
+    }
 
 
     const carouselTwo = document.getElementById('carouselTwo');
