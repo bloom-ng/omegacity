@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Models\ContactMessage;
 use App\Http\Controllers\Controller;
+use App\Models\LandListing;
 
 class UserController extends Controller
 {
@@ -33,11 +34,47 @@ class UserController extends Controller
 
     public function LandPage()
     {
-        return view("users.land");
+        // Determine top 2 locations by recency of listings
+        $locations = LandListing::latest()
+            ->pluck('location')
+            ->filter()
+            ->unique()
+            ->take(2)
+            ->values();
+
+        $sections = [];
+        foreach ($locations as $loc) {
+            $sections[] = [
+                'location' => $loc,
+                'listings' => LandListing::where('location', $loc)
+                    ->latest()
+                    ->take(3)
+                    ->get(),
+            ];
+        }
+
+        return view("users.land", [
+            'sections' => $sections,
+        ]);
     }
 
-    public function LandListingPage()
+    public function LandListingPage(int $id)
     {
-        return view("users.landlisting");
+        $landlisting = LandListing::with('agent')->findOrFail($id);
+        $otherListings = LandListing::where('location', $landlisting->location)
+            ->where('id', '!=', $landlisting->id)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        return view("users.landlisting", [
+            'landlisting' => $landlisting,
+            'otherListings' => $otherListings,
+        ]);
+    }
+
+    public function AboutPage()
+    {
+        return view("users.about");
     }
 }

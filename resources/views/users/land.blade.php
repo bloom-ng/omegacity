@@ -22,280 +22,86 @@
 
     <!-- Land Section -->
     <section class="md:px-12 lg:px-20 py-10">
-        <div class="flex flex-col gap-6 mb-10">
-            <h1 class="px-4 sm:px-6 lg:px-0 font-extrabold md:text-xl lg:text-2xl">Apo Resettlement </h1>
-            
+        @foreach (($sections ?? []) as $section)
+        <div class="flex flex-col {{ !$loop->first ? 'lg:pt-20' : '' }} gap-6 mb-10">
+            <h1 class="px-4 sm:px-6 lg:px-0 font-extrabold md:text-xl lg:text-2xl">{{ $section['location'] }}</h1>
+
             <!-- Extra Small Swiper (< 640px) - 1 slide -->
             <swiper-container slides-per-view="1" speed="500" loop="true" autoplay="true" css-mode="true"
                 class="flex items-center justify-center flex-row sm:hidden w-full px-4">
+                @foreach ($section['listings'] as $listing)
                 <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
+                    <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
+                        <div class="h-[81%] w-full rounded-t-lg">
+                            @php
+                                $photos = $listing->photos ?? [];
+                                $first = is_array($photos) && count($photos) ? $photos[0] : null;
+                                $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset($first)) : asset('assets/images/landImage.png');
+                            @endphp
+                            <img src="{{ $imgSrc }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
+                        </div>
+                        <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
+                            <p>2 plots of land 350sq.ft</p>
+                            <div class="flex flex-row justify_between">
+                                <p class="font-extrabold">NGN {{ number_format($listing->selling_price / 1000000, 2) }} million</p>
+                                <a href="{{ route('landlisting.show', ['id' => $listing->id]) }}" class="border-b-[0.5px] border-[#676968] px-1.5">View Land</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
+                @endforeach
             </swiper-container>
-            
+
             <!-- Small Swiper (640-767px) - 2 slides -->
             <swiper-container slides-per-view="2" speed="500" loop="true" autoplay="true" css-mode="true"
                 class="hidden sm:flex md:hidden w-full px-4">
+                @foreach ($section['listings'] as $listing)
                 <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
+                    <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
+                        <div class="h-[81%] w-full rounded-t-lg">
+                            @php
+                                $photos = $listing->photos ?? [];
+                                $first = is_array($photos) && count($photos) ? $photos[0] : null;
+                                $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset($first)) : asset('assets/images/landImage.png');
+                            @endphp
+                            <img src="{{ $imgSrc }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
+                        </div>
+                        <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
+                            <p>2 plots of land 350sq.ft</p>
+                            <div class="flex flex-row justify-between">
+                                <p class="font-extrabold">NGN {{ number_format($listing->selling_price / 1000000, 2) }} million</p>
+                                <a href="{{ route('landlisting.show', ['id' => $listing->id]) }}" class="border-b-[0.5px] border-[#676968] px-1.5">View Land</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
+                @endforeach
             </swiper-container>
-            
+
             <!-- Desktop Grid (≥ 768px) -->
             <div class="hidden md:grid grid-cols-3 md:h-[45vh] gap-3">
+                @foreach ($section['listings'] as $listing)
                 <div class="flex h-full flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
                     <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
+                        @php
+                            $photos = $listing->photos ?? [];
+                            $first = is_array($photos) && count($photos) ? $photos[0] : null;
+                            $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset($first)) : asset('assets/images/landImage.png');
+                        @endphp
+                        <img src="{{ $imgSrc }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
                     </div>
                     <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
                         <p>2 plots of land 350sq.ft</p>
                         <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
+                            <p class="font-extrabold">NGN {{ number_format($listing->selling_price / 1000000, 2) }} million</p>
+                            <a href="{{ route('landlisting.show', ['id' => $listing->id]) }}" class="border-b-[0.5px] border-[#676968] px-1.5">View Land</a>
                         </div>
                     </div>
                 </div>
-                <div class="flex h-full flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex h-full flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-        <div class="flex flex-col gap-6 mb-10">
-            <h1 class="px-4 sm:px-6 lg:px-0 font-extrabold md:text-xl lg:text-2xl">Apo Resettlement </h1>
-            
-            <!-- Extra Small Swiper (< 640px) - 1 slide -->
-            <swiper-container slides-per-view="1" speed="500" loop="true" autoplay="true" css-mode="true"
-                class="flex items-center justify-center flex-row sm:hidden w-full px-4">
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-            </swiper-container>
-            
-            <!-- Small Swiper (640-767px) - 2 slides -->
-            <swiper-container slides-per-view="2" speed="500" loop="true" autoplay="true" css-mode="true"
-                class="hidden sm:flex md:hidden w-full px-4">
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-                <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                </swiper-slide>
-            </swiper-container>
-            
-            <!-- Desktop Grid (≥ 768px) -->
-            <div class="hidden md:grid grid-cols-3 md:h-[45vh] gap-3">
-                <div class="flex h-full flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex h-full flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex h-full flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset("assets/images/landImage.png") }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN 1.58 million</p>
-                            <p class="border-b-[0.5px] border-[#676968] px-1.5">View Land</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </section>
 
     <!-- Footer Section -->

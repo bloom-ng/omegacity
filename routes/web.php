@@ -46,6 +46,7 @@ Route::post('/contact-us', [App\Http\Controllers\User\UserController::class, 'Co
     ->name('store.contact-us');
 Route::get('/land', [App\Http\Controllers\User\UserController::class, 'LandPage'])
     ->name('land');
-Route::get('/landlisting', [App\Http\Controllers\User\UserController::class, 'LandListingPage'])
-    ->name('landlisting');
-
+Route::get('/landlisting/{id}', [App\Http\Controllers\User\UserController::class, 'LandListingPage'])
+    ->name('landlisting.show');
+Route::get('/about', [App\Http\Controllers\User\UserController::class, 'AboutPage'])
+    ->name('about');
