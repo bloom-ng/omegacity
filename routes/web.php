@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ReceiptController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LandListingController;
+use App\Http\Controllers\Admin\AgentTargetController;
+use App\Http\Controllers\Agent\DashboardController as AgentDashboardController;
 
 // Authentication Routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('loginform');
@@ -52,6 +54,30 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     //contact messages
     Route::resource('contacts', ContactController::class);
+    
+    // Agent Targets Management
+    Route::get('/agents', [AgentTargetController::class, 'index'])->name('targets.index');
+    Route::get('/agents/{agent}/targets/create', [AgentTargetController::class, 'create'])->name('targets.create');
+    Route::post('/agents/{agent}/targets', [AgentTargetController::class, 'store'])->name('targets.store');
+    Route::get('/agents/{agent}/targets', [AgentTargetController::class, 'show'])->name('targets.show');
+    Route::get('/agents/{agent}/targets/{target}/edit', [AgentTargetController::class, 'edit'])->name('targets.edit');
+    Route::put('/agents/{agent}/targets/{target}', [AgentTargetController::class, 'update'])->name('targets.update');
+    Route::delete('/agents/{agent}/targets/{target}', [AgentTargetController::class, 'destroy'])->name('targets.destroy');
+    Route::post('/agents/refresh-progress', [AgentTargetController::class, 'refreshProgress'])->name('targets.refresh');
+});
+
+// Agent Routes
+Route::middleware(['auth'])->prefix('agent')->name('agent.')->group(function () {
+    // Agent Dashboard
+    Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('dashboard');
+    
+    // Agent Clients Management
+    Route::get('/clients', [AgentDashboardController::class, 'clients'])->name('clients');
+    Route::get('/clients/create', [AgentDashboardController::class, 'createClient'])->name('clients.create');
+    Route::post('/clients', [AgentDashboardController::class, 'storeClient'])->name('clients.store');
+    
+    // Agent Targets View
+    Route::get('/targets', [AgentDashboardController::class, 'targets'])->name('targets');
 });
 
 // Public routes

@@ -26,8 +26,8 @@
                             </label>
                             <div class="mt-2">
                                 <input type="text" name="first_name" id="first_name"
-                                   class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("first_name") border-red-500 @enderror"
-                                    value="{{ old("first_name", $client->first_name ?? "") }}" required>
+                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-xl text-xl border-gray-300 rounded-md @error("first_name") border-red-500 @enderror"
+                                    value="{{ old("first_name") }}" required>
                                 @error("first_name")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -42,7 +42,7 @@
                             <div class="mt-2">
                                 <input type="text" name="last_name" id="last_name"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("last_name") border-red-500 @enderror"
-                                    value="{{ old("last_name", $client->last_name ?? "") }}" required>
+                                    value="{{ old("last_name") }}" required>
                                 @error("last_name")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -57,7 +57,7 @@
                             <div class="mt-1">
                                 <input type="email" name="email" id="email"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("email") border-red-500 @enderror"
-                                    value="{{ old("email", $client->email ?? "") }}">
+                                    value="{{ old("email") }}">
                                 @error("email")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -72,7 +72,7 @@
                             <div class="mt-1">
                                 <input type="text" name="phone" id="phone"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-xl text-xl border-gray-300 rounded-md @error("phone") border-red-500 @enderror"
-                                    value="{{ old("phone", $client->phone ?? "") }}">
+                                    value="{{ old("phone") }}">
                                 @error("phone")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -87,7 +87,7 @@
                             <div class="mt-1">
                                 <input type="text" name="source" id="source"
                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("source") border-red-500 @enderror"
-                                    value="{{ old("source", $client->source ?? "") }}">
+                                    value="{{ old("source") }}">
                                 @error("source")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -102,7 +102,7 @@
                             <div class="mt-1">
                                 <input type="text" name="budget_range" id="budget_range"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("budget_range") border-red-500 @enderror"
-                                    value="{{ old("budget_range", $client->budget_range ?? "") }}">
+                                    value="{{ old("budget_range") }}">
                                 @error("budget_range")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -120,7 +120,7 @@
                                     <option value="">Select Land</option>
                                     @foreach ($land_listings as $land)
                                         <option value="{{ $land->id }}"
-                                            {{ old("interested_land_id", $client->interested_land_id ?? "") == $land->id ? "selected" : "" }}>
+                                            {{ old("interested_land_id") == $land->id ? "selected" : "" }}>
                                             {{ $land->property_name }}
                                         </option>
                                     @endforeach
@@ -139,8 +139,29 @@
                             <div class="mt-1">
                                 <input type="date" name="follow_up_date" id="follow_up_date"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("follow_up_date") border-red-500 @enderror"
-                                    value="{{ old("follow_up_date", $client->follow_up_date ?? "") }}">
+                                    value="{{ old("follow_up_date") }}">
                                 @error("follow_up_date")
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Assign Agent -->
+                        <div>
+                            <label for="assigned_agent_id" class="block text-lg font-semibold text-gray-700">
+                                Assign Agent
+                            </label>
+                            <div class="mt-1">
+                                <select name="assigned_agent_id" id="assigned_agent_id"
+                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("assigned_agent_id") border-red-500 @enderror">
+                                    <option value="">-- Select Agent --</option>
+                                    @foreach(\App\Models\User::whereHas('role', fn($q) => $q->where('name', 'Agent'))->get() as $agent)
+                                        <option value="{{ $agent->id }}" {{ old("assigned_agent_id") == $agent->id ? "selected" : "" }}>
+                                            {{ $agent->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error("assigned_agent_id")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -155,13 +176,13 @@
                                 <select name="status" id="status"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("status") border-red-500 @enderror">
                                     <option value="prospect"
-                                        {{ old("status", $client->status ?? "") == "prospect" ? "selected" : "" }}>Prospect
+                                        {{ old("status", "prospect") == "prospect" ? "selected" : "" }}>Prospect
                                     </option>
                                     <option value="active"
-                                        {{ old("status", $client->status ?? "") == "active" ? "selected" : "" }}>Active
+                                        {{ old("status") == "active" ? "selected" : "" }}>Active
                                     </option>
                                     <option value="closed"
-                                        {{ old("status", $client->status ?? "") == "closed" ? "selected" : "" }}>Closed
+                                        {{ old("status") == "closed" ? "selected" : "" }}>Closed
                                     </option>
                                 </select>
                                 @error("status")
@@ -177,7 +198,7 @@
                             </label>
                             <div class="mt-1">
                                 <textarea name="remark" id="remark" rows="3"
-                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("remark") border-red-500 @enderror">{{ old("remark", $client->remark ?? "") }}</textarea>
+                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("remark") border-red-500 @enderror">{{ old("remark") }}</textarea>
                                 @error("remark")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -191,7 +212,7 @@
                             </label>
                             <div class="mt-1">
                                 <textarea name="address" id="address" rows="3"
-                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("address") border-red-500 @enderror">{{ old("address", $client->address ?? "") }}</textarea>
+                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("address") border-red-500 @enderror">{{ old("address") }}</textarea>
                                 @error("address")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror

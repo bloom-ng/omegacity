@@ -19,6 +19,7 @@ class Client extends Model
         'source',
         'budget_range',
         'interested_land_id',
+        'assigned_agent_id',
         'follow_up_date',
         'remark',
         'status',
@@ -36,10 +37,19 @@ class Client extends Model
         return $this->belongsTo(LandListing::class, 'interested_land_id');
     }
 
+    public function assignedAgent()
+    {
+        return $this->belongsTo(User::class, 'assigned_agent_id');
+    }
 
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function receipts()
+    {
+        return $this->hasMany(Receipt::class);
     }
 
     public function feedbacks()
