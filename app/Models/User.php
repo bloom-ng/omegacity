@@ -48,7 +48,38 @@ class User extends Authenticatable
     }
 
     public function role()
-{
-    return $this->belongsTo(Role::class);
-}
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function agentTargets()
+    {
+        return $this->hasMany(AgentTarget::class);
+    }
+
+    public function assignedClients()
+    {
+        return $this->hasMany(Client::class, 'assigned_agent_id');
+    }
+
+    public function assignedLandListings()
+    {
+        return $this->hasMany(LandListing::class, 'sales_agent_id');
+    }
+
+    // Helper methods
+    public function isAgent()
+    {
+        return $this->role && $this->role->name === 'Agent';
+    }
+
+    public function isAccountant()
+    {
+        return $this->role && $this->role->name === 'Accountant';
+    }
+
+    public function hasRole($roleName)
+    {
+        return $this->role && $this->role->name === $roleName;
+    }
 }

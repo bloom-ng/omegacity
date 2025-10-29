@@ -32,13 +32,26 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|string|max:20',
-            'address' => 'required|string',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+            'source' => 'nullable|string|max:255',
+            'budget_range' => 'nullable|string|max:255',
+            'interested_land_id' => 'nullable|exists:land_listings,id',
+            'follow_up_date' => 'nullable|date',
+            'remark' => 'nullable|string',
+            'status' => 'nullable|string|max:255',
+            'assigned_agent_id' => 'nullable|exists:users,id',
         ]);
 
-        Client::create($validated);
+        $client = Client::create($validated);
+
+        // If created by agent (not admin), auto-assign to themselves
+        if (auth()->user()->isAgent() && !$request->filled('assigned_agent_id')) {
+            $client->update(['assigned_agent_id' => auth()->id()]);
+        }
 
         return redirect()->route('admin.clients.index')
             ->with('success', 'Client created successfully.');
@@ -66,10 +79,18 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'nullable|email',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
+            'source' => 'nullable|string|max:255',
+            'budget_range' => 'nullable|string|max:255',
+            'interested_land_id' => 'nullable|exists:land_listings,id',
+            'follow_up_date' => 'nullable|date',
+            'remark' => 'nullable|string',
+            'status' => 'nullable|string|max:255',
+            'assigned_agent_id' => 'nullable|exists:users,id',
         ]);
 
         $client->update($validated);

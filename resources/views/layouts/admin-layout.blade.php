@@ -122,6 +122,16 @@
                 <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-[#222222B2]' }}">Users</span>
             </a>
 
+            <!-- Agent Targets -->
+            <a href="{{ route('admin.targets.index') }}"
+                class="{{ request()->routeIs('admin.targets.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <i class="fas fa-bullseye w-6 h-6 text-center {{ request()->routeIs('admin.targets.*') ? 'text-white' : 'text-gray-600' }}"></i>
+                <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.targets.*') ? 'text-white' : 'text-[#222222B2]' }}">Agent Targets</span>
+            </a>
+
             <!-- Contacts -->
             <a href="#"
                 class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-105 transition-transform duration-200 rounded-l ml-6 mr-4">
