@@ -1,18 +1,18 @@
 @extends("layouts.admin-layout")
 
-@section("title", "Edit Invoice")
+@section("title", "Edit Receipt")
 
 @section("content")
 <div class="w-full">
     <div class="flex justify-between items-center mb-6">
         <h4 class="text-2xl font-medium text-gray-800">
-            Edit Invoice : INV-{{ $invoice->created_at->format('Ymd') }}{{ $invoice->id }}
+            Edit Receipt : REC-{{ $receipt->created_at->format('Ymd') }}{{ $receipt->id }}
         </h4>
     </div>
 
     <div class="bg-white rounded-lg shadow overflow-hidden p-8">
-        <form id="edit-invoice-form"
-              action="{{ route('admin.invoices.update', $invoice->id) }}"
+        <form id="edit-receipt-form"
+              action="{{ route('admin.receipts.update', $receipt->id) }}"
               method="POST">
             @csrf
             @method("PUT")
@@ -26,7 +26,7 @@
                         <option value="">Select Client</option>
                         @foreach ($clients as $client)
                             <option value="{{ $client->id }}"
-                                {{ $invoice->client_id == $client->id ? 'selected' : '' }}>
+                                {{ $receipt->client_id == $client->id ? 'selected' : '' }}>
                                 {{ $client->first_name }} {{ $client->last_name }}
                             </option>
                         @endforeach
@@ -37,20 +37,20 @@
                 <div>
                     <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                     <input type="date" name="date" id="date" required
-                        value="{{ old('date', $invoice->date->format('Y-m-d')) }}"
+                        value="{{ old('date', $receipt->date->format('Y-m-d')) }}"
                         class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-black">
                 </div>
             </div>
 
-            <!-- Invoice Items -->
+            <!-- Receipt Items -->
             <div class="mb-8">
-                <h3 class="text-lg font-medium text-gray-700 mb-4">Invoice Items</h3>
+                <h3 class="text-lg font-medium text-gray-700 mb-4">Receipt Items</h3>
 
-                <div id="invoice-items" class="space-y-4">
+                <div id="receipt-items" class="space-y-4">
                     @php
-                        $items = is_array($invoice->invoice_items)
-                            ? $invoice->invoice_items
-                            : json_decode($invoice->invoice_items, true);
+                        $items = is_array($receipt->receipt_items)
+                            ? $receipt->receipt_items
+                            : json_decode($receipt->receipt_items, true);
                     @endphp
 
                     @foreach ($items as $index => $item)
@@ -102,13 +102,12 @@
             <div class="mb-6">
                 <label for="discount" class="block text-sm font-medium text-gray-700 mb-1">Discount (%)</label>
                 <input type="number" name="discount" id="discount" min="0" step="0.01"
-                    value="{{ $invoice->discount ?? 0 }}"
+                    value="{{ $receipt->discount ?? 0 }}"
                     class="w-full md:w-1/3 border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-black">
             </div>
-
             <div class="mb-6">
 <label for="tax" class="block text-sm font-medium text-gray-700 mb-1">VAT (%)</label>
-<input type="number" name="tax" id="tax" min="0" step="0.01" value="{{ $invoice->tax ?? 0 }}" class="w-full md:w-1/3 border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-black">
+<input type="number" name="tax" id="tax" min="0" step="0.01" value="{{ $receipt->tax ?? 0 }}" class="w-full md:w-1/3 border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-black">
 </div>
 
             <!-- Buttons -->
@@ -119,7 +118,7 @@
                 </button>
                 <button type="submit"
                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800">
-                    <i class="fas fa-save mr-2"></i> Update Invoice
+                    <i class="fas fa-save mr-2"></i> Update Receipt
                 </button>
             </div>
         </form>
@@ -131,7 +130,7 @@
 let itemCount = {{ count($items) }};
 
 function addNewItem() {
-    const container = document.getElementById('invoice-items');
+    const container = document.getElementById('receipt-items');
     const newItem = document.createElement('div');
     newItem.className = 'grid grid-cols-12 gap-4 items-end';
     newItem.innerHTML = `
@@ -147,7 +146,10 @@ function addNewItem() {
             <input type="number" name="items[${itemCount}][price]" min="0" step="0.01" required
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-black">
         </div>
-       
+        <div class="col-span-2">
+            <input type="number" name="items[${itemCount}][tax]" value="0" min="0" max="100" step="0.01"
+                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-black">
+        </div>
         <div class="col-span-1 flex items-end">
             <button type="button" onclick="removeItem(this)"
                 class="text-red-600 hover:text-red-800 focus:outline-none">
@@ -162,7 +164,7 @@ function addNewItem() {
 }
 
 function removeItem(button) {
-    if (document.querySelectorAll('#invoice-items > div').length > 1) {
+    if (document.querySelectorAll('#receipt-items > div').length > 1) {
         button.closest('.grid').remove();
     }
 }

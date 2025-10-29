@@ -70,9 +70,13 @@
     @foreach ($invoices as $invoice)
         @php
             $items = json_decode($invoice->invoice_items, true);
-            $totalQuantity = collect($items)->sum(fn($item) => (int) $item['quantity']);
-            $subtotal = collect($items)->sum(fn($item) => $item['price'] * $item['quantity']);
-        @endphp
+             $totalQuantity = collect($items)->sum(fn($item) => (int) $item["quantity"]);
+                                $subtotal = collect($items)->sum(fn($item) => $item["price"] * $item["quantity"]);
+                                $vatPercent = $invoice->tax ?? 0;
+                                $taxValue = $subtotal * ($vatPercent / 100);
+                                $discount = $invoice->discount ?? 0;
+                                $total = $subtotal + $taxValue - $discount;
+                            @endphp
 
         <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -98,7 +102,7 @@
             </td>
 
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                ₦{{ number_format($subtotal, 2) }}
+                ₦{{ number_format($total, 2) }}
             </td>
 
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

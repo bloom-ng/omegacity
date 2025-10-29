@@ -4,16 +4,16 @@
     <div class="w-full px-4">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-3 sm:space-y-0">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Invoice: INV-{{ $invoice->created_at->format('Ymd') }}{{ $invoice->id }}</h1>
+                <h1 class="text-2xl font-bold text-gray-800">Receipt: REC-{{ $receipt->created_at->format('Ymd') }}{{ $receipt->id }}</h1>
                 <div class="flex items-center">
 
                     <div class="ml-4 text-sm text-gray-500">
-                        Created on {{ $invoice->created_at->format("M d, Y") }}
+                        Created on {{ $receipt->created_at->format("M d, Y") }}
                     </div>
                 </div>
             </div>
             <div class="flex space-x-2">
-                <a href="{{ route("admin.invoices.pdf", $invoice) }}" target="_blank"
+                <a href="{{ route("admin.receipts.pdf", $receipt) }}" target="_blank"
                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
                     <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -23,9 +23,9 @@
                     </svg>
                     Download PDF
                 </a>
-                <a href="{{ route("admin.invoices.edit", $invoice) }}"
+                <a href="{{ route("admin.receipts.edit", $receipt) }}"
                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-700 hover:scale-105 transition-transform duration-200">
-                    Edit Invoice
+                    Edit Receipt
                 </a>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">
-                    Invoice Information
+                    Receipt Information
                 </h3>
             </div>
             <div class="px-4 py-5 sm:p-6">
@@ -41,23 +41,23 @@
                     <div>
                         <h4 class="text-sm font-medium text-gray-500">Client Details</h4>
                         <div class="mt-1 text-sm font-bold text-gray-900">
-                            {{ $invoice->client->first_name }} {{ $invoice->client->last_name }}<br>
-                            {{ $invoice->client->address }}<br>
-                            {{ $invoice->client->email }}<br>
-                            {{ $invoice->client->phone }}
+                            {{ $receipt->client->first_name }} {{ $receipt->client->last_name }}<br>
+                            {{ $receipt->client->address }}<br>
+                            {{ $receipt->client->email }}<br>
+                            {{ $receipt->client->phone }}
 
                         </div>
                     </div>
                     <div class="space-y-2">
                         <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-500">Invoice #</span>
+                            <span class="text-sm font-medium text-gray-500">Receipt #</span>
                              <span class="text-sm font-medium text-gray-500">Date</span>
 
                         </div>
                         <div class="flex justify-between">
 
-                            <span class="text-sm text-gray-900 font-bold">INV-{{ $invoice->created_at->format('Ymd') }}{{ $invoice->id }}</span>
-                            <span class="text-sm text-gray-900 font-bold">{{ $invoice->date->format("M d, Y") }}</span>
+                            <span class="text-sm text-gray-900 font-bold">REC-{{ $receipt->created_at->format('Ymd') }}{{ $receipt->id }}</span>
+                            <span class="text-sm text-gray-900 font-bold">{{ $receipt->date->format("M d, Y") }}</span>
                         </div>
 
                     </div>
@@ -66,10 +66,10 @@
         </div>
 
         @php
-            $items = json_decode($invoice->invoice_items, true);
+            $items = json_decode($receipt->receipt_items, true);
             $subtotal = collect($items)->sum(fn($item) => $item["price"] * $item["quantity"]);
-            $discountAmount = $subtotal * ($invoice->discount / 100);
-            $taxAmount = $subtotal * ($invoice->tax / 100);
+            $discountAmount = $subtotal * ($receipt->discount / 100);
+            $taxAmount = $subtotal * ($receipt->tax / 100);
             $total = $subtotal + $taxAmount - $discountAmount;
         @endphp
 
@@ -126,16 +126,16 @@
                     <div class="w-64">
 
 
-                        @if ($invoice->tax > 0)
+                        @if ($receipt->tax > 0)
                             <div class="flex justify-between py-2 text-sm text-gray-600">
-                                <span>Tax ({{ $invoice->tax }}%)</span>
+                                <span>VAT ({{ $receipt->tax }}%)</span>
                                 <span>₦{{ number_format($taxAmount, 2) }}</span>
                             </div>
                         @endif
 
-                        @if ($invoice->discount > 0)
+                        @if ($receipt->discount > 0)
                             <div class="flex justify-between py-2 text-sm text-gray-600">
-                                <span>Discount ({{  $invoice->discount }}%)</span>
+                                <span>Discount ({{ $receipt->discount }})%</span>
                                 <span>-₦{{ number_format($discountAmount, 2) }}</span>
                             </div>
                         @endif

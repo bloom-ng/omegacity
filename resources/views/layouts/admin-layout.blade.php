@@ -105,13 +105,6 @@
                 </span>
             </a>
 
-             <!-- Transactions -->
-            <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
-                <img src="{{ asset("assets/images/transaction.svg") }}" class="w-6 h-6" alt="transactions-icon">
-                <span class="pl-5 text-[13.5px] font-sans ">Transactions</span>
-            </a>
-
             <!-- Users -->
             <a href="{{ route('admin.users.index') }}"
                 class="{{ request()->routeIs('admin.users.*')
@@ -123,10 +116,13 @@
             </a>
 
             <!-- Contacts -->
-            <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-105 transition-transform duration-200 rounded-l ml-6 mr-4">
-                <img src="{{ asset("assets/images/contacts.svg") }}" class="w-6 h-6" alt="contacts-icon">
-                <span class="pl-5 text-[13.5px] font-sans">Contacts</span>
+            <a href="{{ route('admin.contacts.index') }}"
+                class="{{ request()->routeIs('admin.contacts.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-105 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset('assets/images/contacts.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.contacts.*') ? 'filter invert' : '' }}" alt="contacts-icon">
+                <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.contacts.*') ? 'text-white' : 'text-[#222222B2]' }}">Contacts</span>
             </a>
 
             <!-- Settings -->
@@ -157,10 +153,13 @@
             </a>
 
             <!-- Receipt -->
-            <a href="#"
-                class="flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4">
-                <img src="{{ asset("assets/images/receipt-alt.svg") }}" class="w-6 h-6" alt="receipt-icon">
-                <span class="pl-5 text-[13.5px] font-sans">Receipt</span>
+            <a href="{{ route('admin.receipts.index') }}"
+                class="{{ request()->routeIs('admin.receipts.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset('assets/images/receipt-alt.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.receipts.*') ? 'filter invert' : '' }}" alt="receipt-icon">
+                <span class="pl-5 text-[13.5px] font-sans {{ request()->routeIs('admin.receipts.*') ? 'text-white' : 'text-[#222222B2]' }}">Receipt</span>
             </a>
 
             <!-- Logout (stick to bottom) -->

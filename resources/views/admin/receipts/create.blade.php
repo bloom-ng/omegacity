@@ -3,10 +3,10 @@
 @section("content")
     <div class="w-full">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Create New Invoice</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Create New Receipt</h1>
         </div>
 
-        <form action="{{ route("admin.invoices.store") }}" method="POST" class="bg-white rounded-lg shadow-md p-6">
+        <form action="{{ route("admin.receipts.store") }}" method="POST" class="bg-white rounded-lg shadow-md p-6">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -37,7 +37,7 @@
                     </script>
                 </div>
 
-                <!-- Invoice Date -->
+                <!-- receipt Date -->
                 <div>
                     <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                     <input type="date" name="date" id="date" required
@@ -49,10 +49,10 @@
                 </div>
             </div>
 
-            <!-- Invoice Items -->
+            <!-- receipt Items -->
             <div class="mb-8">
 
-                <div id="invoice-items" class="space-y-4">
+                <div id="receipt-items" class="space-y-4">
                     <!-- Item Row Template -->
                     <div class="grid grid-cols-12 gap-4 items-end">
                         <div class="col-span-5">
@@ -71,7 +71,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 
                                 </div>
-                                <input type="number" name="items[0][price]"  required
+                                <input type="number" name="items[0][price]" required
                                     class="w-full border border-gray-300 rounded-md pl-7 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                             </div>
                         </div>
@@ -101,6 +101,9 @@
                     </button>
                 </div>
             </div>
+
+
+
 
             <!-- Totals -->
             <div class="bg-gray-50 p-6 rounded-lg mb-8">
@@ -140,13 +143,13 @@
 
             <!-- Form Actions -->
             <div class="flex justify-end space-x-3">
-                <a href="{{ route("admin.invoices.index") }}"
+                <a href="{{ route("admin.receipts.index") }}"
                     class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
                     Cancel
                 </a>
                 <button type="submit"
                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
-                    Save Invoice
+                    Save Receipt
                 </button>
             </div>
         </form>
@@ -157,7 +160,7 @@
             let itemCount = 1;
 
             function addNewItem() {
-                const container = document.getElementById('invoice-items');
+                const container = document.getElementById('receipt-items');
                 const newItem = document.createElement('div');
                 newItem.className = 'grid grid-cols-12 gap-4 items-end';
                 newItem.innerHTML = `
@@ -194,17 +197,17 @@
             }
 
             function removeItem(button) {
-                const itemsContainer = document.getElementById('invoice-items');
+                const itemsContainer = document.getElementById('receipt-items');
                 if (itemsContainer.children.length > 1) {
                     button.closest('.grid').remove();
                     calculateTotals();
                 }
             }
 
-             function calculateTotals() {
+            function calculateTotals() {
     let subtotal = 0;
 
-    document.querySelectorAll('#invoice-items .grid').forEach(row => {
+    document.querySelectorAll('#receipt-items .grid').forEach(row => {
         const price = parseFloat(row.querySelector('input[name*="[price]"]').value) || 0;
         const qty = parseFloat(row.querySelector('input[name*="[quantity]"]').value) || 0;
         subtotal += price * qty;
@@ -223,10 +226,9 @@
     document.getElementById('totalDisplay').textContent = total.toFixed(2);
 }
 
-
             function attachEventListeners() {
                 // Add event listeners to all quantity, price, and tax inputs
-                document.querySelectorAll('input[name*="[quantity]"], input[name*="[price]"], input[name*="[tax]"]').forEach(
+                document.querySelectorAll('input[name*="[quantity]"], input[name*="[price]"]').forEach(
                     input => {
                         input.removeEventListener('input', calculateTotals);
                         input.addEventListener('input', calculateTotals);

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->date('date');
-            $table->text('invoice_items');
+            $table->text('receipt_items');
             $table->decimal('tax', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->default(0);
             $table->timestamps();

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Invoice : INV-{{ $invoice->created_at->format("Ymd") }}{{ $invoice->id }}</title>
+    <title>Receipt : REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }}</title>
     <style>
         @page {
             margin: 0;
@@ -73,7 +73,7 @@
 <body>
 
     <!-- Company Logo -->
-    <div style="padding-bottom: 5px;">
+    <div style="padding: 0; margin: 0;">
         <img src="{{ public_path("assets/images/omegacitylogo.png") }}" alt="Company Logo"
             style="display: block; width: 280px; margin: 0;">
     </div>
@@ -82,15 +82,15 @@
     <div style="display: table; width: 100%; border-bottom: 2px solid #000; margin-top: 10px;">
         <div style="display: table-row;">
             <div style="display: table-cell; width: 33%; padding: 5px; vertical-align: top;">
-                {{ \Carbon\Carbon::parse($invoice->date)->format("jS F Y") }}<br>
-                {{ $invoice->client->first_name }} {{ $invoice->client->last_name }}
+                {{ \Carbon\Carbon::parse($receipt->date)->format("jS F Y") }}<br>
+                {{ $receipt->client->first_name }} {{ $receipt->client->last_name }}
             </div>
             <div style="display: table-cell; width: 33%; padding: 5px; vertical-align: top;">
-                INV-{{ $invoice->created_at->format("Ymd") }}{{ $invoice->id }} <br>
-                {{ $invoice->client->address }}
+                REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }} <br>
+                {{ $receipt->client->address }}
             </div>
             <div style="display: table-cell; width: 33%; padding: 5px; text-align: right;">
-                <div style="font-weight: bold; font-size: 28px;">INVOICE</div>
+                <div style="font-weight: bold; font-size: 28px;">RECEIPT</div>
             </div>
         </div>
     </div>
@@ -101,14 +101,14 @@
                 width: 600px; opacity: 0.05; z-index: -1; pointer-events: none;">
 
     @php
-        // Decode invoice items from JSON
-        $items = json_decode($invoice->invoice_items, true);
+        // Decode receipt items from JSON
+        $items = json_decode($receipt->receipt_items, true);
         $subtotal = collect($items)->sum(fn($item) => $item["price"] * $item["quantity"]);
-        $discount = $invoice->discount ?? 0;
+        $discount = $receipt->discount ?? 0;
         $discountValue = $subtotal * ($discount / 100);
-       $vatPercent = $invoice->tax ?? 0;
+         $vatPercent = $receipt->tax ?? 0;
        $taxValue = $subtotal * ($vatPercent / 100);
-        $total = ($subtotal + $taxValue) - $discountValue;
+        $total = ($subtotal + $taxValue) - $discount;
     @endphp
 
     <!-- Items Table -->
@@ -145,12 +145,12 @@
         <tr>
             <td style="font-weight: bold;">Discount ({{ $discount }}%)</td>
             <td></td>
-            <td style="text-align: right;">-₦{{ number_format($discountValue, 2) }}</td>
+            <td style="text-align: right;">₦{{ number_format($discountValue, 2) }}</td>
         </tr>
         <tr>
             <td style="font-weight: bold;">VAT ({{ $vatPercent }}%)</td>
             <td></td>
-            <td style="text-align: right;">₦{{ number_format($taxValue , 2) }}</td>
+            <td style="text-align: right;">₦{{ number_format($taxValue, 2) }}</td>
         </tr>
         <tr style="background-color: #ffcc00; font-weight: bold;">
             <td>Total</td>
