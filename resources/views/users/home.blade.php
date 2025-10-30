@@ -41,13 +41,14 @@
     <!-- Hero Section -->
     <section
         class="relative flex flex-col items-center justify-center min-h-[120vh] opacity-90  z-0 md:bg-cover bg-center text-center"
-        style="background-image: url('{{ asset("assets/images/fieldbgimage.png") }}');">
+        style="background-image: url('{{ asset("assets/images/analog-landscape-city-with-buildings.png") }}');">
         <!-- Main content -->
         <div class="max-w-6xl px-3 sm:px-0 sm:max-w-2xl md:max-w-lg lg:max-w-3xl -mt-[400px] md:-mt-[120px] z-20 lg:-mt-[160px]">
             <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-just mb-6 sm:leading-12 lg:leading-16"> Secure a land you can afford with
-                Omega city & properties </h1> <button
+                Omega city & properties </h1> 
+                <a href="/contact-us"><button
                 class="bg-black text-white px-16 py-3 rounded-full font-just hover:bg-gray-800 transition duration-300">
-                Contact Us </button>
+                Contact Us </button></a>
         </div>
 
         <!-- Bottom black bar -->
@@ -114,16 +115,24 @@
             <!-- Slides -->
             <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/carouselimage1.png") }}" class="w-full h-[500px] object-cover"
+                    <img src="{{ asset("assets/images/modern-country-houses-construction.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
-                        class="w-full h-[500px] object-cover" alt="Omega Land 2">
+                    <img src="{{ asset("assets/images/carousel-img-2.png") }}"
+                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=1200&q=80"
-                        class="w-full h-[500px] object-cover" alt="Omega Land 3">
+                    <img src="{{ asset("assets/images/carousel-img-3.png") }}"
+                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="{{ asset("assets/images/carousel-img-4.png") }}"
+                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="{{ asset("assets/images/carousel-img-5.png") }}"
+                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
                 </div>
             </div>
 
@@ -151,6 +160,8 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                 <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
                 <span class="dot w-4 h-4 rounded-full bg-gray-500"></span>
                 <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
+                <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
+                <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
             </div>
         </div>
     </section>
@@ -172,12 +183,20 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
-                        class="w-full h-[500px] object-cover" alt="Omega Land 2">
+                    <img src="{{ asset("assets/images/2nd-carousel-img-2.png") }}" class="w-full h-[500px] object-cover"
+                        alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=1200&q=80"
-                        class="w-full h-[500px] object-cover" alt="Omega Land 3">
+                    <img src="{{ asset("assets/images/2nd-carousel-img-3.png") }}" class="w-full h-[500px] object-cover"
+                        alt="Omega Land 1">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="{{ asset("assets/images/2nd-carousel-img-4.png") }}" class="w-full h-[500px] object-cover"
+                        alt="Omega Land 1">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="{{ asset("assets/images/2nd-carousel-img-5.png") }}" class="w-full h-[500px] object-cover"
+                        alt="Omega Land 1">
                 </div>
             </div>
 
@@ -206,6 +225,8 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
             <div class="flex gap-2">
                 <span class="dotTwo w-4 h-4 rounded-full bg-gray-500"></span>
                 <span class="dotTwo w-4 h-4 rounded-full bg-gray-300"></span>
+                <span class="dotTwo w-4 h-4 rounded-full bg-gray-300"></span>
+                <span class="dotTwo w-4 h-4 rounded-full bg-gray-500"></span>
                 <span class="dotTwo w-4 h-4 rounded-full bg-gray-300"></span>
             </div>
         </div>
@@ -242,7 +263,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                     <p class="text-gray-600 text-sm mb-6">
                         We offer you land in a highly secured area and environment.
                     </p>
-                    <img src="{{ asset("assets/images/securelandimg.png") }}" alt="Secure Land"
+                    <img src="{{ asset("assets/images/securelandimg1.png") }}" alt="Secure Land"
                         class="rounded-xl shadow object-cover">
                 </div>
 
@@ -256,7 +277,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                     <p class="text-gray-600 text-sm mb-6">
                         Become a landowner at an affordable price.
                     </p>
-                    <img src="{{ asset("assets/images/landimg.png") }}" alt="Affordable Land"
+                    <img src="{{ asset("assets/images/securelandimg2.png") }}" alt="Affordable Land"
                         class="rounded-xl shadow object-cover">
                 </div>
             </div>
@@ -276,7 +297,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                     <p class="text-gray-600 text-sm mb-6">
                         Wide expanse of land for your dream property.
                     </p>
-                    <img src="{{ asset("assets/images/affordimg.png") }}" alt="Spacious Land"
+                    <img src="{{ asset("assets/images/securelandimg3.png") }}" alt="Spacious Land"
                         class="rounded-xl shadow object-cover">
                 </div>
 
@@ -290,7 +311,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                     <p class="text-gray-600 text-sm mb-6">
                         Strategically located in fast-developing areas.
                     </p>
-                    <img src="{{ asset("assets/images/affordlandimg.png") }}" alt="Prime Land"
+                    <img src="{{ asset("assets/images/securelandimg4.png") }}" alt="Prime Land"
                         class="rounded-xl shadow object-cover">
                 </div>
             </div>
@@ -304,7 +325,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         Buy a land
                     </a>
 
-                    <a href="#"
+                    <a href="/contact-us"
                         class="text-gray-900 font-semibold underline underline-offset-8 hover:text-yellow-500 transition mt-2">
                         Contact us
                     </a>
@@ -353,12 +374,16 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
     const textsTwo = [
         "Land description goes here. Land description goes here. Land description goes here.",
         "Beautiful green landscape perfect for building your dream home.",
-        "Secure environment with road access and full documentation."
+        "Secure environment with road access and full documentation.",
+        "Land description goes here. Land description goes here. Land description goes here.",
+        "Land description goes here. Land description goes here. Land description goes here.",
     ];
     const pricesTwo = [
         "350sq.ft going for <span class='font-bold text-lg'>N1.58 million</span>",
         "500sq.ft going for <span class='font-bold text-lg'>N2.10 million</span>",
-        "1 plot going for <span class='font-bold text-lg'>N3.50 million</span>"
+        "1 plot going for <span class='font-bold text-lg'>N3.50 million</span>",
+        "350sq.ft going for <span class='font-bold text-lg'>N1.58 million</span>",
+        "500sq.ft going for <span class='font-bold text-lg'>N2.10 million</span>",
     ];
 
     let indexTwo = 0;

@@ -10,7 +10,7 @@
                 <form method="POST" action="{{ route('admin.targets.refresh') }}" class="inline">
                     @csrf
                     <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                        class="bg-black shadow-md hover:scale-110 transition-transform duration-200 text-white font-medium py-2 px-4 rounded-lg">
                         <i class="fas fa-sync-alt mr-2"></i> Refresh Progress
                     </button>
                 </form>
@@ -45,7 +45,7 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center">
                                                 <span class="text-white font-semibold">
                                                     {{ strtoupper(substr($agent->name, 0, 2)) }}
                                                 </span>
