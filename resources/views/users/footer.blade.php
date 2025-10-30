@@ -15,9 +15,9 @@
       <div class="text-left w-full md:w-auto">
         <h4 class="font-bold text-lg text-gray-900 mb-3">Omega City</h4>
         <ul class="space-y-2 text-gray-700">
-          <li><a href="#" class="hover:text-gray-900 transition">About</a></li>
-          <li><a href="#" class="hover:text-gray-900 transition">Land</a></li>
-          <li><a href="#" class="hover:text-gray-900 transition">Contact us</a></li>
+          <li><a href="/about" class="hover:text-gray-900 transition">About</a></li>
+          <li><a href="/land" class="hover:text-gray-900 transition">Land</a></li>
+          <li><a href="/contact-us" class="hover:text-gray-900 transition">Contact us</a></li>
         </ul>
       </div>
 

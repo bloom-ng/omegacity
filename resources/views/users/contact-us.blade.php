@@ -9,7 +9,7 @@
     }
     </style>
 
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-gray-50 font-just text-[#010504]">
 
     <!-- Navbar -->
     @include("users.nav")
@@ -20,14 +20,14 @@
         class="contact-section w-11/12 md:w-10/12 mx-auto mt-24 md:mt-32 mb-16 bg-white rounded-3xl overflow-hidden shadow-md flex flex-col md:flex-row">
         <!-- Left Image Section -->
         <div class="md:w-1/2 relative">
-            <img src="{{ asset("assets/images/affordlandimg.png") }}" alt="Land View" class="w-full object-cover">
+            <img src="{{ asset("assets/images/contact-us.png") }}" alt="Land View" class="w-full object-cover">
         </div>
 
         <!-- Right Contact Form Section -->
         <div class="md:w-1/2 bg-gray-50 p-8 md:p-12 flex flex-col justify-center space-y-8">
             <!-- Contact Info -->
             <div>
-                <h2 class="text-2xl md:text-3xl font-[justbold] text-gray-900 mb-2">Contact us</h2>
+                <h2 class="text-2xl md:text-3xl mb-2">Contact us</h2>
                 <p class="text-gray-700 text-sm md:text-base leading-relaxed">
                     Body text goes here. Body text goes here. Body text goes here. Body text goes here.
                 </p>
@@ -35,14 +35,15 @@
 
             <!-- Contact Details -->
             <div>
-                <h3 class="text-lg font-[justbold] text-gray-900 mb-1">Contact details</h3>
-                <p class="text-gray-800 text-sm md:text-base">+234 000 000 0000</p>
-                <p class="text-gray-800 text-sm md:text-base">Office address goes here</p>
+                <h3 class="text-lg mb-1">Contact details</h3>
+                <p class="text-gray-800 text-sm md:text-base">+234 806 778 0422, +234 911 333 3439</p>
+                <p class="text-gray-800 text-sm md:text-base">30 Libreville Cres,
+                Wuse 2, Abuja 904101, Federal Capital Territory</p>
             </div>
 
             <!-- Message Form -->
             <div>
-                <h3 class="text-xl md:text-2xl font-[justbold] text-gray-900 mb-2">Have questions?</h3>
+                <h3 class="text-xl md:text-2xl mb-2">Have questions?</h3>
                 <p class="text-gray-700 mb-4 text-sm md:text-base">Send us a dm</p>
 
                 @if (session("success"))
@@ -70,7 +71,7 @@
                     @enderror
 
                     <button
-                        class="w-full bg-yellow-400 hover:bg-yellow-500 transition text-gray-900 font-[justbold] py-3 md:py-4 rounded-full text-sm md:text-base">
+                        class="w-full bg-[#FACF07] hover:bg-yellow-500 transition py-3 md:py-4 rounded-full text-sm md:text-base">
                         Send us a message
                     </button>
                 </form>

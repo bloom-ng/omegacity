@@ -11,7 +11,7 @@
             </div>
             <div class="flex space-x-3">
                 <a href="{{ route('admin.targets.create', $agent) }}"
-                    class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                    class="bg-black shadow-md hover:scale-110 transition-transform duration-200 text-white font-medium py-2 px-4 rounded-lg">
                     <i class="fas fa-plus mr-2"></i> Set New Targets
                 </a>
                 <a href="{{ route('admin.targets.index') }}"
