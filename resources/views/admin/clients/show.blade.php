@@ -105,10 +105,17 @@
                 </span>
             </div>
 
-            <div class="md:col-span-2 lg:col-span-3">
-                <h6 class="text-gray-500 mb-1">Remark</h6>
-                <p class="font-medium text-gray-800 whitespace-pre-line">
+            <div >
+                <h6 class="text-gray-500 ">Remark</h6>
+                <p class="font-medium text-gray-800">
                     {{ $client->remark ?? 'No remarks yet.' }}
+                </p>
+            </div>
+
+             <div >
+                <h6 class="text-gray-500">Agent Assigned</h6>
+                <p class="font-medium text-gray-800">
+                    {{ $client->assignedAgent->name }}
                 </p>
             </div>
         </div>

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('land_listings', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->string('property_name');
             $table->string('location');
             $table->decimal('plot_size', 10, 2)->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('sales_agent_id')->nullable()->constrained('users')->nullOnDelete();
             $table->text('description')->nullable();
             $table->json('photos')->nullable();
-            $table->string('map_link')->nullable();
+            $table->text('map_link')->nullable();
             $table->integer('view_count')->default(0);
             $table->timestamps();
         });

@@ -108,7 +108,7 @@
         $discountValue = $subtotal * ($discount / 100);
          $vatPercent = $receipt->tax ?? 0;
        $taxValue = $subtotal * ($vatPercent / 100);
-        $total = ($subtotal + $taxValue) - $discount;
+        $total = ($subtotal + $taxValue) - $discountValue;
     @endphp
 
     <!-- Items Table -->
@@ -163,34 +163,11 @@
     <div class="footer">
         <div class="footer-section">
             <div class="footer-cell">
-                <h4>PAYMENT</h4>
-                <p>
-                    Bank Name:Wema Bank<br>
-                    Account Name: Omega City &amp; Properties Nig LTD<br>
-                    Account Number: 0127081443
-                </p>
-            </div>
-            <div class="footer-cell"></div>
-            <div class="footer-cell" style="text-align: right;">
-                <h4 style="font-size: 13px;">Terms &amp; Conditions</h4>
-                <ol>
-                    <li>7 days from issue date</li>
-                    <li>Other terms go here</li>
-                    <li>Other terms go here</li>
-                </ol>
-            </div>
-        </div>
-
-        <div style="margin-top: 8px; border-top: 1px solid #000; padding-top: 5px;" class="footer-section">
-            <div class="footer-cell">
                 <p style="font-weight: bold;">Thanks for your Business!</p>
-            </div>
-            <div class="footer-cell"></div>
-            <div class="footer-cell" style="text-align: right;">
-                <p> Omega City &amp; Properties <br>
+                 <p> Omega City &amp; Properties <br>
                 Office Address. <br> 30 Libreville Cres, Wuse 2, Abuja, Federal Capital Territory.</p>
-
             </div>
+
         </div>
     </div>
 
