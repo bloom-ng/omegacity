@@ -78,10 +78,14 @@
                 <div class="flex flex-col gap-5">
                     <h1 class="text-2xl pb-4 md:pb-0">Let’s get you started today!</h1>
                     <div class="flex flex-row items-center gap-5">
-                        <div class="flex justify-center">
-                            <button class="bg-[#FACF07] rounded-full text-xl md:text-sm px-16 md:px-10 py-3 md:py-2">Buy a land</button>
-                        </div>
-                        <p class="border-b-[0.5px] border-[#010504] text-xl md:text-base pb-1 md:pb-0 mb-1 mt-1 px-1">Contact Us</p>
+                        <a href="/land">
+                            <div class="flex justify-center">
+                                <button class="bg-[#FACF07] rounded-full text-xl md:text-sm px-16 md:px-10 py-3 md:py-2">Buy a land</button>
+                            </div>
+                        </a>
+                        <a href="/contact-us">
+                            <p class="border-b-[0.5px] border-[#010504] text-xl md:text-base pb-1 md:pb-0 mb-1 mt-1 px-1">Contact Us</p>
+                        </a>
                     </div>
                 </div>  
             </div>

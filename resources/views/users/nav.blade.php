@@ -14,10 +14,12 @@
         <a href="/land" class="hover:text-yellow-400 transition {{ request()->is('land') || request()->is('landlisting') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Land</a>
         <a href="{{ route("contact-us") }}" class="hover:text-yellow-400 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
         <!-- Buy button (desktop) -->
-        <button
-            class="hidden md:block bg-yellow-400/90 hover:bg-yellow-500 text-black font-just px-10 lg:px-12 py-2 rounded-full transition">
-            Buy a land
-        </button>
+        <a href="/land">
+            <button
+                class="hidden md:block bg-yellow-400/90 hover:bg-yellow-500 text-black font-just px-10 lg:px-12 py-2 rounded-full transition">
+                Buy a land
+            </button>
+        </a>
     </div>
 
     
@@ -45,10 +47,12 @@
         <a href="{{ route('contact-us') }}" class="hover:text-yellow-500 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
         <!-- Buy a Land Button -->
         <div class="w-full flex justify-center pb-3 mt-2">
-            <button
-            class="bg-yellow-400 hover:bg-yellow-500 text-black font-just px-4 py-2 rounded-full w-full text-center transition">
-            Buy a land
-            </button>
+            <a href="/land">
+                <button
+                    class="bg-yellow-400 hover:bg-yellow-500 text-black font-just px-4 py-2 rounded-full w-full text-center transition">
+                    Buy a land
+                </button>
+            </a>
         </div>
   </div>
 

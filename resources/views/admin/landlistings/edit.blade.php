@@ -127,11 +127,11 @@
                         <!-- Map Link -->
                         <div>
                             <label for="map_link" class="block text-xl font-bold text-gray-700">
-                                Map Link
+                                Google Maps Link
                             </label>
-                            <input type="url" name="map_link" id="map_link"
+                            <input type="text" name="map_link" id="map_link"
                                 value="{{ old("map_link", $landlisting->map_link) }}"
-                                placeholder="https://maps.google.com/..."
+                                placeholder="Paste any Google Maps link here"
                                 class="mt-2 shadow-sm focus:ring-black focus:border-black block w-full sm:text-xl text-xl border-gray-300 rounded-md @error("map_link") border-red-500 @enderror">
                             @error("map_link")
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

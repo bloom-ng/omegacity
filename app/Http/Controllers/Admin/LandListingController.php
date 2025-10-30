@@ -63,7 +63,7 @@ class LandListingController extends Controller
             'sales_agent_id' => 'required|exists:users,id',
             'description' => 'nullable|string',
             'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:50243',
-            'map_link' => 'nullable|url',
+            'map_link' => 'nullable|string',
         ]);
 
         $photos = [];
@@ -76,6 +76,11 @@ class LandListingController extends Controller
 
         $validated['photos'] = $photos;
         $validated['slug'] = Str::slug($validated['property_name']) . '-' . time();
+        
+        // Process map link to extract embed URL if needed
+        if (!empty($validated['map_link'])) {
+            $validated['map_link'] = $this->processMapLink($validated['map_link']);
+        }
 
         LandListing::create($validated);
 
@@ -117,7 +122,7 @@ class LandListingController extends Controller
             'sales_agent_id' => 'required|exists:users,id',
             'description' => 'nullable|string',
             'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'map_link' => 'nullable|url',
+            'map_link' => 'nullable|string',
         ]);
 
         $photos = $landlisting->photos ?? [];
@@ -138,6 +143,11 @@ class LandListingController extends Controller
 
         $validated['photos'] = $photos;
         $validated['slug'] = Str::slug($validated['property_name']) . '-' . $landlisting->id;
+        
+        // Process map link to extract embed URL if needed
+        if (!empty($validated['map_link'])) {
+            $validated['map_link'] = $this->processMapLink($validated['map_link']);
+        }
 
         $landlisting->update($validated);
 
@@ -159,5 +169,47 @@ class LandListingController extends Controller
 
         return redirect()->route('admin.landlistings.index')
             ->with('success', 'Land listing deleted successfully.');
+    }
+    
+    /**
+     * Process map link to extract embeddable URL from various Google Maps formats
+     * Handles: embed HTML, regular share links, and already formatted embed URLs
+     */
+    private function processMapLink($input)
+    {
+        $input = trim($input);
+        
+        // If it's already a valid embed URL, return it
+        if (strpos($input, 'google.com/maps/embed') !== false) {
+            return $input;
+        }
+        
+        // If input contains HTML (embed code), extract the src attribute
+        if (strpos($input, '<iframe') !== false) {
+            preg_match('/src="([^"]+)"/', $input, $matches);
+            if (!empty($matches[1])) {
+                return $matches[1];
+            }
+        }
+        
+        // If it's a regular Google Maps link, try to convert it to embed format
+        // Examples: https://maps.app.goo.gl/xyz or https://www.google.com/maps/...
+        if (strpos($input, 'google.com/maps') !== false || strpos($input, 'maps.app.goo.gl') !== false) {
+            // Extract coordinates if present
+            if (preg_match('/@(-?\d+\.\d+),(-?\d+\.\d+)/', $input, $matches)) {
+                $lat = $matches[1];
+                $lng = $matches[2];
+                return "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d!2d{$lng}!3d{$lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1";
+            }
+            
+            // Extract place ID if present
+            if (preg_match('/\/place\/([^\/\?]+)/', $input, $matches)) {
+                $place = urlencode($matches[1]);
+                return "https://www.google.com/maps/embed/v1/place?key=&q={$place}";
+            }
+        }
+        
+        // Return original if no processing was needed/possible
+        return $input;
     }
 }

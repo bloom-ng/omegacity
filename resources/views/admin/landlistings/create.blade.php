@@ -139,16 +139,17 @@
 
                         <!-- Map Link -->
                         <div>
-                            <label for="map_link" class="block text-lg font-semibold text-gray-700">Map Link</label>
+                            <label for="map_link" class="block text-lg font-semibold text-gray-700">Google Maps Link</label>
                             <div class="mt-2">
-                                <input type="url" name="map_link" id="map_link"
+                                <input type="text" name="map_link" id="map_link"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("map_link") border-red-500 @enderror"
-                                    value="{{ old("map_link") }}" placeholder="https://maps.google.com/...">
+                                    value="{{ old("map_link") }}" placeholder="Paste any Google Maps link here">
                                 @error("map_link")
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
+                        
                     </div>
 
                     <!-- Description -->

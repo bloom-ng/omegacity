@@ -36,7 +36,7 @@
                             @php
                                 $photos = $listing->photos ?? [];
                                 $first = is_array($photos) && count($photos) ? $photos[0] : null;
-                                $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset($first)) : asset('assets/images/landImage.png');
+                                $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset('storage/' . $first)) : asset('assets/images/landImage.png');
                             @endphp
                             <img src="{{ $imgSrc }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
                         </div>
@@ -62,7 +62,7 @@
                             @php
                                 $photos = $listing->photos ?? [];
                                 $first = is_array($photos) && count($photos) ? $photos[0] : null;
-                                $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset($first)) : asset('assets/images/landImage.png');
+                                $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset('storage/' . $first)) : asset('assets/images/landImage.png');
                             @endphp
                             <img src="{{ $imgSrc }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
                         </div>

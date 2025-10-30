@@ -29,7 +29,7 @@
             <div>
                 <h2 class="text-2xl md:text-3xl mb-2">Contact us</h2>
                 <p class="text-gray-700 text-sm md:text-base leading-relaxed">
-                    Body text goes here. Body text goes here. Body text goes here. Body text goes here.
+                    Omega city & properties is a fast rising real estate brand that offers affordable land for sale in Abuja. to get in touch with us, please reach out to us on any of the details below.
                 </p>
             </div>
 

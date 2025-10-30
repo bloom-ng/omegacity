@@ -8,20 +8,26 @@
     @include("users.nav")
 
     <!-- Carousel Section -->
-    <section class="relative bg-[#F3F3F3] md:py-10">
+    <section class="relative bg-[#F3F3F3] md:pb-1">
         <div class="relative w-full overflow-hidden">
             <!-- Slides -->
             @php
                 $photos = $landlisting->photos ?? [];
                 $photos = is_array($photos) ? $photos : [];
                 if (count($photos) === 0) {
-                    $photos = [asset('assets/images/landImage.png')];
+                    $photos = ['default'];
                 }
             @endphp
             <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
                 @foreach ($photos as $idx => $photo)
                     @php
-                        $src = \Illuminate\Support\Str::startsWith($photo, ['http://','https://']) ? $photo : asset($photo);
+                        if ($photo === 'default') {
+                            $src = asset('assets/images/landImage.png');
+                        } elseif (\Illuminate\Support\Str::startsWith($photo, ['http://', 'https://'])) {
+                            $src = $photo;
+                        } else {
+                            $src = asset('storage/' . $photo);
+                        }
                     @endphp
                     <div class="w-full flex-shrink-0">
                         <img src="{{ $src }}" class="w-full h-[90vh] object-cover" alt="Slide {{ $idx + 1 }}">
@@ -99,12 +105,20 @@
             <div class="flex flex-col gap-3">
                 <h1 class="text-lg font-extrabold">Agent details</h1>
                 <p>{{ optional($landlisting->agent)->name ?? '—' }}</p>
-                <p class="pb-3">{{ $landlisting->sales_agent_id }}</p>
+                <p class="pb-3">{{ optional($landlisting->agent)->email ?? 'No email available' }}</p>
                 <div class="w-full flex justify-center block md:hidden">
-                    <button class="bg-[#FACF07] rounded-full text-base w-full py-3">Contact agent</button>
+                    @if(optional($landlisting->agent)->email)
+                        <a href="mailto:{{ $landlisting->agent->email }}?subject=Inquiry about {{ $landlisting->property_name }}" class="bg-[#FACF07] rounded-full text-base w-full py-3 text-center block">Contact agent</a>
+                    @else
+                        <button class="bg-gray-300 rounded-full text-base w-full py-3 cursor-not-allowed" disabled>No contact available</button>
+                    @endif
                 </div>
                 <span class="hidden md:block">
-                    <button class="bg-[#FACF07] rounded-full text-sm px-6 py-3 md:py-2">Contact agent</button>
+                    @if(optional($landlisting->agent)->email)
+                        <a href="mailto:{{ $landlisting->agent->email }}?subject=Inquiry about {{ $landlisting->property_name }}" class="bg-[#FACF07] rounded-full text-sm px-6 py-3 md:py-2 inline-block">Contact agent</a>
+                    @else
+                        <button class="bg-gray-300 rounded-full text-sm px-6 py-3 md:py-2 cursor-not-allowed" disabled>No contact available</button>
+                    @endif
                 </span>
             </div>
             <div class="flex flex-col gap-2.5 md:gap-4">
