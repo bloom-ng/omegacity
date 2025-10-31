@@ -4,7 +4,7 @@
     <!-- Logo -->
     <div class="flex items-center space-x-2 ">
         <a href="{{ route("home") }}">
-            <img src="{{ asset("assets/images/OmegaCityLogoYellow.svg") }}" alt="Omega Logo" class="w-20 md:w-28 lg:w-36">
+            <img src="{{ asset("assets/images/OmegaCityLogoYellow.png") }}" alt="Omega Logo" class="w-20 md:w-28 lg:w-36">
         </a>
     </div>
 
