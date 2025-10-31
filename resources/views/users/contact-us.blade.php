@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 @include("users.header")
-<style>
+<!-- <style>
     @media (max-width: 767px) {
       .contact-section {
         margin-top: 9rem !important; /* Tailwind mt-44 */
       }
     }
-    </style>
+    </style> -->
 
-<body class="bg-gray-50 font-just text-[#010504]">
+<body class="bg-[#F3F3F3] font-just text-[#010504]">
 
     <!-- Navbar -->
     @include("users.nav")
@@ -17,17 +17,17 @@
 
     <!-- Contact Us Section -->
     <section
-        class="contact-section w-11/12 md:w-10/12 mx-auto mt-24 md:mt-32 mb-16 bg-white rounded-3xl overflow-hidden shadow-md flex flex-col md:flex-row">
+        class="contact-section w-11/12 md:w-10/12 mx-auto mt-2 md:mt-16 md:border-[0.5px] md:border-[#676968] md:mb-16 bg-white md:rounded-3xl overflow-hidden flex flex-col md:flex-row">
         <!-- Left Image Section -->
         <div class="md:w-1/2 relative">
             <img src="{{ asset("assets/images/contact-us.png") }}" alt="Land View" class="w-full object-cover">
         </div>
 
         <!-- Right Contact Form Section -->
-        <div class="md:w-1/2 bg-gray-50 p-8 md:p-12 flex flex-col justify-center space-y-8">
+        <div class="md:w-1/2 bg-[#F3F3F3] py-8 px-auto sm:p-8 md:p-12 flex flex-col justify-center space-y-8">
             <!-- Contact Info -->
             <div>
-                <h2 class="text-2xl md:text-3xl mb-2">Contact us</h2>
+                <h2 class="text-2xl md:text-3xl mb-2 font-just font-extrabold">Contact us</h2>
                 <p class="text-gray-700 text-sm md:text-base leading-relaxed">
                     Omega city & properties is a fast rising real estate brand that offers affordable land for sale in Abuja. to get in touch with us, please reach out to us on any of the details below.
                 </p>
@@ -43,7 +43,7 @@
 
             <!-- Message Form -->
             <div>
-                <h3 class="text-xl md:text-2xl mb-2">Have questions?</h3>
+                <h3 class="text-xl md:text-2xl mb-2 font-just font-extrabold">Have questions?</h3>
                 <p class="text-gray-700 mb-4 text-sm md:text-base">Send us a dm</p>
 
                 @if (session("success"))

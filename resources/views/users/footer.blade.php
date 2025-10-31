@@ -1,4 +1,4 @@
-<footer class="bg-[#FCFCFC] md:bg-[#F3F3F3] py-10 px-6 md:px-20">
+<footer class="bg-[#F3F3F3] md:bg-[#F3F3F3] py-10 px-6 md:px-20">
   <div class="flex flex-col md:flex-row items-start justify-between space-y-10 md:space-y-0">
 
     <!-- Left: Logo -->
@@ -25,8 +25,8 @@
       <div class="text-left w-full md:w-auto">
         <h4 class="font-bold text-lg text-gray-900 mb-3">Socials</h4>
         <ul class="space-y-2 text-gray-700">
-          <li><a href="#" class="hover:text-gray-900 transition">Instagram</a></li>
-          <li><a href="#" class="hover:text-gray-900 transition">Twitter</a></li>
+          <li><a href="https://www.instagram.com/omegacityproperties/?hl=en" class="hover:text-gray-900 transition">Instagram</a></li>
+          <li><a href="https://web.facebook.com/profile.php?id=61581679809389" class="hover:text-gray-900 transition">Facebook</a></li>
         </ul>
       </div>
 

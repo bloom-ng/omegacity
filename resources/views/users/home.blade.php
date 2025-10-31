@@ -40,7 +40,7 @@
 
     <!-- Hero Section -->
     <section
-        class="relative flex flex-col items-center justify-center min-h-[120vh] opacity-90  z-0 md:bg-cover bg-center text-center"
+        class="relative flex flex-col items-center justify-center min-h-[120vh] opacity-90  z-0 md:bg-cover bg-cover bg-center bg-bottom text-center"
         style="background-image: url('{{ asset("assets/images/analog-landscape-city-with-buildings.png") }}');">
         <!-- Main content -->
         <div class="max-w-6xl px-3 sm:px-0 sm:max-w-2xl md:max-w-lg lg:max-w-3xl -mt-[400px] md:-mt-[120px] z-20 lg:-mt-[160px]">
@@ -62,13 +62,13 @@
                 </p>
 
                 <!-- Tags -->
-                <span class="font-light text-center">
+                <span class="font-light  text-sm text-center">
                     Land
                 </span>
-                <span class="font-light text-center">
+                <span class="font-light  text-sm text-center">
                     Real estate
                 </span>
-                <span class="font-light text-center">
+                <span class="font-light  text-sm text-center">
                     Investment
                 </span>
             </div>
@@ -80,16 +80,16 @@
     <section class="bg-[#F3F3F3] py-10 md:py-16">
         <div class="w-full px-4 sm:px-6 md:px-10 lg:px-20">
             <h2
-                class="text-2xl sm:text-3xl md:text-5xl font-just font-extrabold leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900
+                class="text-2xl sm:text-3xl md:text-5xl font-just leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900
              text-left md:text-left md:px-16">
                 Omega City &amp; Properties
                 <img src="{{ asset("assets/images/OmegaCityBlack.png") }}" alt="Omega Icon"
-                    class="inline w-7 sm:w-10 md:w-12 h-7 sm:h-10 md:h-12 align-middle"> <br>
-                is your go-to brand in Nigeria<br class="hidden sm:block">
+                    class="inline w-7 sm:w-10 md:w-12 h-7 sm:h-10 md:h-14 align-middle"> <br class="hidden sm:block">
+                is your go-to brand in Nigeria <br class="hidden sm:block">
                 when it comes to purchasing<br class="hidden sm:block">
                 affordable land in Abuja
                 <img src="{{ asset("assets/images/imageland.png") }}" alt="Land Image"
-                    class="inline-block w-16 sm:w-24 md:w-28 h-12 sm:h-16 md:h-20 object-cover rounded-md align-middle mt-2">
+                    class="inline-block w-16 sm:w-24 md:w-32 lg:w-40 h-12 sm:h-16 md:h-16 object-cover rounded-md align-middle mt-2">
             </h2>
 
             <div
@@ -153,7 +153,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
         <!-- Text & Indicators -->
         <div class="flex flex-col items-center mt-6 space-y-3">
-            <p class=" font-just text-gray-800">
+            <p class="px-3 sm:px-0 font-just text-gray-800">
                 <span class="font-bold text-lg">Now selling</span> — A plot of land in Omega City 350Sq.ft
             </p>
             <div class="flex gap-2">
@@ -179,36 +179,36 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
             <!-- Slides -->
             <div id="carouselTwo" class="flex transition-transform duration-700 ease-in-out">
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/locationland.png") }}" class="w-full h-[500px] object-cover"
+                    <img src="{{ asset("assets/images/2nd-carousel-img-1.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-2.png") }}" class="w-full h-[500px] object-cover"
+                    <img src="{{ asset("assets/images/2nd-carousel-img-2.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-3.png") }}" class="w-full h-[500px] object-cover"
+                    <img src="{{ asset("assets/images/2nd-carousel-img-3.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-4.png") }}" class="w-full h-[500px] object-cover"
+                    <img src="{{ asset("assets/images/2nd-carousel-img-4.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-5.png") }}" class="w-full h-[500px] object-cover"
+                    <img src="{{ asset("assets/images/2nd-carousel-img-5.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
                         alt="Omega Land 1">
                 </div>
             </div>
 
             <!-- Arrows -->
             <button id="prevTwo"
-                class="absolute top-1/2 left-6 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center
+                class="absolute hidden md:block top-1/2 left-6 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center
                          bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border border-gray-200">
                 &#10094;
             </button>
 
             <button id="nextTwo"
-                class="absolute top-1/2 right-6 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center
+                class="absolute hidden md:block top-1/2 right-6 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center
                          bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border border-gray-200">
                 &#10095;
             </button>
@@ -216,12 +216,12 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
         <!-- Text & Indicators -->
         <div class="flex flex-col items-center mt-6 space-y-3">
-            <p id="carouselTextTwo" class="font-justregular text-gray-800 text-center">
-                Land description goes here. Land description goes here. Land description goes here.
+            <p id="carouselTextTwo" class="px-2 lg:px-0 md:text-lg font-justregular text-gray-800 text-center">
+                Beautiful green landscape perfect for building your dream home.
             </p>
-            <p id="carouselPriceTwo" class="text-center">
+            <!-- <p id="carouselPriceTwo" class="text-center">
                 350sq.ft going for <span class="font-bold text-lg">N1.58 million</span>
-            </p>
+            </p> -->
             <div class="flex gap-2">
                 <span class="dotTwo w-4 h-4 rounded-full bg-gray-500"></span>
                 <span class="dotTwo w-4 h-4 rounded-full bg-gray-300"></span>
@@ -238,7 +238,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
         <div class="grid md:grid-cols-2 gap-10 items-start">
             <!-- Left Text -->
             <div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-[justsansexregular] text-gray-900 leading-tight mt-8">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mt-8">
                     <span class="block md:hidden">
                         You too can own a <br>
                         land in Omega city
@@ -259,7 +259,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">1</span>
                     </div>
-                    <h3 class="font-[justbold] text-2xl text-black">Secure land</h3>
+                    <h3 class="text-2xl text-black">Secure land</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         We offer you land in a highly secured area and environment.
                     </p>
@@ -273,7 +273,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">2</span>
                     </div>
-                    <h3 class="font-[justbold] text-2xl text-black">Affordable</h3>
+                    <h3 class="text-2xl text-black">Affordable</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         Become a landowner at an affordable price.
                     </p>
@@ -293,7 +293,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">3</span>
                     </div>
-                    <h3 class="font-[justbold] text-2xl text-black">Spacious</h3>
+                    <h3 class="text-2xl text-black">Spacious</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         Wide expanse of land for your dream property.
                     </p>
@@ -307,7 +307,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                         <span
                             class="border border-gray-400 text-gray-700 rounded-md px-4 py-2 mr-2 text-sm font-semibold">4</span>
                     </div>
-                    <h3 class="font-[justbold] text-2xl text-black">Prime Location</h3>
+                    <h3 class="text-2xl text-black">Prime Location</h3>
                     <p class="text-gray-600 text-sm mb-6">
                         Strategically located in fast-developing areas.
                     </p>
@@ -372,18 +372,18 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
     const slidesTwo = carouselTwo.children;
     const dotsTwo = document.querySelectorAll('.dotTwo');
     const textsTwo = [
-        "Land description goes here. Land description goes here. Land description goes here.",
+        "Secure environment with road access and full documentation.",
         "Beautiful green landscape perfect for building your dream home.",
         "Secure environment with road access and full documentation.",
-        "Land description goes here. Land description goes here. Land description goes here.",
-        "Land description goes here. Land description goes here. Land description goes here.",
+        "Secure environment with road access and full documentation.",
+        "Secure environment with road access and full documentation.",
     ];
     const pricesTwo = [
-        "350sq.ft going for <span class='font-bold text-lg'>N1.58 million</span>",
-        "500sq.ft going for <span class='font-bold text-lg'>N2.10 million</span>",
-        "1 plot going for <span class='font-bold text-lg'>N3.50 million</span>",
-        "350sq.ft going for <span class='font-bold text-lg'>N1.58 million</span>",
-        "500sq.ft going for <span class='font-bold text-lg'>N2.10 million</span>",
+        // "350sq.ft going for <span class='font-bold text-lg'>N1.58 million</span>",
+        // "500sq.ft going for <span class='font-bold text-lg'>N2.10 million</span>",
+        // "1 plot going for <span class='font-bold text-lg'>N3.50 million</span>",
+        // "350sq.ft going for <span class='font-bold text-lg'>N1.58 million</span>",
+        // "500sq.ft going for <span class='font-bold text-lg'>N2.10 million</span>",
     ];
 
     let indexTwo = 0;
