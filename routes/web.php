@@ -8,9 +8,10 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ReceiptController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LandListingController;
 use App\Http\Controllers\Admin\AgentTargetController;
+use App\Http\Controllers\Admin\LandListingController;
 use App\Http\Controllers\Agent\DashboardController as AgentDashboardController;
 
 // Authentication Routes
@@ -54,7 +55,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     //contact messages
     Route::resource('contacts', ContactController::class);
-    
+
+    //Settings
+    Route::resource('settings', SettingController::class);
+
     // Agent Targets Management
     Route::get('/agents', [AgentTargetController::class, 'index'])->name('targets.index');
     Route::get('/agents/{agent}/targets/create', [AgentTargetController::class, 'create'])->name('targets.create');
@@ -70,12 +74,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 Route::middleware(['auth'])->prefix('agent')->name('agent.')->group(function () {
     // Agent Dashboard
     Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('dashboard');
-    
+
     // Agent Clients Management
     Route::get('/clients', [AgentDashboardController::class, 'clients'])->name('clients');
     Route::get('/clients/create', [AgentDashboardController::class, 'createClient'])->name('clients.create');
     Route::post('/clients', [AgentDashboardController::class, 'storeClient'])->name('clients.store');
-    
+
     // Agent Targets View
     Route::get('/targets', [AgentDashboardController::class, 'targets'])->name('targets');
 });
