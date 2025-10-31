@@ -7,6 +7,7 @@
     <meta name="description" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="icon" type="image/png" href="{{ asset("assets/images/favicon-omega.png") }}">
     @if (file_exists(public_path("build/manifest.json")) || file_exists(public_path("hot")))
         @vite(["resources/css/app.css", "resources/js/app.js"])
     @else
