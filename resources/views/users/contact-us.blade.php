@@ -36,7 +36,7 @@
             <!-- Contact Details -->
             <div>
                 <h3 class="text-lg mb-1">Contact details</h3>
-                <p class="text-gray-800 text-sm md:text-base">+234 806 778 0422, +234 911 333 3439</p>
+                <p class="text-gray-800 text-sm md:text-base">+234 705 626 0000 , +234 911 333 3439</p>
                 <p class="text-gray-800 text-sm md:text-base">30 Libreville Cres,
                 Wuse 2, Abuja 904101, Federal Capital Territory</p>
             </div>
