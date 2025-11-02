@@ -92,29 +92,29 @@
 
             <div class="p-4 space-y-2">
 
-                <a href="{{ route("admin.landlistings.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                    <div class="p-2 bg-green-100 text-green-600 rounded-full">
+                <a href="{{ route("admin.landlistings.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-200">
+                    <div >
                         <i class="fa-solid fa-plus"></i>
                     </div>
                     <span class="ml-3 text-sm font-medium">Add Land Listing</span>
                 </a>
 
-                <a href="{{ route("admin.users.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                    <div class="p-2 bg-blue-100 text-blue-600 rounded-full">
+                <a href="{{ route("admin.users.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-200">
+                    <div >
                         <i class="fa-solid fa-plus"></i>
                     </div>
                     <span class="ml-3 text-sm font-medium">Add Client</span>
                 </a>
 
-                <a href="{{ route("admin.invoices.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                    <div class="p-2 bg-purple-100 text-purple-600 rounded-full">
+                <a href="{{ route("admin.invoices.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-200">
+                    <div >
                        <i class="fa-solid fa-plus"></i>
                     </div>
                     <span class="ml-3 text-sm font-medium">Create Invoice</span>
                 </a>
 
-                <a href="{{ route("admin.receipts.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                    <div class="p-2 bg-red-100 text-red-600 rounded-full">
+                <a href="{{ route("admin.receipts.create") }}" class="flex items-center p-3 rounded-lg hover:bg-gray-200">
+                    <div >
                        <i class="fa-solid fa-plus"></i>
                     </div>
                     <span class="ml-3 text-sm font-medium">Record Receipt</span>
