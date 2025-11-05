@@ -3,7 +3,7 @@
 @section("title", "Set Targets for {{ $agent->name }}")
 
 @section("content")
-    <div class="w-full max-w-4xl mx-auto">
+    <div class="w-full">
         <div class="flex justify-between items-center mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Set Targets for {{ $agent->name }}</h1>
@@ -74,7 +74,7 @@
                         </div>
                         <div>
                             <label for="monthly_year" class="block text-sm font-semibold text-gray-700 mb-2">Year</label>
-                            <input type="number" name="targets[0][year]" id="monthly_year" 
+                            <input type="number" name="targets[0][year]" id="monthly_year"
                                 value="{{ old('targets.0.year', $currentYear) }}" readonly
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
@@ -162,21 +162,21 @@
     <script>
         // Existing targets data for checking duplicates
         const existingTargets = @json($existingTargets);
-        
+
         function togglePeriodOptions() {
             const periodType = document.getElementById('period_type').value;
             const monthlyOptions = document.getElementById('monthly_options');
             const yearlyOptions = document.getElementById('yearly_options');
             const targetHint = document.getElementById('target_hint');
-            
+
             // Hide both sections first
             monthlyOptions.style.display = 'none';
             yearlyOptions.style.display = 'none';
-            
+
             // Reset form validation requirements
             document.getElementById('month').required = false;
             document.getElementById('yearly_year').required = false;
-            
+
             if (periodType === 'monthly') {
                 monthlyOptions.style.display = 'grid';
                 document.getElementById('month').required = true;
@@ -186,17 +186,17 @@
                 document.getElementById('yearly_year').required = true;
                 targetHint.textContent = 'Enter the yearly target (amount in Naira or number of sales)';
             }
-            
+
             // Update target hint based on target type
             updateTargetHint();
             checkExistingTarget();
         }
-        
+
         function updateTargetHint() {
             const targetType = document.getElementById('target_type').value;
             const targetHint = document.getElementById('target_hint');
             const periodType = document.getElementById('period_type').value;
-            
+
             if (targetType === 'amount') {
                 const period = periodType === 'monthly' ? 'monthly' : periodType === 'yearly' ? 'yearly' : '';
                 targetHint.textContent = `Enter the ${period} revenue target in Naira (e.g., 500000 for ₦500,000)`;
@@ -205,52 +205,52 @@
                 targetHint.textContent = `Enter the ${period} sales count target (e.g., 10 for 10 sales)`;
             }
         }
-        
+
         function checkExistingTarget() {
             const periodType = document.getElementById('period_type').value;
             const targetType = document.getElementById('target_type').value;
             const month = document.getElementById('month').value;
             const year = periodType === 'monthly' ? {{ $currentYear }} : document.getElementById('yearly_year').value;
-            
+
             if (!periodType || !targetType) return;
-            
+
             let existingKey = '';
             if (periodType === 'monthly' && month) {
                 existingKey = `${periodType}_${targetType}_${month}`;
             } else if (periodType === 'yearly') {
                 existingKey = `${periodType}_${targetType}_yearly`;
             }
-            
+
             const existing = existingTargets[existingKey];
             const warningDiv = document.getElementById('existing_target_warning');
             const warningMessage = document.getElementById('existing_target_message');
-            
+
             if (existing) {
-                const periodDisplay = periodType === 'monthly' ? 
-                    `${new Date(year, month - 1).toLocaleString('default', { month: 'long' })} ${year}` : 
+                const periodDisplay = periodType === 'monthly' ?
+                    `${new Date(year, month - 1).toLocaleString('default', { month: 'long' })} ${year}` :
                     year;
                 const typeDisplay = targetType === 'amount' ? 'amount' : 'sales count';
-                const valueDisplay = targetType === 'amount' ? 
-                    `₦${Number(existing.target_value).toLocaleString()}` : 
+                const valueDisplay = targetType === 'amount' ?
+                    `₦${Number(existing.target_value).toLocaleString()}` :
                     `${existing.target_value} sales`;
-                
+
                 warningMessage.textContent = `A ${periodType} ${typeDisplay} target already exists for ${periodDisplay}: ${valueDisplay}. Creating a new target will update the existing one.`;
                 warningDiv.style.display = 'block';
             } else {
                 warningDiv.style.display = 'none';
             }
         }
-        
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('target_type').addEventListener('change', function() {
                 updateTargetHint();
                 checkExistingTarget();
             });
-            
+
             document.getElementById('month').addEventListener('change', checkExistingTarget);
             document.getElementById('yearly_year').addEventListener('change', checkExistingTarget);
-            
+
             // Initialize form if there are old values
             @if(old('targets.0.period_type'))
                 togglePeriodOptions();

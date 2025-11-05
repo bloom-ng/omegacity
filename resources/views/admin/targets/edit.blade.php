@@ -3,7 +3,7 @@
 @section("title", "Edit Target for {{ $agent->name }}")
 
 @section("content")
-    <div class="w-full max-w-4xl mx-auto">
+    <div class="w-full">
         <div class="flex justify-between items-center mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Edit Target for {{ $agent->name }}</h1>
@@ -34,7 +34,7 @@
                         <div>
                             <p class="text-sm font-medium text-gray-600">Target Type</p>
                             <p class="text-base font-semibold text-gray-900 mt-1">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                     @if($target->target_type === 'amount') bg-blue-100 text-blue-800 @else bg-green-100 text-green-800 @endif">
                                     {{ ucfirst($target->target_type) }}
                                 </span>
@@ -64,7 +64,7 @@
                             <span class="text-sm font-semibold text-gray-900">{{ $target->formatted_achieved_value }}</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-3">
-                            <div class="bg-blue-600 h-3 rounded-full transition-all duration-300" 
+                            <div class="bg-blue-600 h-3 rounded-full transition-all duration-300"
                                 style="width: {{ min(100, $target->progress_percentage) }}%"></div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                     <!-- Submit Buttons -->
                     <div class="flex items-center justify-between pt-6 border-t border-gray-200">
                         <div>
-                            <form method="POST" action="{{ route('admin.targets.destroy', [$agent, $target]) }}" 
+                            <form method="POST" action="{{ route('admin.targets.destroy', [$agent, $target]) }}"
                                 class="inline" onsubmit="return confirm('Are you sure you want to delete this target? This action cannot be undone.')">
                                 @csrf
                                 @method('DELETE')
@@ -188,11 +188,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             const notesTextarea = document.getElementById('notes');
             const notesCounter = document.getElementById('notes_counter');
-            
+
             notesTextarea.addEventListener('input', function() {
                 const length = this.value.length;
                 notesCounter.textContent = length;
-                
+
                 if (length > 500) {
                     notesCounter.classList.add('text-red-600');
                 } else {

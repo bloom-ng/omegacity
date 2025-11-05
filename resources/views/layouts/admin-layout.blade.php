@@ -124,7 +124,7 @@
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
                     : 'flex items-center gap-3 py-2 px-8 h-12 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
                 }}">
-                <i class="fas fa-bullseye w-6 h-6 text-center {{ request()->routeIs('admin.targets.*') ? 'text-white' : 'text-gray-600' }}"></i>
+               <img src="{{ asset("assets/images/bullseye.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.targets.*') ? 'filter invert' : '' }}" alt="bullseye-icon">
                 <span class="text-[14px] font-sans {{ request()->routeIs('admin.targets.*') ? 'text-white' : 'text-[#222222B2]' }}">Agent Targets</span>
             </a>
 
@@ -142,7 +142,7 @@
             <a href="{{ route('admin.settings.index') }}"
                 class="{{ request()->routeIs('admin.settings.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
-                    : 'flex items-center py-2 px-8 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                    : 'flex items-center gap-3 py-2 px-8 h-12 text-gray-800 mt-7 font-sans hover:scale-105 transition-transform duration-200 rounded-l ml-6 mr-4'
                 }}">
                 <img src="{{ asset("assets/images/settings.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.settings.*') ? 'filter invert' : '' }}" alt="settings-icon">
                 <span class="text-[14px] font-sans {{ request()->routeIs('admin.settings.*') ? 'text-white' : 'text-[#222222B2]' }}">Settings</span>

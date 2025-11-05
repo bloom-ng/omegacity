@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Cache;
 class Setting extends Model
 {
     protected $fillable = [
-        'name',
-        'key',
         'value'
     ];
 
-   
+
 }

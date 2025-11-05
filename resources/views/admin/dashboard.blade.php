@@ -30,7 +30,7 @@
             $growth = growthValue($data["monthly"], $data["last_month"]);
         @endphp
 
-        <div class="bg-white rounded-xl shadow p-6 border-l-4 border-{{ $color }}-500">
+        <div class="bg-white rounded-xl shadow p-6 border-l-4 border-none">
             <div class="flex justify-between items-center">
                 <div>
                     <p class="text-sm font-medium text-gray-500 capitalize">{{ str_replace('_',' ',$key) }}</p>
