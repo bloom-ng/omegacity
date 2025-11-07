@@ -51,8 +51,9 @@
                                     {{ $contact->email }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $contact->message ?? "N/A" }}
+                                    {{ \Illuminate\Support\Str::words($contact->message, 7, "...") }}
                                 </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="{{ route("admin.contacts.show", $contact->id) }}"
                                         class="text-blue-600 hover:text-blue-900 mr-2">

@@ -29,7 +29,8 @@
             <div>
                 <h2 class="text-2xl md:text-3xl mb-2 font-just font-extrabold">Contact us</h2>
                 <p class="text-gray-700 text-sm md:text-base leading-relaxed">
-                    Omega city & properties is a fast rising real estate brand that offers affordable land for sale in Abuja. to get in touch with us, please reach out to us on any of the details below.
+                    Omega city & properties is a fast rising real estate brand that offers affordable land for sale in
+                    Abuja. to get in touch with us, please reach out to us on any of the details below.
                 </p>
             </div>
 
@@ -38,7 +39,7 @@
                 <h3 class="text-lg mb-1">Contact details</h3>
                 <p class="text-gray-800 text-sm md:text-base">+234 705 626 0000 , +234 911 333 3439</p>
                 <p class="text-gray-800 text-sm md:text-base">30 Libreville Cres,
-                Wuse 2, Abuja 904101, Federal Capital Territory</p>
+                    Wuse 2, Abuja 904101, Federal Capital Territory</p>
             </div>
 
             <!-- Message Form -->
@@ -70,11 +71,46 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
 
+                    {{-- Captcha Box --}}
+                    <div class="space-y-3">
+
+                        <div class="flex items-center justify-between bg-white border border-gray-300 rounded-md p-3">
+                            {{-- <span class="captcha-img">{!! captcha_img("flat") !!}</span> --}}
+                           <span class="captcha-img">{!! captcha_img('flat') !!}</span>
+
+
+                            <button type="button"
+                                class="text-xs md:text-sm text-[#FACF07] hover:text-yellow-600 font-medium"
+                                onclick="reloadCaptcha()">
+                                Reload
+                            </button>
+                        </div>
+
+                        <input type="text" name="captcha" placeholder="Enter the text you see above"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm md:text-base"
+                            required>
+
+                        @error("captcha")
+                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+
+                    </div>
+
                     <button
                         class="w-full bg-[#FACF07] hover:bg-yellow-500 transition py-3 md:py-4 rounded-full text-sm md:text-base">
                         Send us a message
                     </button>
                 </form>
+
+                <script>
+                    function reloadCaptcha() {
+                        fetch("/reload-captcha")
+                            .then(res => res.json())
+                            .then(data => {
+                                document.querySelector(".captcha-img img").src = data.captcha;
+                            });
+                    }
+                </script>
 
             </div>
         </div>

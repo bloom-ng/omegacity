@@ -13,11 +13,17 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AgentTargetController;
 use App\Http\Controllers\Admin\LandListingController;
 use App\Http\Controllers\Agent\DashboardController as AgentDashboardController;
+use Mews\Captcha\Facades\Captcha;
 
 // Authentication Routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('loginform');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('login');
 Route::get('/password/forgot', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+
+
+Route::get('/reload-captcha', function(){
+    return response()->json(['captcha'=> captcha_src('flat')]);
+});
 
 // Admin Routes
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

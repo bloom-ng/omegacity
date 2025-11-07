@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ContactMessage;
 use App\Http\Controllers\Controller;
 use App\Models\LandListing;
+use Mews\Captcha\Facades\Captcha;
 
 class UserController extends Controller
 {
@@ -20,7 +21,11 @@ class UserController extends Controller
         $validated = $request->validate([
             'email' => 'required|email|max:255',
             'message' => 'required|string|max:2000',
+            'captcha' => 'required|captcha'
+        ], [
+            'captcha.captcha' => 'Invalid Captcha, try again.'
         ]);
+
 
         ContactMessage::create($validated);
 
