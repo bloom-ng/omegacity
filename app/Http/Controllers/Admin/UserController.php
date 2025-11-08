@@ -14,26 +14,45 @@ class UserController extends Controller
     /**
      * Display a listing of the users.
      */
-   public function index(Request $request)
-{
-    $query = User::query();
+    public function index(Request $request)
+    {
+        $query = User::query();
 
-    // search filter
-    if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where(function($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhereHas('role', function($r) use ($search) {
-                  $r->where('name', 'like', "%{$search}%");
-              });
-        });
+        // search filter
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhereHas('role', function ($r) use ($search) {
+                        $r->where('name', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        $users = $query->latest()->paginate(10)->withQueryString();
+
+        return view('admin.users.index', compact('users'));
     }
 
-    $users = $query->latest()->paginate(10)->withQueryString();
+    public function profile()
+    {
+        return view('admin.profile.index');
+    }
 
-    return view('admin.users.index', compact('users'));
+    public function updatePassword(Request $request, User $user)
+{
+    $request->validate([
+        'password' => 'required|min:6'
+    ]);
+
+    $user->update([
+        'password' => bcrypt($request->password)
+    ]);
+
+    return back()->with('success', 'Password updated successfully.');
 }
+
 
 
     /**
@@ -71,11 +90,11 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified user.
      */
-  public function edit(User $user)
-{
-    $roles = Role::all();
-    return view('admin.users.edit', compact('user', 'roles'));
-}
+    public function edit(User $user)
+    {
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
+    }
 
 
     /**
@@ -87,7 +106,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-             'role_id' => ['required', 'exists:roles,id'],
+            'role_id' => ['required', 'exists:roles,id'],
         ]);
 
         if (!empty($validated['password'])) {

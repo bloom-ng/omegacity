@@ -1,3 +1,6 @@
+@php
+$userRole = auth()->user()->role->name;
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace("_", "-", app()->getLocale()) }}">
 
@@ -82,6 +85,7 @@
             <p class="text-gray-400 ml-12 font-sans text-[20px] mt-3">Admin Panel</p>
 
             <!-- Dashboard -->
+            @if(in_array($userRole, ['Admin','Accountant','Agent']))
             <a href="{{ route("admin.dashboard") }}"
                 class="{{ request()->routeIs("admin.dashboard")
                     ? "flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans"
@@ -94,8 +98,25 @@
                     Dashboard
                 </span>
             </a>
+            @endif
+
+             @if(in_array($userRole, ['Admin','Accountant','Agent']))
+            <a href="{{ route("admin.profile.index") }}"
+                class="{{ request()->routeIs("admin.profile.*")
+                    ? "flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans"
+                    : "flex items-center gap-3 py-2 px-8 h-12 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4" }}">
+                <img src="{{ asset("assets/images/profile.svg") }}"
+                    class="w-6 h-6 {{ request()->routeIs("admin.profile.*") ? "filter invert" : "" }}"
+                    alt="profile-icon">
+                <span
+                    class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs("admin.profile.*") ? "text-white" : "text-[#222222B2]" }}">
+                    Profile
+                </span>
+            </a>
+            @endif
 
             <!-- Land Listing -->
+            @if(in_array($userRole, ['Admin','Agent']))
             <a href="{{ route('admin.landlistings.index') }}"
                 class="{{ request()->routeIs('admin.landlistings.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -107,8 +128,10 @@
                     Land Listing
                 </span>
             </a>
+            @endif
 
             <!-- Users -->
+            @if($userRole === 'Admin')
             <a href="{{ route('admin.users.index') }}"
                 class="{{ request()->routeIs('admin.users.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -117,8 +140,10 @@
                 <img src="{{ asset("assets/images/users.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.users.*') ? 'filter invert' : '' }}" alt="users-icon">
                 <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-[#222222B2]' }}">Users</span>
             </a>
+            @endif
 
             <!-- Agent Targets -->
+            @if($userRole === 'Admin')
             <a href="{{ route('admin.targets.index') }}"
                 class="{{ request()->routeIs('admin.targets.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -127,8 +152,10 @@
                <img src="{{ asset("assets/images/bullseye.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.targets.*') ? 'filter invert' : '' }}" alt="bullseye-icon">
                 <span class="text-[14px] font-sansm l-2 mr-4 {{ request()->routeIs('admin.targets.*') ? 'text-white' : 'text-[#222222B2]' }}">Agent Targets</span>
             </a>
+            @endif
 
             <!-- Contacts -->
+            @if($userRole === 'Admin')
             <a href="{{ route('admin.contacts.index') }}"
                 class="{{ request()->routeIs('admin.contacts.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -137,8 +164,10 @@
                 <img src="{{ asset('assets/images/contacts.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.contacts.*') ? 'filter invert' : '' }}" alt="contacts-icon">
                 <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.contacts.*') ? 'text-white' : 'text-[#222222B2]' }}">Contacts</span>
             </a>
+            @endif
 
             <!-- Settings -->
+            @if($userRole === 'Admin')
             <a href="{{ route('admin.settings.index') }}"
                 class="{{ request()->routeIs('admin.settings.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -147,8 +176,10 @@
                 <img src="{{ asset("assets/images/settings.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.settings.*') ? 'filter invert' : '' }}" alt="settings-icon">
                 <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.settings.*') ? 'text-white' : 'text-[#222222B2]' }}">Settings</span>
             </a>
+            @endif
 
              <!-- Clients -->
+             @if(in_array($userRole, ['Admin','Accountant','Agent']))
             <a href="{{ route('admin.clients.index') }}"
                 class="{{ request()->routeIs('admin.clients.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -157,8 +188,10 @@
                 <img src="{{ asset('assets/images/client.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.clients.*') ? 'filter invert' : '' }}" alt="users-icon">
                 <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.clients.*') ? 'text-white' : 'text-[#222222B2]' }}">Clients</span>
             </a>
+            @endif
 
             <!-- Invoice -->
+            @if(in_array($userRole, ['Admin','Accountant']))
             <a href="{{ route('admin.invoices.index') }}"
                 class="{{ request()->routeIs('admin.invoices.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -167,8 +200,10 @@
                 <img src="{{ asset('assets/images/invoice.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.invoices.*') ? 'filter invert' : '' }}" alt="invoice-icon">
                 <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.invoices.*') ? 'text-white' : 'text-[#222222B2]' }}">Invoice</span>
             </a>
+            @endif
 
             <!-- Receipt -->
+            @if(in_array($userRole, ['Admin','Accountant']))
             <a href="{{ route('admin.receipts.index') }}"
                 class="{{ request()->routeIs('admin.receipts.*')
                     ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
@@ -177,6 +212,7 @@
                 <img src="{{ asset('assets/images/receipt-alt.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.receipts.*') ? 'filter invert' : '' }}" alt="receipt-icon">
                 <span class="text-[14px] font-sans ml-2 mr-4  {{ request()->routeIs('admin.receipts.*') ? 'text-white' : 'text-[#222222B2]' }}">Receipt</span>
             </a>
+            @endif
 
             <!-- Logout (stick to bottom) -->
             <form method="POST" action="{{ route("admin.logout") }}"

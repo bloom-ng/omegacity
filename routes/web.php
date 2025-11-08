@@ -21,8 +21,8 @@ Route::post('/admin/login', [LoginController::class, 'login'])->name('login');
 Route::get('/password/forgot', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
 
 
-Route::get('/reload-captcha', function(){
-    return response()->json(['captcha'=> captcha_src('flat')]);
+Route::get('/reload-captcha', function () {
+    return response()->json(['captcha' => captcha_src('flat')]);
 });
 
 // Admin Routes
@@ -34,19 +34,19 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Invoices
     Route::resource('invoices', InvoiceController::class);
     Route::post('invoices/{invoice}/mark-as-paid', [InvoiceController::class, 'markAsPaid'])
-         ->name('invoices.markAsPaid');
+        ->name('invoices.markAsPaid');
 
     Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'generatePDF'])
-         ->name('invoices.pdf');
+        ->name('invoices.pdf');
 
 
-         // Receipts
-     Route::resource('receipts', ReceiptController::class);
+    // Receipts
+    Route::resource('receipts', ReceiptController::class);
     Route::post('receipts/{receipt}/mark-as-paid', [ReceiptController::class, 'markAsPaid'])
-         ->name('receipts.markAsPaid');
+        ->name('receipts.markAsPaid');
 
     Route::get('receipts/{receipt}/pdf', [ReceiptController::class, 'generatePDF'])
-         ->name('receipts.pdf');
+        ->name('receipts.pdf');
 
 
 
@@ -58,6 +58,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Admin users
     Route::resource('users', UserController::class);
+
+    Route::get('/profile', [UserController::class, 'profile'])
+        ->name('profile.index');
+
+    Route::put('/users/{user}/update-password', [UserController::class, 'updatePassword'])
+        ->name('users.update-password');
+
 
     //contact messages
     Route::resource('contacts', ContactController::class);
