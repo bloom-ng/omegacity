@@ -54,6 +54,7 @@ class InvoiceController extends Controller
             'client_id' => 'required|exists:clients,id',
             'date' => 'required|date',
             'discount' => 'nullable|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0',
             'items' => 'required|array|min:1',
             'items.*.description' => 'required|string',
             'items.*.quantity' => 'required|numeric|min:1',
@@ -61,16 +62,18 @@ class InvoiceController extends Controller
         ]);
 
         $subtotal = collect($data['items'])->sum(fn($item) => $item['price'] * $item['quantity']);
-        $tax = $request->input('tax', 0);
-        $discount = $data['discount'] ?? 0;
-        $total = ($subtotal + $tax) - $discount;
+        $taxPercentage = $data['tax'] ?? 0;
 
+        $taxValue = ($subtotal * $taxPercentage) / 100;
+        $discount = $data['discount'] ?? 0;
+
+        $total = ($subtotal + $taxValue) - $discount;
 
         $invoice = Invoice::create([
             'client_id' => $data['client_id'],
             'date' => $data['date'],
             'invoice_items' => json_encode($data['items']),
-            'tax' => $tax,
+            'tax' => $taxPercentage,
             'discount' => $discount,
         ]);
 
