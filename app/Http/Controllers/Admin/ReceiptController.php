@@ -4,12 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Client;
 use App\Models\Receipt;
+use App\Services\AgentTargetService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ReceiptController extends Controller
 {
+    protected $targetService;
+
+    public function __construct(AgentTargetService $targetService)
+    {
+        $this->targetService = $targetService;
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -72,6 +79,17 @@ class ReceiptController extends Controller
             'tax' => $taxPercentage,
             'discount' => $discount,
         ]);
+
+        // Update agent's target progress automatically
+        $client = Client::find($data['client_id']);
+        if ($client && $client->assigned_agent_id) {
+            $receiptDate = \Carbon\Carbon::parse($data['date']);
+            $this->targetService->updateTargetProgress(
+                $client->assigned_agent_id,
+                $receiptDate->year,
+                $receiptDate->month
+            );
+        }
 
         return redirect()
             ->route('admin.receipts.index')
@@ -140,6 +158,17 @@ class ReceiptController extends Controller
         'discount' => $discount,
     ]);
 
+    // Update agent's target progress automatically
+    $client = Client::find($data['client_id']);
+    if ($client && $client->assigned_agent_id) {
+        $receiptDate = \Carbon\Carbon::parse($data['date']);
+        $this->targetService->updateTargetProgress(
+            $client->assigned_agent_id,
+            $receiptDate->year,
+            $receiptDate->month
+        );
+    }
+
     return redirect()
         ->route('admin.receipts.index')
         ->with('success', 'Receipt updated successfully!')
@@ -157,7 +186,20 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
+        // Get client and date before deleting
+        $client = $receipt->client;
+        $receiptDate = $receipt->date;
+        
         $receipt->delete();
+
+        // Update agent's target progress automatically
+        if ($client && $client->assigned_agent_id) {
+            $this->targetService->updateTargetProgress(
+                $client->assigned_agent_id,
+                $receiptDate->year,
+                $receiptDate->month
+            );
+        }
 
         return redirect()->route('admin.receipts.index')
             ->with('success', 'Receipt deleted successfully!');

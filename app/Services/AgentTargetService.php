@@ -43,12 +43,19 @@ class AgentTargetService
      */
     protected function updateTarget($agentId, $periodType, $targetType, $year, $month, $value)
     {
-        $target = AgentTarget::where('user_id', $agentId)
+        $query = AgentTarget::where('user_id', $agentId)
             ->where('period_type', $periodType)
             ->where('target_type', $targetType)
-            ->where('year', $year)
-            ->where('month', $month)
-            ->first();
+            ->where('year', $year);
+        
+        // Handle null month for yearly targets
+        if ($month === null) {
+            $query->whereNull('month');
+        } else {
+            $query->where('month', $month);
+        }
+        
+        $target = $query->first();
             
         if ($target) {
             $target->update(['achieved_value' => $value]);
@@ -87,11 +94,18 @@ class AgentTargetService
      */
     protected function getPeriodSummary($agentId, $periodType, $year, $month)
     {
-        $targets = AgentTarget::where('user_id', $agentId)
+        $query = AgentTarget::where('user_id', $agentId)
             ->where('period_type', $periodType)
-            ->where('year', $year)
-            ->where('month', $month)
-            ->get();
+            ->where('year', $year);
+        
+        // Handle null month for yearly targets
+        if ($month === null) {
+            $query->whereNull('month');
+        } else {
+            $query->where('month', $month);
+        }
+        
+        $targets = $query->get();
             
         return [
             'amount_target' => $targets->where('target_type', 'amount')->first(),
