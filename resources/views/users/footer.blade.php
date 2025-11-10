@@ -3,9 +3,9 @@
 
     <!-- Left: Logo -->
     <div class="flex flex-col items-start space-y-2">
-      <img src="{{ asset('assets/images/omegacitylogo.png') }}"
+      <img src="{{ asset('assets/images/Omega-City-no-whitespace.png') }}"
            alt="Omega Logo"
-           class="w-28 md:w-44 object-contain" />
+           class="w-16 -ml-1 md:w-44 object-contain" />
     </div>
 
     <!-- Right: Links & Socials -->

@@ -32,7 +32,7 @@
 </style>
 
 
-<body class="bg-[#F3F3F3] text-[#010504]">
+<body class="bg-[#F3F3F3] font-just text-[#010504]">
 
     <!-- Navbar -->
     
@@ -52,36 +52,51 @@
         </div>
 
         <!-- Bottom black bar -->
-        <div class="absolute bottom-0 w-full bg-[#F3F3F3] text-lg md:text-xl lg:text-2xl py-12 px-6">
+        <div class="absolute bottom-0 w-full bg-[#F3F3F3] text-sm sm:text-lg md:text-xl lg:text-2xl pt-8 md:py-12 px-6">
             <div
-                class="grid grid-cols-2 md:flex md:flex-nowrap items-center justify-center gap-5.5 max-w-5xl mx-auto text-center">
+                class="grid grid-cols-2 grid-rows-2 md:flex md:flex-nowrap items-center justify-center gap-5.5 max-w-5xl mx-auto text-center">
                 <!-- Text -->
                 <p
-                    class="col-span-2 md:col-span-1  font-just font-extrabold mb-2 md:mb-0 md:mr-6 whitespace-nowrap">
+                    class="col-span-2 md:col-span-1 font-just font-extrabold mb-2 md:mb-0 md:mr-6 whitespace-nowrap">
                     Building wealth the smart way
                 </p>
 
+
                 <!-- Tags -->
-                <span class="font-light  text-sm text-center">
-                    Land
-                </span>
-                <span class="font-light  text-sm text-center">
-                    Real estate
-                </span>
-                <span class="font-light  text-sm text-center">
-                    Investment
-                </span>
+                <div class="hidden md:block">
+                    <span class="font-light  text-sm text-center">
+                        Land
+                    </span>
+                    <span class="font-light  text-sm text-center">
+                        Real estate
+                    </span>
+                    <span class="font-light  text-sm text-center">
+                        Investment
+                    </span>
+                </div>
+                <div class="block md:hidden flex flex-row items-center justify-center gap-6 w-[90vw] -mt-12 mx-auto">
+                    <span class="font-light  text-sm text-center">
+                        Land
+                    </span>
+                    <span class="font-light  text-sm text-center">
+                        Real estate
+                    </span>
+                    <span class="font-light  text-sm text-center">
+                        Investment
+                    </span>
+                </div>
+                
             </div>
         </div>
 
     </section>
 
     <!-- About Section -->
-    <section class="bg-[#F3F3F3] py-10 md:py-16">
+    <section class="bg-[#F3F3F3] pt-6 md:py-16">
         <div class="w-full px-4 sm:px-6 md:px-10 lg:px-20">
             <h2
-                class="text-2xl sm:text-3xl md:text-5xl font-just leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900
-             text-left md:text-left md:px-16">
+                class="text-2xl sm:pr-1 pr-[50px] sm:text-3xl md:text-5xl font-just leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900
+                text-left text-justify md:text-left md:px-16">
                 Omega City &amp; Properties
                 <img src="{{ asset("assets/images/OmegaCityBlack.png") }}" alt="Omega Icon"
                     class="inline w-7 sm:w-10 md:w-12 h-7 sm:h-10 md:h-14 align-middle"> <br class="hidden sm:block">
@@ -89,11 +104,11 @@
                 when it comes to purchasing<br class="hidden sm:block">
                 affordable land in Abuja
                 <img src="{{ asset("assets/images/imageland.png") }}" alt="Land Image"
-                    class="inline-block w-16 sm:w-24 md:w-32 lg:w-40 h-12 sm:h-16 md:h-16 object-cover rounded-md align-middle mt-2">
+                    class="inline-block w-[55px] sm:w-24 md:w-32 lg:w-40 h-8 -mt-1.5 sm:h-16 md:h-16 object-none sm:object-cover rounded-md align-middle md:mt-2">
             </h2>
 
             <div
-                class="font-just block mt-4 text-gray-700 text-lg sm:text-lg md:text-xl md:px-16 tracking-wide leading-relaxed text-left">
+                class="font-just block mt-4 text-gray-700 text-base sm:text-lg md:text-xl md:px-16 tracking-wide leading-6 md:leading-relaxed text-left">
                 <p>
                     We’re here to help you become a landowner in <br class="hidden sm:block"> Omega City, the finest
                     city in Abuja.
@@ -153,8 +168,8 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
         <!-- Text & Indicators -->
         <div class="flex flex-col items-center mt-6 space-y-3">
-            <p class="px-3 sm:px-0 font-just text-gray-800">
-                <span class="font-bold text-lg">Now selling</span> — A plot of land in Omega City 350Sq.ft
+            <p class="text-sm sm:text-lg px-3 sm:px-0 font-just text-gray-800">
+                <span class="font-bold text-sm sm:text-lg">Now selling</span> — A plot of land in Omega City 350Sq.ft
             </p>
             <div class="flex gap-2">
                 <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
@@ -169,7 +184,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
     <section class="relative bg-[#F3F3F3] py-10">
         <div class='mb-5'>
-            <p class="text-4xl text-center md:text-7xl font-justbold text-gray-900 leading-tight">
+            <p class="text-4xl text-center md:text-7xl font-just text-gray-900 leading-tight">
                 One land, many <br>
                 possibilities
             </p>
@@ -184,19 +199,19 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                 </div>
                 <div class="w-full flex-shrink-0">
                     <img src="{{ asset("assets/images/2nd-carousel-img-2.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
-                        alt="Omega Land 1">
+                        alt="Omega Land 2">
                 </div>
                 <div class="w-full flex-shrink-0">
                     <img src="{{ asset("assets/images/2nd-carousel-img-3.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
-                        alt="Omega Land 1">
+                        alt="Omega Land 3">
                 </div>
                 <div class="w-full flex-shrink-0">
                     <img src="{{ asset("assets/images/2nd-carousel-img-4.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
-                        alt="Omega Land 1">
+                        alt="Omega Land 4">
                 </div>
                 <div class="w-full flex-shrink-0">
                     <img src="{{ asset("assets/images/2nd-carousel-img-5.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
-                        alt="Omega Land 1">
+                        alt="Omega Land 5">
                 </div>
             </div>
 
@@ -216,7 +231,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
         <!-- Text & Indicators -->
         <div class="flex flex-col items-center mt-6 space-y-3">
-            <p id="carouselTextTwo" class="px-2 lg:px-0 md:text-lg font-justregular text-gray-800 text-center">
+            <p id="carouselTextTwo" class="text-sm sm:text-lg px-2 lg:px-0 md:text-lg font-just text-gray-800 text-center">
                 Beautiful green landscape perfect for building your dream home.
             </p>
             <!-- <p id="carouselPriceTwo" class="text-center">
@@ -233,12 +248,12 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
     </section>
 
     <!-- Section: Own a Land in Omega City -->
-    <section class="w-11/12 md:w-10/12 mx-auto py-16 space-y-20">
+    <section class="w-11/12 md:w-10/12 mx-auto sm:py-16 space-y-8 md:space-y-20">
         <!-- First Row -->
-        <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div class="grid md:grid-cols-2 gap-6 sm:gap-10 items-start">
             <!-- Left Text -->
             <div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mt-8">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 leading-tight pb-5 sm:pb-0 sm:mt-8">
                     <span class="block md:hidden">
                         You too can own a <br>
                         land in Omega city
@@ -252,7 +267,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
             </div>
 
             <!-- Features 1 & 2 -->
-            <div class="grid sm:grid-cols-2 gap-6">
+            <div class="grid sm:grid-cols-2 gap-8 sm:gap-6">
                 <!-- Feature 1 -->
                 <div>
                     <div class="flex items-center mb-2">
@@ -286,7 +301,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
         <!-- Second Row -->
         <div class="grid md:grid-cols-2 gap-10 items-start">
             <!-- Features 3 & 4 -->
-            <div class="grid sm:grid-cols-2 gap-6">
+            <div class="grid sm:grid-cols-2 gap-8 sm:gap-6">
                 <!-- Feature 3 -->
                 <div>
                     <div class="flex items-center mb-2">
@@ -318,7 +333,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
 
             <!-- CTA Section (Bottom-Aligned) -->
             <div class="flex flex-col items-start justify-end gap-4 text-left h-full">
-                <p class="text-3xl font-just text-gray-800">Let’s get you started today!</p>
+                <p class="text-xl sm:text-3xl font-just text-gray-800">Let’s get you started today!</p>
                 <div class="flex gap-8">
                     <a href="#"
                         class="bg-yellow-400 text-gray-900 text-xl font-just px-14 py-2 rounded-full hover:bg-yellow-500 transition">
@@ -326,7 +341,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
                     </a>
 
                     <a href="/contact-us"
-                        class="text-gray-900 font-semibold underline underline-offset-8 hover:text-yellow-500 transition mt-2">
+                        class="text-gray-900 text-lg sm:text-base underline underline-offset-8 hover:text-yellow-500 transition mt-2">
                         Contact us
                     </a>
                 </div>
