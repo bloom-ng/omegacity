@@ -1,6 +1,8 @@
 <?php
 
+use Mews\Captcha\Facades\Captcha;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FormsController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
@@ -13,12 +15,19 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AgentTargetController;
 use App\Http\Controllers\Admin\LandListingController;
 use App\Http\Controllers\Agent\DashboardController as AgentDashboardController;
-use Mews\Captcha\Facades\Captcha;
 
 // Authentication Routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('loginform');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('login');
 Route::get('/password/forgot', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+
+
+//FORMS
+Route::get('/expression-of-interest', [FormsController::class, 'createEOI'])->name('eoi.create');
+Route::post('/eoi', [FormsController::class, 'storeEOI'])->name('eoi.store');
+
+Route::get('/guarantor-form', [FormsController::class, 'createGuarantor'])->name('guarantor.create');
+Route::post('/guarantor', [FormsController::class, 'storeGuarantor'])->name('guarantor.store');
 
 
 Route::get('/reload-captcha', function () {
@@ -38,6 +47,27 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'generatePDF'])
         ->name('invoices.pdf');
+
+
+    //Forms
+
+    // Route::resource('forms',  App\Http\Controllers\Admin\FormsController::class)->except('show');
+    Route::get('/forms', [App\Http\Controllers\Admin\FormsController::class, 'index'])
+    ->name('forms.index');
+
+// Form lists
+Route::get('/forms/eoi', [App\Http\Controllers\Admin\FormsController::class, 'eoi'])
+    ->name('forms.eoi');
+
+Route::get('/forms/guarantor', [App\Http\Controllers\Admin\FormsController::class, 'guarantor'])
+    ->name('forms.guarantor');
+
+Route::get('/forms/purchase', [App\Http\Controllers\Admin\FormsController::class, 'purchase'])
+    ->name('forms.purchase');
+
+// Download PDF
+Route::get('forms/download/{id}/{type}', [App\Http\Controllers\Admin\FormsController::class, 'download'])
+    ->name('forms.download');
 
 
     // Receipts
