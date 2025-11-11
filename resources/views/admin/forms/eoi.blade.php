@@ -54,7 +54,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="{{ route('admin.forms.download', [$form->id, 'eoi']) }}"
                                    class="text-blue-600 hover:text-blue-900 mr-3" title="Download PDF">
-                                    <i class="fas fa-download"></i>
+                                    <i class="fas fa-eye"></i>
                                 </a>
 
                                 {{-- Delete Form --}}

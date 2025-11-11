@@ -21,7 +21,7 @@
         </a>
 
         {{-- Sale Tracking Card --}}
-        <a href="" class="block bg-white rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition-transform duration-200 p-6 text-center">
+        <a href="{{ route('admin.forms.sales') }}" class="block bg-white rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition-transform duration-200 p-6 text-center">
             <div class="text-4xl mb-4 text-red-600">
                 <i class="fas fa-chart-line"></i>
             </div>

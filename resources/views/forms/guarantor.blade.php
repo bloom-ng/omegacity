@@ -21,59 +21,76 @@
         <h3 class="font-semibold text-lg border-b mb-2">Candidate Information</h3>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <select name="candidate_title" class="input" required>
+            <select name="candidate_title" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
                 <option value="">Title</option>
                 <option>Mr</option><option>Mrs</option><option>Miss</option>
             </select>
 
-            <input name="candidate_name" placeholder="Candidate Full Name" class="input" required>
+            <input name="candidate_name" placeholder="Candidate Full Name" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
         </div>
 
         {{-- Relationship Questions --}}
         <h3 class="font-semibold text-lg border-b mb-2">Guarantor Confirmation</h3>
 
         <label>Do you personally know the candidate?</label>
-        <select name="known_candidate" class="input" required>
+        <select name="known_candidate" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
             <option value="">Select</option>
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
 
-        <input name="relationship" placeholder="Relationship to Candidate" class="input" required>
-        <input name="known_duration" placeholder="How long have you known them?" class="input" required>
-        <input name="occupation" placeholder="Your Occupation" class="input" required>
+        <input name="relationship" placeholder="Relationship to Candidate" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
+        <input name="known_duration" placeholder="How long have you known them?" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
+        <input name="occupation" placeholder="Your Occupation" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
 
         {{-- Guarantor Information --}}
         <h3 class="font-semibold text-lg border-b mb-2">Guarantor Personal Information</h3>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <select name="guarantor_title" class="input" required>
+            <select name="guarantor_title" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
                 <option value="">Title</option>
                 <option>Mr</option><option>Mrs</option><option>Miss</option>
             </select>
 
-            <input name="guarantor_name" placeholder="Guarantor Full Name" class="input" required>
+            <input name="guarantor_name" placeholder="Guarantor Full Name" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
         </div>
 
-        <textarea name="home_address" placeholder="Home Address" class="input" required></textarea>
-        <textarea name="office_address" placeholder="Office Address" class="input" required></textarea>
+        <textarea name="home_address" placeholder="Home Address" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required></textarea>
+        <textarea name="office_address" placeholder="Office Address" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required></textarea>
 
-        <input name="candidate_name_confirm" placeholder="Candidate Name (Confirm)" class="input" required>
+        <input name="candidate_name_confirm" placeholder="Candidate Name (Confirm)" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
 
         {{-- Documentation --}}
         <h3 class="font-semibold text-lg border-b mb-2">Documents</h3>
 
-        <input type="email" name="guarantor_email" placeholder="Email Address" class="input" required>
-        <input name="id_type" placeholder="Means of Identification (e.g. NIN, Passport)" class="input" required>
+        <input type="email" name="guarantor_email" placeholder="Email Address" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
+        <input name="id_type" placeholder="Means of Identification (e.g. NIN, Passport)" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
 
         <label class="block">Upload ID Copy</label>
-        <input type="file" name="id_file" class="input">
+        <input type="file" name="id_file" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+>
 
         <label class="block">Upload Signature</label>
-        <input type="file" name="signature_file" class="input">
+        <input type="file" name="signature_file" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+>
 
-        <input name="phone" placeholder="Phone Number" class="input" required>
-        <input type="date" name="date_signed" class="input" required>
+        <input name="phone" placeholder="Phone Number" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
+        <input type="date" name="date_signed" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+ required>
 
         <button class="bg-black text-white px-6 py-2 rounded shadow hover:bg-gray-800">
             Submit Guarantor Form

@@ -102,7 +102,7 @@
                                 <div class="ml-4">
                                     <p class="text-sm font-medium text-gray-900">{{ $item["type"] }} — {{ $item["name"] }}
                                     </p>
-                                    <p class="text-sm text-gray-500">{{ $item["details"] }}</p>
+                                    <p class="text-sm text-gray-500">{{ $item["details"] ?? " " }}</p>
                                     <p class="text-xs text-gray-400 mt-1">{{ $item["time"]->diffForHumans() }}</p>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
 
                 <div class="p-4 space-y-2">
 
-                    
+
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Eoi;
 use App\Models\Guarantor;
 use Illuminate\Http\Request;
+use App\Models\SalesTracking;
 
 class FormsController extends Controller
 {
@@ -13,9 +14,14 @@ class FormsController extends Controller
         return view('forms.eoi');
     }
 
-     public function createGuarantor()
+    public function createGuarantor()
     {
         return view('forms.guarantor');
+    }
+
+    public function createSalesTracking()
+    {
+        return view('forms.sales-tracking');
     }
 
     public function storeEOI(Request $request)
@@ -79,7 +85,7 @@ class FormsController extends Controller
 
     public function storeGuarantor(Request $request)
     {
-         $validated = $request->validate([
+        $validated = $request->validate([
             'candidate_title' => 'required',
             'candidate_name' => 'required',
             'known_candidate' => 'required',
@@ -107,6 +113,43 @@ class FormsController extends Controller
         }
 
         $g = Guarantor::create($validated);
+        return back()->with('success', 'Form submitted successfully!');
+    }
+
+    public function storeSalesTracking(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'nullable|email',
+            'address' => 'nullable|string',
+            'id_type' => 'nullable|string',
+            'nok_name' => 'nullable|string',
+            'nok_phone' => 'nullable|string',
+            'occupation' => 'nullable|string',
+            'registration_date' => 'nullable|date',
+            'sales_rep' => 'nullable|string',
+
+            'project_name' => 'nullable|string',
+            'property_type' => 'nullable|string',
+            'plot_unit_no' => 'nullable|string',
+            'location' => 'nullable|string',
+            'size' => 'nullable|string',
+            'total_price' => 'nullable|numeric',
+            'payment_option' => 'nullable|string',
+            'initial_deposit' => 'nullable|numeric',
+            'initial_date' => 'nullable|date',
+
+            'total_paid' => 'nullable|numeric',
+            'outstanding_balance' => 'nullable|numeric',
+            'next_due_payment' => 'nullable|numeric',
+            'payment_status' => 'nullable|string',
+            'last_payment_date' => 'nullable|date',
+            'handled_by' => 'nullable|string',
+            'comments' => 'nullable|string'
+        ]);
+
+        $sales = SalesTracking::create($validated);
         return back()->with('success', 'Form submitted successfully!');
     }
 }

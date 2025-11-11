@@ -29,6 +29,9 @@ Route::post('/eoi', [FormsController::class, 'storeEOI'])->name('eoi.store');
 Route::get('/guarantor-form', [FormsController::class, 'createGuarantor'])->name('guarantor.create');
 Route::post('/guarantor', [FormsController::class, 'storeGuarantor'])->name('guarantor.store');
 
+Route::get('/sales-tracking', [FormsController::class, 'createSalesTracking'])->name('sales.create');
+Route::post('/sales-tracking', [FormsController::class, 'storeSalesTracking'])->name('sales.store');
+
 
 Route::get('/reload-captcha', function () {
     return response()->json(['captcha' => captcha_src('flat')]);
@@ -62,8 +65,11 @@ Route::get('/forms/eoi', [App\Http\Controllers\Admin\FormsController::class, 'eo
 Route::get('/forms/guarantor', [App\Http\Controllers\Admin\FormsController::class, 'guarantor'])
     ->name('forms.guarantor');
 
-Route::get('/forms/purchase', [App\Http\Controllers\Admin\FormsController::class, 'purchase'])
-    ->name('forms.purchase');
+Route::get('/forms/salestracking', [App\Http\Controllers\Admin\FormsController::class, 'salesTracking'])
+    ->name('forms.sales');
+
+     Route::get('sales/{id}/edit', [App\Http\Controllers\Admin\FormsController::class, 'edit'])->name('sales.edit');
+    Route::put('sales/{id}', [App\Http\Controllers\Admin\FormsController::class, 'update'])->name('sales.update');
 
 // Download PDF
 Route::get('forms/download/{id}/{type}', [App\Http\Controllers\Admin\FormsController::class, 'download'])

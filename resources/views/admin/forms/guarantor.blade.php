@@ -63,7 +63,7 @@
 
                         <a href="{{ route('admin.forms.download', [$form->id, 'guarantor']) }}"
                            class="text-blue-600 hover:text-blue-900 mr-3" title="Download PDF">
-                            <i class="fas fa-download"></i>
+                            <i class="fas fa-eye"></i>
                         </a>
 
                         {{-- Delete Form --}}

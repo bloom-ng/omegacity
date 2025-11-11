@@ -72,13 +72,11 @@ class DashboardController extends Controller
         ->merge(Invoice::latest()->take(1)->get()->map(fn($i) => [
             'type' => 'Invoice',
             'name' => "Invoice INV-{$i->created_at->format('Ymd') }{$i->id}",
-            'details' => "₦" . number_format($i->total ?? 0),
             'time' => $i->created_at
         ]))
         ->merge(Receipt::latest()->take(1)->get()->map(fn($i) => [
             'type' => 'Receipt',
             'name' => "Receipt REC-{$i->created_at->format('Ymd') }{$i->id}",
-            'details' => "₦" . number_format($i->amount ?? 0),
             'time' => $i->created_at
         ]))
         ->sortByDesc('time')
