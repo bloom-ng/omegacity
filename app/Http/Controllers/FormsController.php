@@ -43,6 +43,7 @@ class FormsController extends Controller
             'business_address' => 'nullable',
             'email' => 'required|email',
             'id_type' => 'required',
+            'id_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
             'passport_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
 
             // NEXT OF KIN
@@ -51,6 +52,7 @@ class FormsController extends Controller
             'nok_address' => 'required',
             'nok_email' => 'nullable|email',
             'nok_id_type' => 'nullable',
+            'nok_id_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
 
             // SECTION C
             'land_category' => 'required',
@@ -77,6 +79,23 @@ class FormsController extends Controller
         if ($request->hasFile('signature_file')) {
             $validated['signature_file'] = $request->signature_file->store('signatures', 'public');
         }
+
+        // Upload applicant ID document
+        if ($request->hasFile('id_file')) {
+            $original = $request->file('id_file')->getClientOriginalName();
+            $filename = $request->id_type . '-' . $original;
+            $path = $request->file('id_file')->storeAs('id_docs', $filename, 'public');
+            $validated['id_file'] = $path;
+        }
+
+        // Upload NOK ID document
+        if ($request->hasFile('nok_id_file')) {
+            $original = $request->file('nok_id_file')->getClientOriginalName();
+            $filename = $request->nok_id_type . '-' . $original;
+            $path = $request->file('nok_id_file')->storeAs('nok_id_docs', $filename, 'public');
+            $validated['nok_id_file'] = $path;
+        }
+
         Eoi::create($validated);
 
         return back()->with('success', 'Form submitted successfully!');

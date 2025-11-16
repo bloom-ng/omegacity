@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FormsController extends Controller
 {
-     public function index()
+    public function index()
     {
         return view('admin.forms.index');
     }
@@ -36,39 +36,84 @@ class FormsController extends Controller
         return view('admin.forms.salesTracking', compact('forms'));
     }
 
-  public function download($id, $type)
-{
-    switch ($type) {
+    public function download($id, $type)
+    {
+        switch ($type) {
 
-        case 'eoi':
-            $eoi = Eoi::findOrFail($id);
-            $pdf = PDF::loadView('admin.pdf.eoipdf', compact('eoi'));
-            $fileName = 'eoi-' . $eoi->created_at->format('Ymd') . '-' . $eoi->id . '.pdf';
-            return $pdf->stream($fileName);
+            case 'eoi':
+                $eoi = Eoi::findOrFail($id);
+                $pdf = PDF::loadView('admin.pdf.eoipdf', compact('eoi'));
+                $fileName = 'eoi-' . $eoi->created_at->format('Ymd') . '-' . $eoi->id . '.pdf';
+                return $pdf->stream($fileName);
 
-        case 'guarantor':
-            $guarantor = Guarantor::findOrFail($id);
-            $pdf = PDF::loadView('admin.pdf.guarantorpdf', compact('guarantor'));
-            $fileName = 'guarantor-' . $guarantor->created_at->format('Ymd') . '-' . $guarantor->id . '.pdf';
-            return $pdf->stream($fileName);
+            case 'guarantor':
+                $guarantor = Guarantor::findOrFail($id);
+                $pdf = PDF::loadView('admin.pdf.guarantorpdf', compact('guarantor'));
+                $fileName = 'guarantor-' . $guarantor->created_at->format('Ymd') . '-' . $guarantor->id . '.pdf';
+                return $pdf->stream($fileName);
 
-        case 'salestracking':
-            $salestracking = SalesTracking::findOrFail($id);
-            $pdf = PDF::loadView('admin.pdf.salespdf', compact('salestracking'));
-            $fileName = 'salestracking-' . $salestracking->created_at->format('Ymd') . '-' . $salestracking->id . '.pdf';
-            return $pdf->stream($fileName);
+            case 'salestracking':
+                $salestracking = SalesTracking::findOrFail($id);
+                $pdf = PDF::loadView('admin.pdf.salespdf', compact('salestracking'));
+                $fileName = 'salestracking-' . $salestracking->created_at->format('Ymd') . '-' . $salestracking->id . '.pdf';
+                return $pdf->stream($fileName);
+        }
+
+        abort(404, 'Invalid form type requested.');
     }
 
-    abort(404, 'Invalid form type requested.');
-}
-
-public function edit($id)
+    public function updateEoi(Request $request, $id)
     {
-        $sales = SalesTracking::findOrFail($id); // fetch the record
+        $request->validate([
+            'receiving_manager' => 'required|string',
+            'date_received' => 'required|date',
+            'approval_status' => 'required|string',
+            'remark' => 'nullable|string',
+        ]);
+
+        $form = Eoi::findOrFail($id);
+
+        $form->update([
+            'receiving_manager' => $request->receiving_manager,
+            'date_received' => $request->date_received,
+            'approval_status' => $request->approval_status,
+            'remark' => $request->remark,
+        ]);
+
+        return redirect()->route("admin.forms.eoi")->with('success', 'EOI updated successfully.');
+    }
+
+
+    public function downloadFile($type, $id)
+    {
+        $eoi = EOI::findOrFail($id);
+
+        if ($type === 'id') {
+            $filePath = $eoi->id_file;
+        } elseif ($type === 'nok') {
+            $filePath = $eoi->nok_id_file;
+        } else {
+            abort(404);
+        }
+
+        // Check file exists in storage/app/public/
+        if (!$filePath || !Storage::disk('public')->exists($filePath)) {
+            abort(404, 'File not found.');
+        }
+
+        return Storage::disk('public')->download($filePath);
+    }
+
+
+
+
+    public function edit($id)
+    {
+        $sales = SalesTracking::findOrFail($id);
         return view('admin.forms.editsales', compact('sales'));
     }
 
-      public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $sales = SalesTracking::findOrFail($id);
 

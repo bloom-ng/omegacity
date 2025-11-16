@@ -53,6 +53,14 @@ return new class extends Migration
             $table->string('signature_file')->nullable();
             $table->date('signature_date');
             $table->text('additional_info')->nullable();
+
+            //document attached
+            $table->string('id_file')->nullable();
+            $table->string('nok_id_file')->nullable();
+            $table->string('receiving_manager')->nullable();
+$table->date('date_received')->nullable();
+$table->string('approval_status')->default('Pending'); 
+$table->text('remark')->nullable();
             $table->timestamps();
         });
     }

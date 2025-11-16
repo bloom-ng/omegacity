@@ -7,10 +7,9 @@
             {{-- Header + Search Bar --}}
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <form method="GET" action="{{ route('admin.forms.eoi') }}" class="relative max-w-xs w-full">
-                        <input type="text" name="search" value="{{ request('search') }}"
-                            class="form-input w-full pl-10 pr-4 py-2 border rounded-lg"
-                            placeholder="Search EOI forms...">
+                    <form method="GET" action="{{ route("admin.forms.eoi") }}" class="relative max-w-xs w-full">
+                        <input type="text" name="search" value="{{ request("search") }}"
+                            class="form-input w-full pl-10 pr-4 py-2 border rounded-lg" placeholder="Search EOI forms...">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
@@ -20,14 +19,14 @@
                         </div>
                     </form>
 
-                    @if(request('search'))
-                        <a href="{{ route('admin.forms.eoi') }}" class="text-sm text-blue-600 hover:underline">Clear</a>
+                    @if (request("search"))
+                        <a href="{{ route("admin.forms.eoi") }}" class="text-sm text-blue-600 hover:underline">Clear</a>
                     @endif
                 </div>
             </div>
 
             {{-- Table --}}
-            <div class="overflow-x-auto">
+            <div class="">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <tr>
@@ -42,33 +41,79 @@
 
                     <tbody class="bg-white divide-y divide-gray-200">
                         @forelse($forms as $form)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">
-                                {{ $form->surname }} {{ $form->first_name }}
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $form->email }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $form->mobile }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $form->land_category }}</td>
+                            <tr class="hover:bg-gray-50">
 
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="{{ route('admin.forms.download', [$form->id, 'eoi']) }}"
-                                   class="text-blue-600 hover:text-blue-900 mr-3" title="Download PDF">
-                                    <i class="fas fa-eye"></i>
-                                </a>
+                                <td class="px-6 py-4 text-sm">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 text-sm">{{ $form->surname }} {{ $form->first_name }}</td>
+                                <td class="px-6 py-4 text-sm">{{ $form->email }}</td>
+                                <td class="px-6 py-4 text-sm">{{ $form->mobile }}</td>
+                                <td class="px-6 py-4 text-sm">{{ $form->land_category }}</td>
 
-                                {{-- Delete Form --}}
-                                <form action=""
-                                      method="POST" class="inline-block"
-                                      onsubmit="return confirm('Delete this EOI submission?');">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button type="submit" class="text-red-600 hover:text-red-900" title="Delete">
-                                        <i class="fas fa-trash"></i>
+                                <td class="px-6 py-4 text-right text-sm">
+
+                                    {{-- View PDF --}}
+                                    <a href="{{ route("admin.forms.download", [$form->id, "eoi"]) }}" target="_blank"
+                                        rel="noopener noreferrer" class="text-blue-600 hover:text-blue-900 mr-3">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                     <!-- Download Dropdown -->
+                                    <div class="relative inline-block text-left z-40">
+
+                                        <!-- Dropdown Trigger -->
+                                        <button onclick="toggleDropdown({{ $form->id }})"
+                                            class="text-blue-600 hover:text-blue-900 focus:outline-none mr-3">
+                                            <i class="fas fa-download text-lg"></i>
+                                        </button>
+
+                                        <!-- Dropdown Menu -->
+                                       <div id="dropdown-{{ $form->id }}"
+     class="hidden fixed bg-white border border-gray-200 rounded-md shadow-xl z-[99999] w-48">
+
+
+                                            <ul class="py-2 text-sm text-gray-700">
+
+                                                <!-- ID File -->
+                                                <li class="px-4 py-2 hover:bg-gray-100">
+                                                    @if ($form->id_file)
+                                                        <a href="{{ route("admin.eoi.download.file", ["type" => "id", "id" => $form->id]) }}"
+                                                            class="flex items-center space-x-2">
+                                                            <i class="fas fa-id-card"></i>
+                                                            <span>Download ID File</span>
+                                                        </a>
+                                                    @else
+                                                        <span class="text-gray-400">No ID File</span>
+                                                    @endif
+                                                </li>
+
+                                                <!-- NOK ID File -->
+                                                <li class="px-4 py-2 hover:bg-gray-100 border-t border-gray-200">
+                                                    @if ($form->nok_id_file)
+                                                        <a href="{{ route("admin.eoi.download.file", ["type" => "nok", "id" => $form->id]) }}"
+                                                            class="flex items-center space-x-2">
+                                                            <i class="fas fa-user-shield"></i>
+                                                            <span>Download NOK ID File</span>
+                                                        </a>
+                                                    @else
+                                                        <span class="text-gray-400">No NOK File</span>
+                                                    @endif
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+                                    </div>
+
+
+                                    {{-- Edit Button --}}
+                                    <button class="text-green-600 hover:text-green-800 mr-3 editBtn"
+                                        data-id="{{ $form->id }}" data-surname="{{ $form->surname }}"
+                                        data-first="{{ $form->first_name }}" data-email="{{ $form->email }}"
+                                        data-phone="{{ $form->mobile }}" data-land="{{ $form->land_category }}">
+                                        <i class="fas fa-edit"></i>
                                     </button>
-                                </form>
-                            </td>
-                        </tr>
+
+                                </td>
+                            </tr>
                         @empty
                             <tr>
                                 <td colspan="11" class="text-center py-4 text-gray-500">No EOI forms found.</td>
@@ -84,24 +129,105 @@
             </div>
         </div>
     </div>
- <!-- Loading Spinner Overlay -->
-<div id="loading-overlay" class="fixed inset-0 bg-gray-100 bg-opacity-75 flex items-center justify-center z-50 hidden">
-    <img src="{{ asset('assets/images/favicon-omega.png') }}"
-         alt="Loading..."
-         class="h-12 w-12 animate-spin">
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const downloadLinks = document.querySelectorAll('a[title="Download PDF"]');
-        const overlay = document.getElementById('loading-overlay');
+    <!-- Edit Modal -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-70 flex items-center justify-center">
+        <div class="bg-white w-full max-w-lg rounded-lg shadow-lg p-6">
 
-        downloadLinks.forEach(link => {
-            link.addEventListener('click', function () {
-                overlay.classList.remove('hidden');
+            <h2 class="text-xl font-bold mb-4">Edit EOI Form</h2>
+
+            <form id="editForm" method="POST">
+                @csrf
+                @method("PUT")
+
+                <!-- Row 1: Receiving Manager & Date Received -->
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="text-sm font-medium">Receiving Manager</label>
+                        <input id="editReceivingManager" type="text" name="receiving_manager" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+                            required>
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">Date Received</label>
+                        <input id="editDateReceived" type="date" name="date_received" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none" required>
+                    </div>
+                </div>
+
+                <!-- Approval Status -->
+                <div class="mb-4">
+                    <label class="text-sm font-medium">Approval Status</label>
+                    <select id="editApprovalStatus" name="approval_status" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none">
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+
+                <!-- Remark -->
+                <div class="mb-4">
+                    <label class="text-sm font-medium">Remark</label>
+                    <textarea id="editRemark" name="remark" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none" rows="3" placeholder="Enter remark (optional)"></textarea>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end mt-6">
+                    <button type="button" onclick="closeModal()" class="mr-3 bg-gray-300 text-black px-6 py-2 rounded shadow mt-8">
+                        Cancel
+                    </button>
+
+                    <button class="bg-black text-white px-6 py-2 rounded shadow hover:bg-gray-800 mt-8">
+                        Update
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('editModal');
+        const editForm = document.getElementById('editForm');
+
+        document.querySelectorAll('.editBtn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Set form action dynamically
+                editForm.action = "/admin/forms/eoi/" + this.dataset.id;
+
+                // Fill form fields
+                document.getElementById('editReceivingManager').value = this.dataset.receiving_manager;
+                document.getElementById('editDateReceived').value = this.dataset.date_received;
+                document.getElementById('editApprovalStatus').value = this.dataset.approval_status;
+                document.getElementById('editRemark').value = this.dataset.remark;
+
+                modal.classList.remove('hidden');
             });
         });
-    });
-</script>
 
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        function toggleDropdown(id) {
+        const dropdown = document.getElementById(`dropdown-${id}`);
+        dropdown.classList.toggle('hidden');
+
+        // Get the button position
+        const button = event.currentTarget.getBoundingClientRect();
+
+        // Position the dropdown directly under the button
+        dropdown.style.top = (button.bottom + 8) + "px";
+        dropdown.style.left = (button.right - dropdown.offsetWidth) + "px";
+    }
+
+    // Close if clicked outside
+    document.addEventListener("click", function (e) {
+        document.querySelectorAll("[id^='dropdown-']").forEach(dd => {
+            if (!dd.contains(e.target) && !e.target.closest("button")) {
+                dd.classList.add("hidden");
+            }
+        });
+    });
+
+    </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use App\Models\Eoi;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Receipt;
@@ -54,6 +55,12 @@ class DashboardController extends Controller
         ->merge(ContactMessage::latest()->take(1)->get()->map(fn($i) => [
             'type' => 'Contact Message',
             'name' => $i->message,
+            'details' => $i->email,
+            'time' => $i->created_at
+        ]))
+         ->merge(Eoi::latest()->take(1)->get()->map(fn($i) => [
+            'type' => 'Expression Of Interest',
+            'name' => $i->surname . " " . $i->first_name,
             'details' => $i->email,
             'time' => $i->created_at
         ]))

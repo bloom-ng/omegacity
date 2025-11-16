@@ -357,10 +357,10 @@
         {{-- Section E --}}
         <div class="section-title">Section E – Official Use Only</div>
         <div class="official-box">
-            Receiving Manager: __________________________________ <br><br>
-            Date Received: ______________________________________ <br><br>
-            Approval Status: _____________________________________ <br><br>
-            Comment / Remark: ___________________________________
+            Receiving Manager: {{ $eoi->receiving_manager }} <br><br>
+            Date Received: {{ $eoi->date_received }} <br><br>
+            Approval Status: {{ $eoi->approval_status }} <br><br>
+            Comment / Remark: {{ $eoi->remark }}
         </div>
 
     </div>

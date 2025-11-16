@@ -15,14 +15,14 @@ class SettingSeeder extends Seeder
     {
         DB::table('settings')->insert([
             [
-                'name'       => 'Phone',
+                'name'       => 'Phone-Number',
                 'key'        => 'phone',
                 'value'      => '+2348067780422',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Phone-2',
+                'name'       => 'Phone-Number-2',
                 'key'        => 'phone2',
                 'value'      => '+2349113333439',
                 'created_at' => now(),

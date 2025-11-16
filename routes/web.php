@@ -62,6 +62,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 Route::get('/forms/eoi', [App\Http\Controllers\Admin\FormsController::class, 'eoi'])
     ->name('forms.eoi');
 
+    Route::put('/forms/eoi/{id}', [App\Http\Controllers\Admin\FormsController::class, 'updateEoi'])->name('forms.eoi.update');
+
+
 Route::get('/forms/guarantor', [App\Http\Controllers\Admin\FormsController::class, 'guarantor'])
     ->name('forms.guarantor');
 
@@ -74,6 +77,10 @@ Route::get('/forms/salestracking', [App\Http\Controllers\Admin\FormsController::
 // Download PDF
 Route::get('forms/download/{id}/{type}', [App\Http\Controllers\Admin\FormsController::class, 'download'])
     ->name('forms.download');
+
+    Route::get('/eoi/download/{type}/{id}', [App\Http\Controllers\Admin\FormsController::class, 'downloadFile'])
+     ->name('eoi.download.file');
+
 
 
     // Receipts
