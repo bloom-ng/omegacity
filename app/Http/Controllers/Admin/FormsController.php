@@ -87,6 +87,7 @@ class FormsController extends Controller
     public function downloadFile($type, $id)
     {
         $eoi = EOI::findOrFail($id);
+        $guarantor = Guarantor::findOrFail($id);
 
         if ($type === 'id') {
             $filePath = $eoi->id_file;
@@ -101,7 +102,23 @@ class FormsController extends Controller
             abort(404, 'File not found.');
         }
 
-        return Storage::disk('public')->download($filePath);
+       return response()->file(storage_path('app/public/' . $filePath));
+
+    }
+
+     public function downloadDocFile($id)
+    {
+
+        $guarantor = Guarantor::findOrFail($id);
+        $filePath = $guarantor->document_file;
+
+        // Check file exists in storage/app/public/
+        if (!$filePath || !Storage::disk('public')->exists($filePath)) {
+            abort(404, 'File not found.');
+        }
+
+       return response()->file(storage_path('app/public/' . $filePath));
+
     }
 
 

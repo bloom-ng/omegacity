@@ -7,6 +7,7 @@ use App\Models\Eoi;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Receipt;
+use App\Models\Guarantor;
 use App\Models\LandListing;
 use Illuminate\Http\Request;
 use App\Models\ContactMessage;
@@ -56,6 +57,12 @@ class DashboardController extends Controller
             'type' => 'Contact Message',
             'name' => $i->message,
             'details' => $i->email,
+            'time' => $i->created_at
+        ]))
+         ->merge(Guarantor::latest()->take(1)->get()->map(fn($i) => [
+            'type' => 'Guarantor Form For',
+            'name' => $i->candidate_name,
+            'details' => $i->guarantor_email,
             'time' => $i->created_at
         ]))
          ->merge(Eoi::latest()->take(1)->get()->map(fn($i) => [

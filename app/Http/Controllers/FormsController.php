@@ -27,7 +27,6 @@ class FormsController extends Controller
     public function storeEOI(Request $request)
     {
         $validated = $request->validate([
-            // SECTION A
             'title' => 'required',
             'surname' => 'required',
             'first_name' => 'required',
@@ -45,24 +44,16 @@ class FormsController extends Controller
             'id_type' => 'required',
             'id_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
             'passport_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-
-            // NEXT OF KIN
             'nok_name' => 'required',
             'nok_mobile' => 'required',
             'nok_address' => 'required',
             'nok_email' => 'nullable|email',
             'nok_id_type' => 'nullable',
             'nok_id_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
-
-            // SECTION C
             'land_category' => 'required',
             'payment_option' => 'required',
-
-            // Agent Info (optional)
             'agent_name' => 'nullable',
             'agent_phone' => 'nullable',
-
-            // Endorsement
             'applicant_name' => 'required',
             'signature_file' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'signature_date' => 'required|date',
@@ -121,6 +112,7 @@ class FormsController extends Controller
             'phone' => 'required',
             'date_signed' => 'required|date',
             'id_file' => 'nullable|file|mimes:jpg,png,pdf',
+            'document_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
             'signature_file' => 'nullable|file|mimes:jpg,png,pdf',
         ]);
 
@@ -129,6 +121,13 @@ class FormsController extends Controller
         }
         if ($request->hasFile('signature_file')) {
             $validated['signature_file'] = $request->signature_file->store('guarantor/signatures', 'public');
+        }
+
+        if ($request->hasFile('document_file')) {
+            $original = $request->file('document_file')->getClientOriginalName();
+            $filename = $request->id_type . '-' . $original;
+            $path = $request->file('document_file')->storeAs('document_docs', $filename, 'public');
+            $validated['document_file'] = $path;
         }
 
         $g = Guarantor::create($validated);

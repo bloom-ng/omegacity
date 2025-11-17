@@ -56,26 +56,24 @@
                                         rel="noopener noreferrer" class="text-blue-600 hover:text-blue-900 mr-3">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                     <!-- Download Dropdown -->
+
                                     <div class="relative inline-block text-left z-40">
 
-                                        <!-- Dropdown Trigger -->
                                         <button onclick="toggleDropdown({{ $form->id }})"
                                             class="text-blue-600 hover:text-blue-900 focus:outline-none mr-3">
                                             <i class="fas fa-download text-lg"></i>
                                         </button>
 
-                                        <!-- Dropdown Menu -->
-                                       <div id="dropdown-{{ $form->id }}"
-     class="hidden fixed bg-white border border-gray-200 rounded-md shadow-xl z-[99999] w-48">
+                                        <div id="dropdown-{{ $form->id }}"
+                                            class="hidden fixed bg-white border border-gray-200 rounded-md shadow-xl z-[99999] w-48">
 
 
                                             <ul class="py-2 text-sm text-gray-700">
 
-                                                <!-- ID File -->
                                                 <li class="px-4 py-2 hover:bg-gray-100">
                                                     @if ($form->id_file)
                                                         <a href="{{ route("admin.eoi.download.file", ["type" => "id", "id" => $form->id]) }}"
+                                                            target="_blank" rel="noopener noreferrer"
                                                             class="flex items-center space-x-2">
                                                             <i class="fas fa-id-card"></i>
                                                             <span>Download ID File</span>
@@ -85,10 +83,10 @@
                                                     @endif
                                                 </li>
 
-                                                <!-- NOK ID File -->
                                                 <li class="px-4 py-2 hover:bg-gray-100 border-t border-gray-200">
                                                     @if ($form->nok_id_file)
                                                         <a href="{{ route("admin.eoi.download.file", ["type" => "nok", "id" => $form->id]) }}"
+                                                            target="_blank" rel="noopener noreferrer"
                                                             class="flex items-center space-x-2">
                                                             <i class="fas fa-user-shield"></i>
                                                             <span>Download NOK ID File</span>
@@ -100,17 +98,20 @@
 
                                             </ul>
 
+
                                         </div>
                                     </div>
 
 
-                                    {{-- Edit Button --}}
                                     <button class="text-green-600 hover:text-green-800 mr-3 editBtn"
-                                        data-id="{{ $form->id }}" data-surname="{{ $form->surname }}"
-                                        data-first="{{ $form->first_name }}" data-email="{{ $form->email }}"
-                                        data-phone="{{ $form->mobile }}" data-land="{{ $form->land_category }}">
+                                        data-id="{{ $form->id }}"
+                                        data-receiving_manager="{{ $form->receiving_manager ?? "" }}"
+                                        data-date_received="{{ $form->date_received ?? "" }}"
+                                        data-approval_status="{{ $form->approval_status ?? "Pending" }}"
+                                        data-remark="{{ $form->remark ?? "" }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
+
 
                                 </td>
                             </tr>
@@ -130,7 +131,6 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-70 flex items-center justify-center">
         <div class="bg-white w-full max-w-lg rounded-lg shadow-lg p-6">
 
@@ -139,40 +139,42 @@
             <form id="editForm" method="POST">
                 @csrf
                 @method("PUT")
-
-                <!-- Row 1: Receiving Manager & Date Received -->
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="text-sm font-medium">Receiving Manager</label>
-                        <input id="editReceivingManager" type="text" name="receiving_manager" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+                        <input id="editReceivingManager" type="text" name="receiving_manager"
+                            class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
                             required>
                     </div>
 
                     <div>
                         <label class="text-sm font-medium">Date Received</label>
-                        <input id="editDateReceived" type="date" name="date_received" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none" required>
+                        <input id="editDateReceived" type="date" name="date_received"
+                            class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+                            required>
                     </div>
                 </div>
 
-                <!-- Approval Status -->
                 <div class="mb-4">
                     <label class="text-sm font-medium">Approval Status</label>
-                    <select id="editApprovalStatus" name="approval_status" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none">
+                    <select id="editApprovalStatus" name="approval_status"
+                        class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none">
                         <option value="Pending">Pending</option>
                         <option value="Approved">Approved</option>
                         <option value="Rejected">Rejected</option>
                     </select>
                 </div>
 
-                <!-- Remark -->
                 <div class="mb-4">
                     <label class="text-sm font-medium">Remark</label>
-                    <textarea id="editRemark" name="remark" class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none" rows="3" placeholder="Enter remark (optional)"></textarea>
+                    <textarea id="editRemark" name="remark"
+                        class="w-full border-2 border-gray-700 p-3 rounded-md bg-white focus:ring-2 focus:ring-black focus:border-black outline-none"
+                        rows="3" placeholder="Enter remark (optional)"></textarea>
                 </div>
 
-                <!-- Buttons -->
                 <div class="flex justify-end mt-6">
-                    <button type="button" onclick="closeModal()" class="mr-3 bg-gray-300 text-black px-6 py-2 rounded shadow mt-8">
+                    <button type="button" onclick="closeModal()"
+                        class="mr-3 bg-gray-300 text-black px-6 py-2 rounded shadow mt-8">
                         Cancel
                     </button>
 
@@ -191,43 +193,39 @@
 
         document.querySelectorAll('.editBtn').forEach(btn => {
             btn.addEventListener('click', function() {
-                // Set form action dynamically
+
                 editForm.action = "/admin/forms/eoi/" + this.dataset.id;
 
-                // Fill form fields
-                document.getElementById('editReceivingManager').value = this.dataset.receiving_manager;
-                document.getElementById('editDateReceived').value = this.dataset.date_received;
-                document.getElementById('editApprovalStatus').value = this.dataset.approval_status;
-                document.getElementById('editRemark').value = this.dataset.remark;
+                document.getElementById('editReceivingManager').value = this.dataset.receiving_manager ||
+                    "";
+                document.getElementById('editDateReceived').value = this.dataset.date_received || "";
+                document.getElementById('editApprovalStatus').value = this.dataset.approval_status ||
+                    "Pending";
+                document.getElementById('editRemark').value = this.dataset.remark || "";
 
                 modal.classList.remove('hidden');
             });
         });
+
 
         function closeModal() {
             modal.classList.add('hidden');
         }
 
         function toggleDropdown(id) {
-        const dropdown = document.getElementById(`dropdown-${id}`);
-        dropdown.classList.toggle('hidden');
+            const dropdown = document.getElementById(`dropdown-${id}`);
+            dropdown.classList.toggle('hidden');
+            const button = event.currentTarget.getBoundingClientRect();
+            dropdown.style.top = (button.bottom + 8) + "px";
+            dropdown.style.left = (button.right - dropdown.offsetWidth) + "px";
+        }
 
-        // Get the button position
-        const button = event.currentTarget.getBoundingClientRect();
-
-        // Position the dropdown directly under the button
-        dropdown.style.top = (button.bottom + 8) + "px";
-        dropdown.style.left = (button.right - dropdown.offsetWidth) + "px";
-    }
-
-    // Close if clicked outside
-    document.addEventListener("click", function (e) {
-        document.querySelectorAll("[id^='dropdown-']").forEach(dd => {
-            if (!dd.contains(e.target) && !e.target.closest("button")) {
-                dd.classList.add("hidden");
-            }
+        document.addEventListener("click", function(e) {
+            document.querySelectorAll("[id^='dropdown-']").forEach(dd => {
+                if (!dd.contains(e.target) && !e.target.closest("button")) {
+                    dd.classList.add("hidden");
+                }
+            });
         });
-    });
-
     </script>
 @endsection

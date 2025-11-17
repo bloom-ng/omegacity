@@ -81,6 +81,9 @@ Route::get('forms/download/{id}/{type}', [App\Http\Controllers\Admin\FormsContro
     Route::get('/eoi/download/{type}/{id}', [App\Http\Controllers\Admin\FormsController::class, 'downloadFile'])
      ->name('eoi.download.file');
 
+      Route::get('/guarantor/download/{id}', [App\Http\Controllers\Admin\FormsController::class, 'downloadDocFile'])
+     ->name('guarantor.download.file');
+
 
 
     // Receipts
