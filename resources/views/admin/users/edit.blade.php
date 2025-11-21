@@ -30,6 +30,15 @@
                         @enderror
                     </div>
 
+                     <div class="mb-4">
+                        <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+                        <input type="text" name="phone" id="phone" value="{{ old("phone", $user->phone) }}" required
+                            class="py-3 px-2 shadow-md focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("phone") border-red-500 @enderror">
+                        @error("phone")
+                            <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class="mb-4">
                         <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
                         <input type="email" name="email" id="email" value="{{ old("email", $user->email) }}"

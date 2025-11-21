@@ -48,16 +48,29 @@
 
                         </div>
                     </div>
-                    <div class="space-y-2">
+                    <div class="space-y-1">
                         <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-500">Receipt #</span>
+                            <span class="text-sm font-medium text-gray-500">Receipt Number</span>
                              <span class="text-sm font-medium text-gray-500">Date</span>
 
                         </div>
                         <div class="flex justify-between">
 
-                            <span class="text-sm text-gray-900 font-bold">REC-{{ $receipt->created_at->format('Ymd') }}{{ $receipt->id }}</span>
-                            <span class="text-sm text-gray-900 font-bold">{{ $receipt->date->format("M d, Y") }}</span>
+                             <span class="text-sm text-gray-900 font-bold">REC-{{ $receipt->created_at->format('Ymd') }}{{ $receipt->id }}</span>
+                             <span class="text-sm text-gray-900 font-bold">{{ $receipt->date->format("M d, Y") }}</span>
+                        </div>
+
+
+
+                        <div class="flex justify-between">
+
+                            <span class="text-sm font-medium text-gray-500">Commission Bonus (%)</span>
+                           <span class="text-sm font-medium text-gray-500">Commission Amount Paid</span>
+
+                        </div>
+                         <div class="flex justify-between">
+                            <span class="text-sm text-gray-900 font-bold">{{ $receipt->commission_percentage }}%</span>
+                            <span class="text-sm text-gray-900 font-bold">₦{{ number_format($receipt->commission_amount) }}</span>
                         </div>
 
                     </div>
@@ -129,14 +142,14 @@
                         @if ($receipt->tax > 0)
                             <div class="flex justify-between py-2 text-sm text-gray-600">
                                 <span>VAT ({{ $receipt->tax }}%)</span>
-                                <span>₦{{ number_format($taxAmount, 2) }}</span>
+                                <span>₦{{ number_format($taxAmount) }}</span>
                             </div>
                         @endif
 
                         @if ($receipt->discount > 0)
                             <div class="flex justify-between py-2 text-sm text-gray-600">
                                 <span>Discount ({{ $receipt->discount }})%</span>
-                                <span>-₦{{ number_format($discountAmount, 2) }}</span>
+                                <span>-₦{{ number_format($discountAmount) }}</span>
                             </div>
                         @endif
 

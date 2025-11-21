@@ -35,6 +35,7 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-6 text-left">Name</th>
+                        <th class="py-3 px-6 text-left">Phone</th>
                         <th class="py-3 px-6 text-left">Email</th>
                         <th class="py-3 px-6 text-center">Role</th>
                         <th class="py-3 px-6 text-center">Actions</th>
@@ -45,6 +46,9 @@
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                     {{ $user->name }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    {{ $user->phone }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900s">
                                     {{ $user->email }}

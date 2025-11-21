@@ -16,6 +16,8 @@ class Receipt extends Model
         'receipt_items',
         'tax',
         'discount',
+        'commission_percentage',
+        'commission_amount',
     ];
 
     protected $dates = [
@@ -43,10 +45,10 @@ class Receipt extends Model
     {
         // Get the raw JSON string from database
         $rawItems = $this->attributes['receipt_items'] ?? '[]';
-        
+
         // Decode JSON string to array
         $items = json_decode($rawItems, true) ?? [];
-        
+
         // Calculate subtotal from items
         $subtotal = 0;
         foreach ($items as $item) {
@@ -54,17 +56,17 @@ class Receipt extends Model
             $price = floatval($item['price'] ?? 0);
             $subtotal += ($quantity * $price);
         }
-        
+
         // Get tax and discount
         $taxPercentage = floatval($this->attributes['tax'] ?? 0);
         $discount = floatval($this->attributes['discount'] ?? 0);
-        
+
         // Calculate tax amount
         $taxAmount = ($subtotal * $taxPercentage) / 100;
-        
+
         // Calculate final total
         $total = ($subtotal + $taxAmount) - $discount;
-        
+
         return round($total, 2);
     }
 

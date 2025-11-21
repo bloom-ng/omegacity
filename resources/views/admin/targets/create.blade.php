@@ -11,7 +11,7 @@
             </div>
             <a href="{{ route('admin.targets.index') }}"
                 class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                <i class="fas fa-arrow-left mr-2"></i> Back to Agents
+                <i class="fas fa-arrow-left mr-2"></i> Back to Marketers
             </a>
         </div>
 

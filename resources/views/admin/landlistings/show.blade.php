@@ -101,39 +101,37 @@
 
         <!-- Gallery -->
         <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
-    <div class="bg-gray-100 text-center py-3 border-b">
-        <h5 class="m-0 font-semibold text-primary">
-            <i class="fas fa-images me-2"></i>Property Gallery
-        </h5>
-    </div>
-
-    <div class="p-6">
-        @php
-            $photos = is_array($landlisting->photos)
-                ? $landlisting->photos
-                : json_decode($landlisting->photos, true);
-        @endphp
-
-        @if (!empty($photos))
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                @foreach ($photos as $index => $photo)
-
-                    <a href="{{ asset('storage/' . $photo) }}" data-lightbox="property-gallery"
-                       data-title="Photo {{ $index + 1 }}">
-                        <img src="{{ asset('storage/' . $photo) }}"
-                             alt="Property Photo {{ $index + 1 }}"
-                             class="rounded-lg shadow-sm hover:scale-105 transition-transform duration-200 object-cover w-50 h-60">
-                    </a>
-                @endforeach
+            <div class="bg-gray-100 text-center py-3 border-b">
+                <h5 class="m-0 font-semibold text-primary">
+                    <i class="fas fa-images me-2"></i>Property Gallery
+                </h5>
             </div>
-        @else
-            <div class="text-center py-6">
-                <i class="fas fa-image fa-3x text-gray-400 mb-3"></i>
-                <h5 class="text-gray-600 font-medium">No photos available</h5>
+
+            <div class="p-6">
+                @php
+                    $photos = is_array($landlisting->photos)
+                        ? $landlisting->photos
+                        : json_decode($landlisting->photos, true);
+                @endphp
+
+                @if (!empty($photos))
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        @foreach ($photos as $index => $photo)
+                            <a href="{{ asset("storage/" . $photo) }}" data-lightbox="property-gallery"
+                                data-title="Photo {{ $index + 1 }}">
+                                <img src="{{ asset("storage/" . $photo) }}" alt="Property Photo {{ $index + 1 }}"
+                                    class="rounded-lg shadow-sm hover:scale-105 transition-transform duration-200 object-cover w-50 h-60">
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-center py-6">
+                        <i class="fas fa-image fa-3x text-gray-400 mb-3"></i>
+                        <h5 class="text-gray-600 font-medium">No photos available</h5>
+                    </div>
+                @endif
             </div>
-        @endif
-    </div>
-</div>
+        </div>
 
 
         <!-- Quick Actions -->
@@ -145,14 +143,17 @@
             </div>
             <div class="flex divide-x">
                 <a href="#" class="flex-1 px-6 py-4 hover:bg-gray-50 transition flex items-center justify-center">
-                    <i class="fas fa-phone-alt me-2 text-gray-500"></i> Contact Agent
+                    Agent Name <br> {{ $landlisting->agent->name }}
                 </a>
                 <a href="#" class="flex-1 px-6 py-4 hover:bg-gray-50 transition flex items-center justify-center">
-                    <i class="fas fa-calendar-alt me-2 text-gray-500"></i> Schedule Inspection
+                    <i class="fas fa-calendar-alt me-2 text-gray-500"></i>
+                    Inspection Date & Time <br>
+
+                    {{ \Carbon\Carbon::parse($landlisting->inspection_date)->format("d M, Y") }}
+                    {{ \Carbon\Carbon::parse($landlisting->inspection_time)->format("h:i A") }}
                 </a>
-                <a href="#" class="flex-1 px-6 py-4 hover:bg-gray-50 transition flex items-center justify-center">
-                    <i class="fas fa-file-invoice-dollar me-2 text-gray-500"></i> Generate Invoice
-                </a>
+
+
                 <form action="{{ route("admin.landlistings.destroy", $landlisting) }}" method="POST"
                     onsubmit="return confirm('Are you sure you want to delete this listing?')" class="flex-1">
                     @csrf

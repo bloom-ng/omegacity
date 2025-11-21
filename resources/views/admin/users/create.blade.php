@@ -5,10 +5,10 @@
 @section("content")
     <div class="w-full">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Create New User</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Create New Staff</h1>
             <a
                 href="{{ route("admin.users.index") }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                <i class="fas fa-arrow-left mr-2"></i> Back to Users
+                <i class="fas fa-arrow-left mr-2"></i> Back to Staffs
             </a>
         </div>
 
@@ -24,6 +24,15 @@
                             <input type="text" name="name" id="name" value="{{ old("name") }}" required
                                 class="py-3 px-2 shadow-md focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("name") border-red-500 @enderror">
                             @error("name")
+                                <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                         <div>
+                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+                            <input type="text" name="phone" id="phone" value="{{ old("phone") }}" required
+                                class="py-3 px-2 shadow-md focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("phone") border-red-500 @enderror">
+                            @error("phone")
                                 <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
                             @enderror
                         </div>

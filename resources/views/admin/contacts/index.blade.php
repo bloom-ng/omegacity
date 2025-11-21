@@ -25,9 +25,7 @@
                         </div>
                     </form>
                     @if (request("search"))
-                        <a href="{{ route("admin.contacts.index") }}" class="text-sm text-blue-600 hover:underline">
-                            Clear
-                        </a>
+                        <a href="{{ route("admin.contacts.index") }}" class="bg-black shadow-md hover:scale-110 transition-transform duration-200 text-white text-sm font-medium py-2 px-4 rounded-lg">Clear</a>
                     @endif
                 </div>
             </div>

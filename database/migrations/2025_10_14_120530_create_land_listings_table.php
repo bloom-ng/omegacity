@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('property_name');
             $table->string('location');
-            $table->decimal('plot_size', 10, 2)->nullable();
+            $table->string('plot_size')->nullable();
             $table->decimal('selling_price', 15, 2)->default(0);
             $table->string('status')->default('available');
             $table->foreignId('sales_agent_id')->nullable()->constrained('users')->nullOnDelete();
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->json('photos')->nullable();
             $table->text('map_link')->nullable();
             $table->integer('view_count')->default(0);
+            $table->date('inspection_date')->nullable();
+            $table->time('inspection_time')->nullable();
             $table->timestamps();
         });
     }

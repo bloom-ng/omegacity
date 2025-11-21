@@ -113,11 +113,20 @@
                         <input type="number" name="discount" id="discount" min="0" step="0.01" value="0"
                             class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                     </div>
-                     <div >
-    <label for="tax_percentage" class="block text-sm font-medium text-gray-700 mb-1">VAT (%)</label>
-    <input type="number" name="tax" id="tax_percentage" value="0" min="0" step="0.01"
-        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
-</div>
+                    <div>
+                        <label for="tax_percentage" class="block text-sm font-medium text-gray-700 mb-1">VAT (%)</label>
+                        <input type="number" name="tax" id="tax_percentage" value="0" min="0"
+                            step="0.01"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                    <div>
+                        <label for="commission_percentage" class="block text-sm font-medium text-gray-700 mb-1">Commission
+                            (%)</label>
+                        <input type="number" name="commission_percentage" id="commission_percentage" value="0"
+                            min="0" step="0.01"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+
                     <div class="flex flex-col justify-end">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-gray-700">Subtotal:</span>
@@ -205,26 +214,26 @@
             }
 
             function calculateTotals() {
-    let subtotal = 0;
+                let subtotal = 0;
 
-    document.querySelectorAll('#receipt-items .grid').forEach(row => {
-        const price = parseFloat(row.querySelector('input[name*="[price]"]').value) || 0;
-        const qty = parseFloat(row.querySelector('input[name*="[quantity]"]').value) || 0;
-        subtotal += price * qty;
-    });
+                document.querySelectorAll('#receipt-items .grid').forEach(row => {
+                    const price = parseFloat(row.querySelector('input[name*="[price]"]').value) || 0;
+                    const qty = parseFloat(row.querySelector('input[name*="[quantity]"]').value) || 0;
+                    subtotal += price * qty;
+                });
 
-    const vatPercent = parseFloat(document.getElementById('tax_percentage').value) || 0;
-    const discountPercent = parseFloat(document.getElementById('discount').value) || 0;
+                const vatPercent = parseFloat(document.getElementById('tax_percentage').value) || 0;
+                const discountPercent = parseFloat(document.getElementById('discount').value) || 0;
 
-    const vatValue = (subtotal * vatPercent) / 100;
-    const discountValue = (subtotal * discountPercent) / 100;
-    const total = subtotal + vatValue - discountValue;
+                const vatValue = (subtotal * vatPercent) / 100;
+                const discountValue = (subtotal * discountPercent) / 100;
+                const total = subtotal + vatValue - discountValue;
 
-    document.getElementById('subtotalDisplay').textContent = subtotal.toFixed(2);
-    document.getElementById('vatDisplay').textContent = vatValue.toFixed(2);
-    document.getElementById('discountDisplay').textContent = discountValue.toFixed(2);
-    document.getElementById('totalDisplay').textContent = total.toFixed(2);
-}
+                document.getElementById('subtotalDisplay').textContent = subtotal.toFixed(2);
+                document.getElementById('vatDisplay').textContent = vatValue.toFixed(2);
+                document.getElementById('discountDisplay').textContent = discountValue.toFixed(2);
+                document.getElementById('totalDisplay').textContent = total.toFixed(2);
+            }
 
             function attachEventListeners() {
                 // Add event listeners to all quantity, price, and tax inputs

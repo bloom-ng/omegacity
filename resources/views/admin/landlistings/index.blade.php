@@ -35,7 +35,7 @@
                             <th class="py-3 px-6 text-left">#</th>
                             <th class="py-3 px-6 text-left">Property Name</th>
                             <th class="py-3 px-6 text-left">Location</th>
-                            <th class="px-6 py-3 text-left ">Plot Size ( Hectares )</th>
+                            <th class="px-6 py-3 text-left ">Plot Size</th>
                             <th class="px-6 py-3 text-left ">Price</th>
                             <th class="px-6 py-3 text-left ">Status</th>
                             <th class="px-6 py-3 text-left">Agent Name</th>

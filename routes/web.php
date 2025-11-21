@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AgentTargetController;
 use App\Http\Controllers\Admin\LandListingController;
+use App\Http\Controllers\Admin\DocumentVerificationController;
 use App\Http\Controllers\Agent\DashboardController as AgentDashboardController;
 
 // Authentication Routes
@@ -111,6 +112,9 @@ Route::get('forms/download/{id}/{type}', [App\Http\Controllers\Admin\FormsContro
     Route::put('/users/{user}/update-password', [UserController::class, 'updatePassword'])
         ->name('users.update-password');
 
+
+    //Document Verification
+    Route::resource('documents-verification', DocumentVerificationController::class);
 
     //contact messages
     Route::resource('contacts', ContactController::class);

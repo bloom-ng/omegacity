@@ -5,7 +5,7 @@
 @section("content")
     <div class="w-full">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Agent Targets Management</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Marketer Targets Management</h1>
             <div class="flex space-x-3">
                 <form method="POST" action="{{ route("admin.targets.refresh") }}" class="inline">
                     @csrf
@@ -44,7 +44,7 @@
                         <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <tr>
                                 <th class="py-3 px-6 text-left">
-                                    Agent
+                                    Marketer
                                 </th>
                                 <th class="py-3 px-6 text-left">
                                     Email
@@ -68,7 +68,6 @@
 
                                             <div>
                                                 <div class="text-sm font-medium text-gray-900">{{ $agent->name }}</div>
-                                                <div class="text-sm text-gray-500">Agent</div>
                                             </div>
                                         </div>
                                     </td>

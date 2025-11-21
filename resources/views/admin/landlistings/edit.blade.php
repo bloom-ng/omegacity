@@ -104,7 +104,7 @@
                             </label>
                             <div class="mt-2">
                                 <select name="sales_agent_id" id="sales_agent_id"
-                                     class="mt-2 shadow-sm focus:ring-black focus:border-black block w-full sm:text-xl text-xl border-gray-300 rounded-md @error("sales_agent_id") border-red-500 @enderror"
+                                    class="mt-2 shadow-sm focus:ring-black focus:border-black block w-full sm:text-xl text-xl border-gray-300 rounded-md @error("sales_agent_id") border-red-500 @enderror"
                                     required>
                                     <option value="" disabled
                                         {{ old("sales_agent_id", $landlisting->sales_agent_id) ? "" : "selected" }}>
@@ -123,6 +123,34 @@
                             </div>
 
                         </div>
+
+                        <div>
+                            <label for="inspection_date" class="block text-xl font-bold text-gray-700">
+                                Inspection Date
+                            </label>
+                            <input type="date" name="inspection_date" id="inspection_date"
+                                value="{{ old("inspection_date", $landlisting->inspection_date) }}"
+                                class="mt-2 shadow-sm focus:ring-black focus:border-black block w-full sm:text-xl text-xl
+               border-gray-300 rounded-md @error("inspection_date") border-red-500 @enderror">
+                            @error("inspection_date")
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="inspection_time" class="block text-xl font-bold text-gray-700">
+                                Inspection Time
+                            </label>
+                            <input type="time" name="inspection_time" id="inspection_time"
+                                value="{{ old("inspection_time", $landlisting->inspection_time) }}"
+                                class="mt-2 shadow-sm focus:ring-black focus:border-black block w-full sm:text-xl text-xl
+               border-gray-300 rounded-md @error("inspection_time") border-red-500 @enderror">
+                            @error("inspection_time")
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
 
                         <!-- Map Link -->
                         <div>

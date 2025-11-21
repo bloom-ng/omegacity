@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('receipt_items');
             $table->decimal('tax', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->default(0);
+            $table->decimal('commission_percentage', 5, 2)->default(0);
+            $table->decimal('commission_amount', 10, 2)->default(0);
             $table->timestamps();
         });
     }

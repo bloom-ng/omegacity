@@ -18,6 +18,8 @@ class LandListing extends Model
         'description',
         'photos',
         'map_link',
+        'inspection_date',
+        'inspection_time',
     ];
 
     protected $casts = [

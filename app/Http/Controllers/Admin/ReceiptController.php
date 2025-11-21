@@ -56,6 +56,8 @@ class ReceiptController extends Controller
         $data = $request->validate([
             'client_id' => 'required|exists:clients,id',
             'date' => 'required|date',
+            'commission_percentage' => 'nullable|numeric|min:0|max:100',
+            'commission_amount' => 'nullable|numeric|min:0',
             'discount' => 'nullable|numeric|min:0',
             'tax' => 'nullable|numeric|min:0',
             'items' => 'required|array|min:1',
@@ -72,12 +74,16 @@ class ReceiptController extends Controller
 
         $total = ($subtotal + $taxValue) - $discount;
 
+        $commissionPercentage = $data['commission_percentage'] ?? 0;
+        $commissionAmount = ($total * $commissionPercentage) / 100;
         $receipt = Receipt::create([
             'client_id' => $data['client_id'],
             'date' => $data['date'],
             'receipt_items' => json_encode($data['items']),
             'tax' => $taxPercentage,
             'discount' => $discount,
+            'commission_percentage' => $commissionPercentage,
+            'commission_amount' => $commissionAmount,
         ]);
 
         // Update agent's target progress automatically
@@ -126,56 +132,62 @@ class ReceiptController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Receipt $receipt)
-{
-    $data = $request->validate([
-        'client_id' => 'required|exists:clients,id',
-        'date' => 'required|date',
-        'discount' => 'nullable|numeric|min:0',
-        'items' => 'required|array|min:1',
-        'items.*.description' => 'required|string',
-        'items.*.quantity' => 'required|numeric|min:1',
-        'items.*.price' => 'required|numeric|min:0',
-        'tax' => 'nullable|numeric|min:0|max:100',
-    ]);
+    {
+        $data = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'date' => 'required|date',
+            'discount' => 'nullable|numeric|min:0',
+            'commission_percentage' => 'nullable|numeric|min:0|max:100',
+            'commission_amount' => 'nullable|numeric|min:0',
+            'items' => 'required|array|min:1',
+            'items.*.description' => 'required|string',
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.price' => 'required|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0|max:100',
+        ]);
 
 
-    $subtotal = collect($data['items'])
-        ->sum(fn($item) => $item['price'] * $item['quantity']);
+        $subtotal = collect($data['items'])
+            ->sum(fn($item) => $item['price'] * $item['quantity']);
 
-    $vatPercent = $data['tax'] ?? 0;
-    $vatAmount = ($subtotal * $vatPercent) / 100;
+        $vatPercent = $data['tax'] ?? 0;
+        $vatAmount = ($subtotal * $vatPercent) / 100;
 
-    $discount = $data['discount'] ?? 0;
+        $discount = $data['discount'] ?? 0;
 
-    $total = ($subtotal + $vatAmount) - $discount;
+        $total = ($subtotal + $vatAmount) - $discount;
 
+        $commissionPercentage = $data['commission_percentage'] ?? 0;
+        $commissionAmount = ($total * $commissionPercentage) / 100;
 
-    $receipt->update([
-        'client_id' => $data['client_id'],
-        'date' => $data['date'],
-        'receipt_items' => json_encode($data['items']),
-        'tax' => $vatPercent,
-        'discount' => $discount,
-    ]);
+        $receipt->update([
+            'client_id' => $data['client_id'],
+            'date' => $data['date'],
+            'receipt_items' => json_encode($data['items']),
+            'tax' => $vatPercent,
+            'discount' => $discount,
+            'commission_percentage' => $commissionPercentage,
+            'commission_amount' => $commissionAmount,
+        ]);
 
-    // Update agent's target progress automatically
-    $client = Client::find($data['client_id']);
-    if ($client && $client->assigned_agent_id) {
-        $receiptDate = \Carbon\Carbon::parse($data['date']);
-        $this->targetService->updateTargetProgress(
-            $client->assigned_agent_id,
-            $receiptDate->year,
-            $receiptDate->month
-        );
+        // Update agent's target progress automatically
+        $client = Client::find($data['client_id']);
+        if ($client && $client->assigned_agent_id) {
+            $receiptDate = \Carbon\Carbon::parse($data['date']);
+            $this->targetService->updateTargetProgress(
+                $client->assigned_agent_id,
+                $receiptDate->year,
+                $receiptDate->month
+            );
+        }
+
+        return redirect()
+            ->route('admin.receipts.index')
+            ->with('success', 'Receipt updated successfully!')
+            ->with('subtotal', $subtotal)
+            ->with('vat_amount', $vatAmount)
+            ->with('total', $total);
     }
-
-    return redirect()
-        ->route('admin.receipts.index')
-        ->with('success', 'Receipt updated successfully!')
-        ->with('subtotal', $subtotal)
-        ->with('vat_amount', $vatAmount)
-        ->with('total', $total);
-}
 
 
 
@@ -189,7 +201,7 @@ class ReceiptController extends Controller
         // Get client and date before deleting
         $client = $receipt->client;
         $receiptDate = $receipt->date;
-        
+
         $receipt->delete();
 
         // Update agent's target progress automatically

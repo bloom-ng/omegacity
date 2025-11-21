@@ -153,7 +153,7 @@ $userRole = auth()->user()->role->name;
                     : 'flex items-center gap-3 py-2 px-8 h-12 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
                 }}">
                 <img src="{{ asset("assets/images/users.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.users.*') ? 'filter invert' : '' }}" alt="users-icon">
-                <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-[#222222B2]' }}">Users</span>
+                <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-[#222222B2]' }}">Staffs</span>
             </a>
             @endif
 
@@ -165,7 +165,7 @@ $userRole = auth()->user()->role->name;
                     : 'flex items-center gap-3 py-2 px-8 h-12 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
                 }}">
                <img src="{{ asset("assets/images/bullseye.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.targets.*') ? 'filter invert' : '' }}" alt="bullseye-icon">
-                <span class="text-[14px] font-sansm l-2 mr-4 {{ request()->routeIs('admin.targets.*') ? 'text-white' : 'text-[#222222B2]' }}">Agent Targets</span>
+                <span class="text-[14px] font-sansm l-2 mr-4 {{ request()->routeIs('admin.targets.*') ? 'text-white' : 'text-[#222222B2]' }}">Marketers Targets</span>
             </a>
             @endif
 
@@ -178,6 +178,18 @@ $userRole = auth()->user()->role->name;
                 }}">
                 <img src="{{ asset('assets/images/contacts.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.contacts.*') ? 'filter invert' : '' }}" alt="contacts-icon">
                 <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.contacts.*') ? 'text-white' : 'text-[#222222B2]' }}">Contacts</span>
+            </a>
+            @endif
+
+             <!-- Document Verification-->
+            @if($userRole === 'Admin')
+            <a href="{{ route('admin.documents-verification.index') }}"
+                class="{{ request()->routeIs('admin.documents-verification.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center gap-3 py-2 px-8 h-12 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset("assets/images/document.svg") }}" class="w-6 h-6 {{ request()->routeIs('admin.documents-verification.*') ? 'filter invert' : '' }}" alt="users-icon">
+                <span class="text-[14px] font-sans ml-2 mr-4 {{ request()->routeIs('admin.documents-verification.*') ? 'text-white' : 'text-[#222222B2]' }}">Documents Verification</span>
             </a>
             @endif
 

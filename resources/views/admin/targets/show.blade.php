@@ -16,7 +16,7 @@
                 </a>
                 <a href="{{ route('admin.targets.index') }}"
                     class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                    <i class="fas fa-arrow-left mr-2"></i> Back to Agents
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Marketer
                 </a>
             </div>
         </div>
@@ -136,9 +136,9 @@
                                     <div class="flex justify-between text-xs text-gray-500 mt-1">
                                         <span>{{ $summary['monthly']['amount_target']->progress_percentage }}% Complete</span>
                                         <span class="@if($summary['monthly']['amount_target']->is_achieved) text-green-600 @else text-gray-500 @endif">
-                                            @if($summary['monthly']['amount_target']->is_achieved) 
+                                            @if($summary['monthly']['amount_target']->is_achieved)
                                                 <i class="fas fa-check-circle"></i> Achieved
-                                            @else 
+                                            @else
                                                 Remaining: ₦{{ number_format($summary['monthly']['amount_target']->remaining, 0) }}
                                             @endif
                                         </span>
@@ -159,9 +159,9 @@
                                     <div class="flex justify-between text-xs text-gray-500 mt-1">
                                         <span>{{ $summary['monthly']['sales_target']->progress_percentage }}% Complete</span>
                                         <span class="@if($summary['monthly']['sales_target']->is_achieved) text-green-600 @else text-gray-500 @endif">
-                                            @if($summary['monthly']['sales_target']->is_achieved) 
+                                            @if($summary['monthly']['sales_target']->is_achieved)
                                                 <i class="fas fa-check-circle"></i> Achieved
-                                            @else 
+                                            @else
                                                 Remaining: {{ number_format($summary['monthly']['sales_target']->remaining, 0) }} sales
                                             @endif
                                         </span>
@@ -199,9 +199,9 @@
                                     <div class="flex justify-between text-xs text-gray-500 mt-1">
                                         <span>{{ $summary['yearly']['amount_target']->progress_percentage }}% Complete</span>
                                         <span class="@if($summary['yearly']['amount_target']->is_achieved) text-green-600 @else text-gray-500 @endif">
-                                            @if($summary['yearly']['amount_target']->is_achieved) 
+                                            @if($summary['yearly']['amount_target']->is_achieved)
                                                 <i class="fas fa-check-circle"></i> Achieved
-                                            @else 
+                                            @else
                                                 Remaining: ₦{{ number_format($summary['yearly']['amount_target']->remaining, 0) }}
                                             @endif
                                         </span>
@@ -222,9 +222,9 @@
                                     <div class="flex justify-between text-xs text-gray-500 mt-1">
                                         <span>{{ $summary['yearly']['sales_target']->progress_percentage }}% Complete</span>
                                         <span class="@if($summary['yearly']['sales_target']->is_achieved) text-green-600 @else text-gray-500 @endif">
-                                            @if($summary['yearly']['sales_target']->is_achieved) 
+                                            @if($summary['yearly']['sales_target']->is_achieved)
                                                 <i class="fas fa-check-circle"></i> Achieved
-                                            @else 
+                                            @else
                                                 Remaining: {{ number_format($summary['yearly']['sales_target']->remaining, 0) }} sales
                                             @endif
                                         </span>
@@ -289,17 +289,17 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                            @if($target->status === 'achieved') bg-green-100 text-green-800 
-                                            @elseif($target->status === 'active') bg-blue-100 text-blue-800 
+                                            @if($target->status === 'achieved') bg-green-100 text-green-800
+                                            @elseif($target->status === 'active') bg-blue-100 text-blue-800
                                             @else bg-gray-100 text-gray-800 @endif">
                                             {{ ucfirst($target->status) }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('admin.targets.edit', [$agent, $target]) }}" 
+                                            <a href="{{ route('admin.targets.edit', [$agent, $target]) }}"
                                                 class="text-blue-600 hover:text-blue-900">Edit</a>
-                                            <form method="POST" action="{{ route('admin.targets.destroy', [$agent, $target]) }}" 
+                                            <form method="POST" action="{{ route('admin.targets.destroy', [$agent, $target]) }}"
                                                 class="inline" onsubmit="return confirm('Are you sure you want to delete this target?')">
                                                 @csrf
                                                 @method('DELETE')

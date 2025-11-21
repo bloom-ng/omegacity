@@ -54,9 +54,6 @@
 
         <!-- Text & Indicators -->
         <div class="flex flex-col items-center mt-6 space-y-3">
-            <!-- <p class=" font-just text-gray-800">
-                <span class="font-bold text-lg">Now selling</span> — A plot of land in Omega City 350Sq.ft
-            </p> -->
             <div class="flex gap-2">
                 @foreach ($photos as $i => $photo)
                     <span class="dot w-4 h-4 rounded-full {{ $i === 0 ? 'bg-gray-500' : 'bg-gray-300' }}"></span>
@@ -81,7 +78,7 @@
                 </div>
                 <div class="flex flex-col">
                     <p>Plot size</p>
-                    <p class="font-extrabold">350sq.ft</p>
+                    <p class="font-extrabold">{{ $landlisting->plot_size }} </p>
                 </div>
                 <div class="flex flex-col">
                     <div class="flex flex-col gap-1.5">
@@ -132,11 +129,11 @@
                 $isEmbedUrl = strpos($link, '/maps/embed') !== false;
             @endphp
             @if($isEmbedUrl)
-                <iframe 
+                <iframe
                     src="{{ $link }}"
-                    class="w-full h-[70vh] border-0 rounded-lg" 
-                    allowfullscreen="" 
-                    loading="lazy" 
+                    class="w-full h-[70vh] border-0 rounded-lg"
+                    allowfullscreen=""
+                    loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             @else
@@ -180,7 +177,7 @@
             </swiper-slide>
             @endforeach
         </swiper-container>
-        
+
         <!-- Small Swiper (640-767px) - 2 slides -->
         <swiper-container slides-per-view="2" speed="500" loop="true" autoplay="true" css-mode="true"
             class="hidden sm:flex md:hidden w-full px-4">
@@ -201,7 +198,7 @@
             </swiper-slide>
             @endforeach
         </swiper-container>
-        
+
         <!-- Desktop Grid (≥ 768px) -->
         <div class="hidden md:grid grid-cols-3 md:h-[45vh] gap-3">
             @foreach ($otherListings as $listing)
@@ -224,11 +221,11 @@
             </div>
             @endforeach
         </div>
-        
+
         <span class="flex justify-center pt-20">
             <a href="{{ route('land') }}" class="bg-[#FACF07] rounded-full text-sm px-12 py-2">View more</a>
         </span>
-        
+
     </section>
     @endif
 

@@ -155,7 +155,8 @@
     <div class="content">
 
         <div>
-            <div class="title">INTEGRITY / SUSTAINABILITY / INNOVATION / EXCELLENCE / CUSTOMER FOCUS</div>
+            <div class="title">INTEGRITY / INNOVATION / EXCELLENCE / CUSTOMER FOCUS / SUSTAINABILITY</div>
+            <hr>
             <div class="subtitle">EXPRESSION OF INTEREST / LAND ALLOCATION FORM (INDIVIDUAL)</div>
         </div>
 

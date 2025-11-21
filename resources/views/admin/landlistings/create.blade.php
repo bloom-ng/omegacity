@@ -149,7 +149,40 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
+                        <!-- Inspection Date -->
+                        <div>
+                            <label for="inspection_date" class="block text-lg font-semibold text-gray-700">
+                                Inspection Date
+                            </label>
+                            <div class="mt-2">
+                                <input type="date" name="inspection_date" id="inspection_date"
+                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300
+            rounded-md @error("inspection_date") border-red-500 @enderror"
+                                    value="{{ old("inspection_date") }}">
+                                @error("inspection_date")
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Inspection Time -->
+                        <div>
+                            <label for="inspection_time" class="block text-lg font-semibold text-gray-700">
+                                Inspection Time
+                            </label>
+                            <div class="mt-2">
+                                <input type="time" name="inspection_time" id="inspection_time"
+                                    class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300
+            rounded-md @error("inspection_time") border-red-500 @enderror"
+                                    value="{{ old("inspection_time") }}">
+                                @error("inspection_time")
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+
                     </div>
 
                     <!-- Description -->
