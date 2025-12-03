@@ -35,7 +35,7 @@
 <body class="bg-[#F3F3F3] font-just text-[#010504]">
 
     <!-- Navbar -->
-    
+
     @include("users.nav")
 
     <!-- Hero Section -->
@@ -45,7 +45,7 @@
         <!-- Main content -->
         <div class="max-w-6xl px-3 sm:px-0 sm:max-w-2xl md:max-w-lg lg:max-w-3xl -mt-[400px] md:-mt-[120px] z-20 lg:-mt-[160px]">
             <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-just mb-6 sm:leading-12 lg:leading-16"> Secure a land you can afford with
-                Omega city & properties </h1> 
+                Omega city & properties </h1>
                 <a href="/contact-us"><button
                 class="bg-black text-white px-16 py-3 rounded-full font-just hover:bg-gray-800 transition duration-300">
                 Contact Us </button></a>
@@ -85,14 +85,14 @@
                         Investment
                     </span>
                 </div>
-                
+
             </div>
         </div>
 
     </section>
 
     <!-- About Section -->
-    <section class="bg-[#F3F3F3] pt-6 md:py-16">
+    {{-- <section class="bg-[#F3F3F3] pt-6 md:py-16">
         <div class="w-full px-4 sm:px-6 md:px-10 lg:px-20">
             <h2
                 class="text-2xl sm:pr-1 pr-[50px] sm:text-3xl md:text-5xl font-just leading-snug sm:leading-[3.5rem] tracking-wide mb-8 text-gray-900
@@ -118,7 +118,7 @@
                 </p>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
 
@@ -130,24 +130,24 @@
             <!-- Slides -->
             <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/modern-country-houses-construction.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
+                    <img src="{{ asset("assets/images/katempe5.jpeg") }}" class="w-full h-[800px] lg:h-[800px] object-cover"
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/carousel-img-2.png") }}"
-                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
+                    <img src="{{ asset("assets/images/katempe.jpeg") }}"
+                        class="w-full h-[800px] lg:h-[800px] object-cover" alt="Omega Land 2">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/carousel-img-3.png") }}"
-                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
+                    <img src="{{ asset("assets/images/katempe2.jpeg") }}"
+                        class="w-full h-[800px] lg:h-[800px] object-cover" alt="Omega Land 2">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/carousel-img-4.png") }}"
-                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
+                    <img src="{{ asset("assets/images/katempe3.jpeg") }}"
+                        class="w-full h-[800px] lg:h-[800px] object-cover" alt="Omega Land 2">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/carousel-img-5.png") }}"
-                        class="w-full h-[500px] lg:h-[600px] object-cover" alt="Omega Land 2">
+                    <img src="{{ asset("assets/images/katempe4.jpeg") }}"
+                        class="w-full h-[800px] lg:h-[800px] object-cover" alt="Omega Land 2">
                 </div>
             </div>
 
@@ -169,7 +169,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
         <!-- Text & Indicators -->
         <div class="flex flex-col items-center mt-6 space-y-3">
             <p class="text-sm sm:text-lg px-3 sm:px-0 font-just text-gray-800">
-                <span class="font-bold text-sm sm:text-lg">Now selling</span> — A plot of land in Omega City 350Sq.ft
+                <span class="font-bold text-sm sm:text-lg">Now selling</span> — A plot of land in Omega City
             </p>
             <div class="flex gap-2">
                 <span class="dot w-4 h-4 rounded-full bg-gray-300"></span>
@@ -194,23 +194,23 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
             <!-- Slides -->
             <div id="carouselTwo" class="flex transition-transform duration-700 ease-in-out">
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-1.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
+                    <img src="{{ asset("assets/images/katempe6.jpeg") }}" class="w-full h-[800px] lg:h-[900px] object-cover"
                         alt="Omega Land 1">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-2.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
+                    <img src="{{ asset("assets/images/katempe7.jpeg") }}" class="w-full h-[800px] lg:h-[900px] object-cover"
                         alt="Omega Land 2">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-3.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
+                    <img src="{{ asset("assets/images/katempe8.jpeg") }}" class="w-full h-[800px] lg:h-[900px] object-cover"
                         alt="Omega Land 3">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-4.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
+                    <img src="{{ asset("assets/images/katempe9.jpeg") }}" class="w-full h-[800px] lg:h-[900px] object-cover"
                         alt="Omega Land 4">
                 </div>
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset("assets/images/2nd-carousel-img-5.png") }}" class="w-full h-[500px] lg:h-[600px] object-cover"
+                    <img src="{{ asset("assets/images/katempe10.jpeg") }}" class="w-full h-[800px] lg:h-[900px] object-cover"
                         alt="Omega Land 5">
                 </div>
             </div>
@@ -380,7 +380,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
     document.getElementById('prev').onclick = () => showSlide(index - 1);
 
     // Auto slide every 5s
-    setInterval(() => showSlide(index + 1), 50000);
+    setInterval(() => showSlide(index + 1), 10000);
 
 
     const carouselTwo = document.getElementById('carouselTwo');
@@ -422,7 +422,7 @@ bg-white rounded-full shadow-lg hover:bg-gray-100 transition duration-300 border
     document.getElementById('prevTwo').onclick = () => showSlideTwo(indexTwo - 1);
 
     // Auto-slide every 5 seconds
-    setInterval(() => showSlideTwo(indexTwo + 1), 50000);
+    setInterval(() => showSlideTwo(indexTwo + 1), 10000);
 </script>
 
 </html>

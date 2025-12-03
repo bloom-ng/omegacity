@@ -97,7 +97,7 @@
         </div>
     </section>
 
-    <section class="flex flex-row flex-wrap md:flex-nowrap  md:px-12 lg:px-20 md:py-10 py-0 sm:py-6 w-full gap-12">
+    <section class="flex flex-row flex-wrap md:flex-nowrap  md:px-12 lg:px-20 md:py-10 py-0 sm:py-6 w-full gap-12 mb-18">
         <div class="flex flex-col w-full text-sm md:text-base px-4 md:w-2/7 gap-8 sm:gap-12 md:gap-24">
             <div class="flex flex-col gap-3">
                 <h1 class="text-lg font-extrabold">Agent details</h1>
@@ -148,86 +148,6 @@
             @endif
         </div>
     </section>
-
-    @if(($otherListings ?? collect())->count() > 0)
-    <section class="flex flex-col md:px-20 py-10 w-full gap-12 justify-center items-center">
-        <h1 class="text-3xl lg:text-5xl">Other listings</h1>
-        <!-- Extra Small Swiper (< 640px) - 1 slide -->
-        <swiper-container slides-per-view="1" speed="500" loop="true" autoplay="true" css-mode="true"
-            class="flex items-center justify-center flex-row sm:hidden w-full px-4">
-            @foreach ($otherListings as $listing)
-            <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        @php
-                            $photos = $listing->photos ?? [];
-                            $first = is_array($photos) && count($photos) ? $photos[0] : null;
-                            $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset($first)) : asset('assets/images/landImage.png');
-                        @endphp
-                        <img src="{{ $imgSrc }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN {{ number_format($listing->selling_price / 1000000, 2) }} million</p>
-                            <a href="{{ route('landlisting.show', ['id' => $listing->id]) }}" class="border-b-[0.5px] border-[#676968] px-1.5">View Land</a>
-                        </div>
-                    </div>
-                </div>
-            </swiper-slide>
-            @endforeach
-        </swiper-container>
-
-        <!-- Small Swiper (640-767px) - 2 slides -->
-        <swiper-container slides-per-view="2" speed="500" loop="true" autoplay="true" css-mode="true"
-            class="hidden sm:flex md:hidden w-full px-4">
-            @foreach ($otherListings as $listing)
-            <swiper-slide>
-                <div class="flex h-full w-72 flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                    <div class="h-[81%] w-full rounded-t-lg">
-                        <img src="{{ asset('assets/images/landImage.png') }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                    </div>
-                    <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                        <p>2 plots of land 350sq.ft</p>
-                        <div class="flex flex-row justify-between">
-                            <p class="font-extrabold">NGN {{ number_format($listing->selling_price / 1000000, 2) }} million</p>
-                            <a href="{{ route('landlisting.show', ['id' => $listing->id]) }}" class="border-b-[0.5px] border-[#676968] px-1.5">View Land</a>
-                        </div>
-                    </div>
-                </div>
-            </swiper-slide>
-            @endforeach
-        </swiper-container>
-
-        <!-- Desktop Grid (≥ 768px) -->
-        <div class="hidden md:grid grid-cols-3 md:h-[45vh] gap-3">
-            @foreach ($otherListings as $listing)
-            <div class="flex h-full flex-col rounded-b-lg border-[0.5px] rounded-lg border-[#676968]">
-                <div class="h-[81%] w-full rounded-t-lg">
-                    @php
-                        $photos = $listing->photos ?? [];
-                        $first = is_array($photos) && count($photos) ? $photos[0] : null;
-                        $imgSrc = $first ? (\Illuminate\Support\Str::startsWith($first, ['http://','https://']) ? $first : asset($first)) : asset('assets/images/landImage.png');
-                    @endphp
-                    <img src="{{ $imgSrc }}" class="object-cover h-full w-full rounded-t-lg" alt="land image">
-                </div>
-                <div class="h-[19%] text-xs lg:text-base gap-2 rounded-b-lg p-2.5 ">
-                    <p>2 plots of land 350sq.ft</p>
-                    <div class="flex flex-row justify-between">
-                        <p class="font-extrabold">NGN {{ number_format($listing->selling_price / 1000000, 2) }} million</p>
-                        <a href="{{ route('landlisting.show', ['id' => $listing->id]) }}" class="border-b-[0.5px] border-[#676968] px-1.5">View Land</a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-
-        <span class="flex justify-center pt-20">
-            <a href="{{ route('land') }}" class="bg-[#FACF07] rounded-full text-sm px-12 py-2">View more</a>
-        </span>
-
-    </section>
-    @endif
 
     <!-- Footer Section -->
     @include("users.footer")

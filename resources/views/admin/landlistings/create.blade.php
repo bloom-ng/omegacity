@@ -104,12 +104,12 @@
                         <!-- Sales Agent -->
                         <div>
                             <label for="sales_agent_id" class="block text-lg font-semibold text-gray-700">
-                                Sales Agent <span class="text-red-500">*</span>
+                                Sales Agent
                             </label>
                             <div class="mt-2">
                                 <select name="sales_agent_id" id="sales_agent_id"
                                     class="shadow-sm focus:ring-black focus:border-black block w-full sm:text-sm text-sm border-gray-300 rounded-md @error("sales_agent_id") border-red-500 @enderror"
-                                    required>
+                                    >
                                     <option value="" disabled selected>Select Agent</option>
                                     @foreach ($agents as $agent)
                                         <option value="{{ $agent->id }}"
