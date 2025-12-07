@@ -24,6 +24,13 @@ Route::get('/password/forgot', [AuthController::class, 'showLinkRequestForm'])->
 
 
 //FORMS
+Route::get('/admin/forms/eoi/download', function () {
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.pdf.eoi-blank-pdf')
+            ->setPaper('A4');
+
+    return $pdf->download('EOI-Form.pdf');
+})->name('admin.forms.eoi.download');
+
 Route::get('/expression-of-interest', [FormsController::class, 'createEOI'])->name('eoi.create');
 Route::post('/eoi', [FormsController::class, 'storeEOI'])->name('eoi.store');
 
