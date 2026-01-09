@@ -143,7 +143,7 @@
             </div>
             <div class="flex divide-x">
                 <a href="#" class="flex-1 px-6 py-4 hover:bg-gray-50 transition flex items-center justify-center">
-                    Agent Name <br> {{ $landlisting->agent->name }}
+                    Agent Name <br> {{ $landlisting->agent->name ?? "N/A" }}
                 </a>
                 <a href="#" class="flex-1 px-6 py-4 hover:bg-gray-50 transition flex items-center justify-center">
                     <i class="fas fa-calendar-alt me-2 text-gray-500"></i>

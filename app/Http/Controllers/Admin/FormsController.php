@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Eoi;
+use App\Models\Marketer;
 use App\Models\Guarantor;
 use Illuminate\Http\Request;
 use App\Models\SalesTracking;
@@ -22,6 +23,47 @@ class FormsController extends Controller
         $forms = Eoi::latest()->paginate(10);
         return view('admin.forms.eoi', compact('forms'));
     }
+
+    public function marketer(Request $request)
+    {
+        $query = Marketer::latest();
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('full_name', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%')
+                    ->orWhere('phone', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $forms = $query->paginate(10)->withQueryString();
+
+        return view('admin.forms.marketer', compact('forms'));
+    }
+
+    public function showMarketer(Marketer $marketer)
+    {
+        return view('admin.forms.marketer-show', compact('marketer'));
+    }
+
+
+    public function destroyMarketer(Marketer $marketer)
+    {
+        if ($marketer->passport) {
+            Storage::disk('public')->delete($marketer->passport);
+        }
+
+        if ($marketer->signature) {
+            Storage::disk('public')->delete($marketer->signature);
+        }
+
+        $marketer->delete();
+
+        return redirect()
+            ->route('admin.forms.marketer')
+            ->with('success', 'Marketer deleted successfully.');
+    }
+
 
     public function guarantor()
     {
@@ -102,11 +144,10 @@ class FormsController extends Controller
             abort(404, 'File not found.');
         }
 
-       return response()->file(storage_path('app/public/' . $filePath));
-
+        return response()->file(storage_path('app/public/' . $filePath));
     }
 
-     public function downloadDocFile($id)
+    public function downloadDocFile($id)
     {
 
         $guarantor = Guarantor::findOrFail($id);
@@ -117,8 +158,7 @@ class FormsController extends Controller
             abort(404, 'File not found.');
         }
 
-       return response()->file(storage_path('app/public/' . $filePath));
-
+        return response()->file(storage_path('app/public/' . $filePath));
     }
 
 

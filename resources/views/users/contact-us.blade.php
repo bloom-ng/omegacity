@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 @include("users.header")
-<!-- <style>
-    @media (max-width: 767px) {
-      .contact-section {
-        margin-top: 9rem !important; /* Tailwind mt-44 */
-      }
-    }
-    </style> -->
 
 <body class="bg-[#F3F3F3] font-just text-[#010504]">
 
@@ -29,8 +22,9 @@
             <div>
                 <h2 class="text-2xl md:text-3xl mb-2 font-just font-extrabold">Contact us</h2>
                 <p class="text-gray-700 text-sm md:text-base leading-relaxed">
-                    Omega city & properties is a fast rising real estate brand that offers affordable land for sale in
-                    Abuja. to get in touch with us, please reach out to us on any of the details below.
+                    Connect with us.
+                    Thank you for reaching out to Omega City.
+                    To help us direct your enquiry to the right department.
                 </p>
             </div>
 
@@ -76,7 +70,7 @@
 
                         <div class="flex items-center justify-between bg-white border border-gray-300 rounded-md p-3">
                             {{-- <span class="captcha-img">{!! captcha_img("flat") !!}</span> --}}
-                           <span class="captcha-img">{!! captcha_img('flat') !!}</span>
+                            <span class="captcha-img">{!! captcha_img("flat") !!}</span>
 
 
                             <button type="button"

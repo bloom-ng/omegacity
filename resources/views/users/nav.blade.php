@@ -10,9 +10,13 @@
 
     <!-- Desktop Links -->
     <div class="text-sm lg:text-base hidden md:flex items-center space-x-4 md:space-x-6 lg:space-x-12 text-black font-just">
-        <a href="/about" class="hover:text-yellow-400 transition {{ request()->is('about') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">About</a>
+        <a href="/about" class="hover:text-yellow-400 transition {{ request()->is('about') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">About us</a>
         <a href="/land" class="hover:text-yellow-400 transition {{ request()->is('land') || request()->is('landlisting') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Land</a>
         <a href="{{ route("contact-us") }}" class="hover:text-yellow-400 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
+        <a href="{{ route("blog") }}" class="hover:text-yellow-400 transition {{ request()->is('blog') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Blog</a>
+         <button class="hover:bg-black/90 transition px-6 lg:px-6 py-2 rounded-full text-yellow-500 font-just">
+            <a href="/marketer-form">Be a Marketer</a>
+         </button>
         <!-- Buy button (desktop) -->
         <a href="/land">
             <button
@@ -22,7 +26,7 @@
         </a>
     </div>
 
-    
+
 
     <!-- Hamburger Button -->
     <button @click="open = !open" class="md:hidden text-black focus:outline-none">
@@ -45,6 +49,8 @@
         <a href="/about" class="hover:text-yellow-500 transition {{ request()->is('about') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">About</a>
         <a href="/land" class="hover:text-yellow-500 transition {{ request()->is('land') || request()->is('landlisting') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Land</a>
         <a href="{{ route('contact-us') }}" class="hover:text-yellow-500 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
+        <a href="{{ route("blog") }}" class="hover:text-yellow-500 transition {{ request()->is('blog') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Blog</a>
+        <a href="/marketer-form" class="hover:text-yellow-500 transition {{ request()->is('marketer-form') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Marketer Form</a>
         <!-- Buy a Land Button -->
         <div class="w-full flex justify-center pb-3 mt-2">
             <a href="/land">

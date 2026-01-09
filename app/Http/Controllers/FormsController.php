@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Eoi;
+use App\Models\Marketer;
 use App\Models\Guarantor;
 use Illuminate\Http\Request;
 use App\Models\SalesTracking;
@@ -22,6 +23,11 @@ class FormsController extends Controller
     public function createSalesTracking()
     {
         return view('forms.sales-tracking');
+    }
+
+    public function createMarketer()
+    {
+        return view('forms.marketer');
     }
 
     public function storeEOI(Request $request)
@@ -91,6 +97,36 @@ class FormsController extends Controller
 
         return back()->with('success', 'Form submitted successfully!');
     }
+
+public function storeMarketer(Request $request)
+{
+    $validated = $request->validate([
+        'passport' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'full_name' => 'required|string|max:255',
+        'phone' => 'required|string|max:20',
+        'email' => 'nullable|email|max:255',
+        'address' => 'required|string',
+        'dob' => 'required|date',
+        'occupation' => 'required|string|max:255',
+        'bank_name' => 'required|string|max:255',
+        'account_name' => 'required|string|max:255',
+        'account_number' => 'required|string|max:20',
+        'signature' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+    if ($request->hasFile('passport')) {
+        $validated['passport'] = $request->passport
+            ->store('passports/marketers', 'public');
+    }
+
+    if ($request->hasFile('signature')) {
+        $validated['signature'] = $request->signature
+            ->store('signatures/marketers', 'public');
+    }
+    Marketer::create($validated);
+
+    return back()->with('success', 'Form submitted successfully!');
+}
+
 
 
     public function storeGuarantor(Request $request)

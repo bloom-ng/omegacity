@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Blog;
+use App\Models\LandListing;
 use Illuminate\Http\Request;
 use App\Models\ContactMessage;
-use App\Http\Controllers\Controller;
-use App\Models\LandListing;
 use Mews\Captcha\Facades\Captcha;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -82,4 +83,16 @@ class UserController extends Controller
     {
         return view("users.about");
     }
+
+    public function BlogPage()
+    {
+        $blogs = Blog::latest()->paginate(9);
+        return view('users.blogIndex', compact('blogs'));
+    }
+
+    public function userShow($slug)
+{
+    $blog = Blog::where('slug', $slug)->firstOrFail();
+    return view('users.blogSingle', compact('blog'));
+}
 }

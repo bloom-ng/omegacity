@@ -4,6 +4,7 @@ use Mews\Captcha\Facades\Captcha;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\ClientController;
@@ -40,6 +41,9 @@ Route::post('/guarantor', [FormsController::class, 'storeGuarantor'])->name('gua
 Route::get('/sales-tracking', [FormsController::class, 'createSalesTracking'])->name('sales.create');
 Route::post('/sales-tracking', [FormsController::class, 'storeSalesTracking'])->name('sales.store');
 
+Route::get('/marketer-form', [FormsController::class, 'createMarketer'])->name('marketer.create');
+Route::post('/marketer', [FormsController::class, 'storeMarketer'])->name('marketer.store');
+
 
 Route::get('/reload-captcha', function () {
     return response()->json(['captcha' => captcha_src('flat')]);
@@ -69,6 +73,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 // Form lists
 Route::get('/forms/eoi', [App\Http\Controllers\Admin\FormsController::class, 'eoi'])
     ->name('forms.eoi');
+
+    Route::get('/forms/marketer', [App\Http\Controllers\Admin\FormsController::class, 'marketer'])->name('forms.marketer');
+
+     Route::get('/marketers/{marketer}', [App\Http\Controllers\Admin\FormsController::class, 'showMarketer'])
+        ->name('marketers.show');
+
+    Route::delete('/marketers/{marketer}', [App\Http\Controllers\Admin\FormsController::class, 'destroyMarketer'])
+        ->name('marketers.destroy');
 
     Route::put('/forms/eoi/{id}', [App\Http\Controllers\Admin\FormsController::class, 'updateEoi'])->name('forms.eoi.update');
 
@@ -109,6 +121,9 @@ Route::get('forms/download/{id}/{type}', [App\Http\Controllers\Admin\FormsContro
 
     // Land Listings
     Route::resource('landlistings', LandListingController::class);
+
+    // Blogs
+    Route::resource('blogs', BlogController::class);
 
     // Admin users
     Route::resource('users', UserController::class);
@@ -157,6 +172,10 @@ Route::middleware(['auth'])->prefix('agent')->name('agent.')->group(function () 
 // Public routes
 Route::get('/', [App\Http\Controllers\User\UserController::class, 'HomePage'])
     ->name('home');
+Route::get('/blog', [App\Http\Controllers\User\UserController::class, 'BlogPage'])
+    ->name('blog');
+Route::get('/blog/{slug}', [App\Http\Controllers\User\UserController::class, 'userShow'])
+    ->name('blog.show');
 Route::get('/contact-us', [App\Http\Controllers\User\UserController::class, 'ContactUsPage'])
     ->name('contact-us');
 Route::post('/contact-us', [App\Http\Controllers\User\UserController::class, 'ContactUsStore'])
