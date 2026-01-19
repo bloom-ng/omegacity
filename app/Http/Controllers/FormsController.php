@@ -98,34 +98,49 @@ class FormsController extends Controller
         return back()->with('success', 'Form submitted successfully!');
     }
 
-public function storeMarketer(Request $request)
-{
-    $validated = $request->validate([
-        'passport' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        'full_name' => 'required|string|max:255',
-        'phone' => 'required|string|max:20',
-        'email' => 'nullable|email|max:255',
-        'address' => 'required|string',
-        'dob' => 'required|date',
-        'occupation' => 'required|string|max:255',
-        'bank_name' => 'required|string|max:255',
-        'account_name' => 'required|string|max:255',
-        'account_number' => 'required|string|max:20',
-        'signature' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
-    if ($request->hasFile('passport')) {
-        $validated['passport'] = $request->passport
-            ->store('passports/marketers', 'public');
-    }
+    public function storeMarketer(Request $request)
+    {
+        $validated = $request->validate([
+            'passport' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'full_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'address' => 'required|string',
+            'dob' => 'required|date',
+            'gender' => 'required|in:Male,Female',
+            'occupation' => 'required|string|max:255',
+            'bank_name' => 'required|string|max:255',
+            'account_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:20',
+            'signature' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'id_type' => 'required',
+            'id_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
+            'contact_staff' => 'nullable|string|max:255',
+        ]);
 
-    if ($request->hasFile('signature')) {
-        $validated['signature'] = $request->signature
-            ->store('signatures/marketers', 'public');
-    }
-    Marketer::create($validated);
 
-    return back()->with('success', 'Form submitted successfully!');
-}
+        if ($request->hasFile('passport')) {
+            $validated['passport'] = $request->passport
+                ->store('passports/marketers', 'public');
+        }
+
+        if ($request->hasFile('signature')) {
+            $validated['signature'] = $request->signature
+                ->store('signatures/marketers', 'public');
+        }
+
+        if ($request->hasFile('id_file')) {
+            $original = $request->file('id_file')->getClientOriginalName();
+            $filename = $request->id_type . '-' . $original;
+            $path = $request->file('id_file')->storeAs('marketer_doc', $filename, 'public');
+            $validated['id_file'] = $path;
+        }
+
+        
+        Marketer::create($validated);
+
+        return back()->with('success', 'Form submitted successfully!');
+    }
 
 
 

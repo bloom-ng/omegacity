@@ -15,7 +15,7 @@
         <a href="{{ route("contact-us") }}" class="hover:text-yellow-400 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
         <a href="{{ route("blog") }}" class="hover:text-yellow-400 transition {{ request()->is('blog') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Blog</a>
          <button class="hover:bg-black/90 transition px-6 lg:px-6 py-2 rounded-full text-yellow-500 font-just">
-            <a href="/marketer-form">Be a Marketer</a>
+            <a href="/marketer-form">Be Our Marketer</a>
          </button>
         <!-- Buy button (desktop) -->
         <a href="/land">
@@ -50,7 +50,7 @@
         <a href="/land" class="hover:text-yellow-500 transition {{ request()->is('land') || request()->is('landlisting') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Land</a>
         <a href="{{ route('contact-us') }}" class="hover:text-yellow-500 transition {{ request()->is('contact-us') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Contact us</a>
         <a href="{{ route("blog") }}" class="hover:text-yellow-500 transition {{ request()->is('blog') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Blog</a>
-        <a href="/marketer-form" class="hover:text-yellow-500 transition {{ request()->is('marketer-form') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Marketer Form</a>
+        <a href="/marketer-form" class="hover:text-yellow-500 transition {{ request()->is('marketer-form') ? 'border-b-[0.5px] px-1 border-[#676968]' : '' }}">Be Our Marketer</a>
         <!-- Buy a Land Button -->
         <div class="w-full flex justify-center pb-3 mt-2">
             <a href="/land">

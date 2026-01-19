@@ -18,6 +18,10 @@ class Marketer extends Model
         'account_name',
         'account_number',
         'signature',
+        'id_type',
+        'id_file',
+        'gender',
+        'contact_staff',
     ];
 
     protected $casts = [

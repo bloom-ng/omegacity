@@ -43,7 +43,8 @@
                         <div class="mt-2 text-sm font-bold text-gray-900 space-y-1">
                             <p>Email: {{ $marketer->email }}</p>
                             <p>Phone: {{ $marketer->phone }}</p>
-                           <p>Date of Birth: {{ $marketer->dob->format('M d, Y') }}</p>
+                            <p>Gender: {{ $marketer->gender }}</p>
+                            <p>Date of Birth: {{ $marketer->dob->format("M d, Y") }}</p>
                             <p>Occupation: {{ $marketer->occupation }}</p>
                             <p>Address: {{ $marketer->address }}</p>
                         </div>
@@ -65,6 +66,27 @@
                             <p>Account Number: {{ $marketer->account_number }}</p>
                             <p>Bank Name: {{ $marketer->bank_name }}</p>
                             <p>Account Name: {{ $marketer->account_name }}</p>
+                        </div>
+
+                        <div class="mt-5 text-sm font-bold text-gray-900 space-y-1">
+                            <h4 class="text-gray-500">Name of Contact Staff</h4>
+                            @if ($marketer->contact_staff)
+                                <p>{{ $marketer->contact_staff }}</p>
+                            @else
+                                <p class="mt-2 text-sm text-gray-400">No Contact Staff</p>
+                            @endif
+                        </div>
+
+                        <div>
+                            <h3 class="text-l font-bold text-gray-500 mt-4">Means of Identification :</h3>
+
+                            @if ($marketer->id_file)
+                                <p class="font-bold">{{ $marketer->id_type }}</p>
+                                <img src="{{ asset("storage/" . $marketer->id_file) }}" alt="Marketer ID"
+                                    class="mt-2 h-24 object-contain border rounded bg-white p-2">
+                            @else
+                                <p class="mt-2 text-sm text-gray-400">No means of identification</p>
+                            @endif
                         </div>
                     </div>
 
