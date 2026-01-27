@@ -148,7 +148,36 @@
                 </div>
             </div>
 
+            <!-- Payment Information -->
+            <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Payment Details</h2>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Payment Type -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Payment Type</label>
+                        <select name="payment_type" id="payment_type"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-black">
+                            <option value="full_payment">Full Payment</option>
+                            <option value="installmental">Installmental</option>
+                        </select>
+                    </div>
+
+                    <!-- Amount Paid -->
+                    <div id="amountPaidWrapper" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Amount Paid</label>
+                        <input type="number" name="amount_paid" id="amount_paid" min="0" step="0.01"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-black">
+                    </div>
+
+                    <!-- Balance Left -->
+                    <div id="balanceWrapper" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Balance Left</label>
+                        <input type="text" id="balance_left" readonly
+                            class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 font-semibold">
+                    </div>
+                </div>
+            </div>
 
             <!-- Form Actions -->
             <div class="flex justify-end space-x-3">
@@ -167,6 +196,36 @@
     @push("scripts")
         <script>
             let itemCount = 1;
+
+            function updatePaymentFields() {
+                const paymentType = document.getElementById('payment_type').value;
+                const amountWrapper = document.getElementById('amountPaidWrapper');
+                const balanceWrapper = document.getElementById('balanceWrapper');
+
+                if (paymentType === 'installmental') {
+                    amountWrapper.classList.remove('hidden');
+                    balanceWrapper.classList.remove('hidden');
+                } else {
+                    amountWrapper.classList.add('hidden');
+                    balanceWrapper.classList.add('hidden');
+                    document.getElementById('amount_paid').value = '';
+                    document.getElementById('balance_left').value = '0.00';
+                }
+
+                calculateBalance();
+            }
+
+            function calculateBalance() {
+                const total = parseFloat(document.getElementById('totalDisplay').textContent) || 0;
+                const amountPaid = parseFloat(document.getElementById('amount_paid')?.value) || 0;
+                const balance = Math.max(total - amountPaid, 0);
+
+                const balanceField = document.getElementById('balance_left');
+                if (balanceField) {
+                    balanceField.value = balance.toFixed(2);
+                }
+            }
+
 
             function addNewItem() {
                 const container = document.getElementById('receipt-items');
@@ -233,6 +292,7 @@
                 document.getElementById('vatDisplay').textContent = vatValue.toFixed(2);
                 document.getElementById('discountDisplay').textContent = discountValue.toFixed(2);
                 document.getElementById('totalDisplay').textContent = total.toFixed(2);
+                calculateBalance();
             }
 
             function attachEventListeners() {
@@ -245,10 +305,24 @@
             }
 
             // Initialize
+            // Initialize
             document.addEventListener('DOMContentLoaded', function() {
                 attachEventListeners();
-                document.getElementById('discount').addEventListener('input', calculateTotals);
-                document.getElementById('tax_percentage').addEventListener('input', calculateTotals);
+
+                document.getElementById('discount')
+                    .addEventListener('input', calculateTotals);
+
+                document.getElementById('tax_percentage')
+                    .addEventListener('input', calculateTotals);
+                const paymentType = document.getElementById('payment_type');
+                if (paymentType) {
+                    paymentType.addEventListener('change', updatePaymentFields);
+                }
+                const amountPaidInput = document.getElementById('amount_paid');
+                if (amountPaidInput) {
+                    amountPaidInput.addEventListener('input', calculateBalance);
+                }
+                updatePaymentFields();
             });
         </script>
     @endpush

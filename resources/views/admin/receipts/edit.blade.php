@@ -113,10 +113,50 @@
                 </div>
 
                 <div class="mb-6">
-                    <label for="commission_percentage" class="block text-sm font-medium text-gray-700 mb-1">Commission (%)</label>
-                    <input type="number" name="commission_percentage" id="commission_percentage" min="0" step="0.01"
-                        value="{{ $receipt->commission_percentage ?? 0 }}"
+                    <label for="commission_percentage" class="block text-sm font-medium text-gray-700 mb-1">Commission
+                        (%)</label>
+                    <input type="number" name="commission_percentage" id="commission_percentage" min="0"
+                        step="0.01" value="{{ $receipt->commission_percentage ?? 0 }}"
                         class="w-full md:w-1/3 border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-black">
+                </div>
+
+                <!-- Payment Information -->
+                <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                    <h3 class="text-lg font-medium text-gray-700 mb-4">Payment Details</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Payment Type -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Payment Type</label>
+                            <select name="payment_type" id="payment_type"
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-black">
+                                <option value="full_payment"
+                                    {{ $receipt->payment_type === "full_payment" ? "selected" : "" }}>
+                                    Full Payment
+                                </option>
+                                <option value="installmental"
+                                    {{ $receipt->payment_type === "installmental" ? "selected" : "" }}>
+                                    Installmental
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Amount Paid -->
+                        <div id="amountPaidWrapper">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Amount Paid</label>
+                            <input type="number" name="amount_paid" id="amount_paid" min="0" step="0.01"
+                                value="{{ $receipt->amount_paid }}"
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-black">
+                        </div>
+
+                        <!-- Balance Left -->
+                        <div id="balanceWrapper">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Balance Left</label>
+                            <input type="text" id="balance_left" readonly
+                                value="{{ number_format($receipt->balance_left, 2) }}"
+                                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 font-semibold">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Buttons -->
@@ -137,6 +177,47 @@
     @push("scripts")
         <script>
             let itemCount = {{ count($items) }};
+
+            function updatePaymentFields() {
+                const paymentType = document.getElementById('payment_type').value;
+                const amountWrapper = document.getElementById('amountPaidWrapper');
+                const balanceWrapper = document.getElementById('balanceWrapper');
+
+                if (paymentType === 'installmental') {
+                    amountWrapper.style.display = 'block';
+                    balanceWrapper.style.display = 'block';
+                } else {
+                    amountWrapper.style.display = 'none';
+                    balanceWrapper.style.display = 'none';
+                    document.getElementById('amount_paid').value = '';
+                    document.getElementById('balance_left').value = '0.00';
+                }
+
+                calculateBalance();
+            }
+
+            function calculateBalance() {
+                let subtotal = 0;
+
+                document.querySelectorAll('#receipt-items .grid').forEach(row => {
+                    const price = parseFloat(row.querySelector('input[name*="[price]"]').value) || 0;
+                    const qty = parseFloat(row.querySelector('input[name*="[quantity]"]').value) || 0;
+                    subtotal += price * qty;
+                });
+
+                const vat = parseFloat(document.getElementById('tax').value) || 0;
+                const discount = parseFloat(document.getElementById('discount').value) || 0;
+
+                const vatValue = (subtotal * vat) / 100;
+                const discountValue = (subtotal * discount) / 100;
+                const total = subtotal + vatValue - discountValue;
+
+                const amountPaid = parseFloat(document.getElementById('amount_paid').value) || 0;
+                const balance = Math.max(total - amountPaid, 0);
+
+                document.getElementById('balance_left').value = balance.toFixed(2);
+            }
+
 
             function addNewItem() {
                 const container = document.getElementById('receipt-items');
@@ -177,6 +258,24 @@
                     button.closest('.grid').remove();
                 }
             }
+
+            document.addEventListener('DOMContentLoaded', function() {
+
+                const paymentType = document.getElementById('payment_type');
+                if (paymentType) {
+                    paymentType.addEventListener('change', updatePaymentFields);
+                }
+
+                const amountPaidInput = document.getElementById('amount_paid');
+                if (amountPaidInput) {
+                    amountPaidInput.addEventListener('input', calculateBalance);
+                }
+
+                document.getElementById('discount').addEventListener('input', calculateBalance);
+                document.getElementById('tax').addEventListener('input', calculateBalance);
+
+                updatePaymentFields();
+            });
         </script>
     @endpush
 @endsection

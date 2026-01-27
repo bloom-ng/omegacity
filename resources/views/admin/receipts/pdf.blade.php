@@ -53,8 +53,6 @@
         .footer-cell {
             display: table-cell;
             width: 33%;
-            vertical-align: top;
-            padding: 3px;
         }
 
         .footer h4 {
@@ -82,15 +80,33 @@
     <div style="display: table; width: 100%; border-bottom: 2px solid #000; margin-top: 10px;">
         <div style="display: table-row;">
             <div style="display: table-cell; width: 33%; padding: 5px; vertical-align: top;">
-                {{ \Carbon\Carbon::parse($receipt->date)->format("jS F Y") }}<br>
-                {{ $receipt->client->first_name }} {{ $receipt->client->last_name }}
+                Name: {{ $receipt->client->first_name }} {{ $receipt->client->last_name }} <br>
+                Tel: {{ $receipt->client->phone }} <br>
+                Address: {{ $receipt->client->address }} <br>
+                Email: {{ $receipt->client->email }} <br>
             </div>
             <div style="display: table-cell; width: 33%; padding: 5px; vertical-align: top;">
-                REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }} <br>
-                {{ $receipt->client->address }}
+
             </div>
             <div style="display: table-cell; width: 33%; padding: 5px; text-align: right;">
-                <div style="font-weight: bold; font-size: 28px;">RECEIPT</div>
+                <div style="font-weight: bold; font-size: 20px;">RECEIPT</div>
+                Date: {{ \Carbon\Carbon::parse($receipt->date)->format("jS F Y") }}<br>
+                Payment Type: {{ $receipt->payment_type }}<br>
+                Receipt No: REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }} <br>
+                <div style="font-weight: bold; font-size: 15px; margin-top: 15px;">
+                    Payment option
+                </div>
+
+                @php
+                    $isFull = strtolower($receipt->payment_type) === "full_payment";
+                    $isInstallment = strtolower($receipt->payment_type) === "installmental";
+                @endphp
+
+                <div style="font-size: 14px; margin-top: 5px;">
+                    Full Payment {!! $isFull ? "☑" : "☐" !!} <br>
+                    Installment  {!! $isInstallment ? "☑" : "☐" !!}
+                </div>
+
             </div>
         </div>
     </div>
@@ -101,15 +117,21 @@
                 width: 600px; opacity: 0.05; z-index: -1; pointer-events: none;">
 
     @php
-        // Decode receipt items from JSON
         $items = json_decode($receipt->receipt_items, true);
         $subtotal = collect($items)->sum(fn($item) => $item["price"] * $item["quantity"]);
         $discount = $receipt->discount ?? 0;
         $discountValue = $subtotal * ($discount / 100);
-         $vatPercent = $receipt->tax ?? 0;
-       $taxValue = $subtotal * ($vatPercent / 100);
-        $total = ($subtotal + $taxValue) - $discountValue;
+        $vatPercent = $receipt->tax ?? 0;
+        $taxValue = $subtotal * ($vatPercent / 100);
+
+        $total = $subtotal + $taxValue - $discountValue;
+
+        $amountPaid = $receipt->amount_paid ?? 0;
+        $balanceDue = max($total - $amountPaid, 0);
+
+        $grandTotal = $total - $balanceDue;
     @endphp
+
 
     <!-- Items Table -->
     <table style="margin-top: 25px; font-size: 12px;">
@@ -152,24 +174,55 @@
             <td></td>
             <td style="text-align: right;">₦{{ number_format($taxValue, 2) }}</td>
         </tr>
-        <tr style="background-color: #ffcc00; font-weight: bold;">
-            <td>Total</td>
+        <tr>
+            <td style="font-weight: bold;">Balance Due</td>
             <td></td>
-            <td style="text-align: right;">₦{{ number_format($total, 2) }}</td>
+            <td style="text-align: right;">₦{{ number_format($balanceDue, 2) }}</td>
+        </tr>
+        <tr style="background-color: #ffcc00; font-weight: bold;">
+            <td>Grand Total</td>
+            <td></td>
+            <td style="text-align: right;">₦{{ number_format($grandTotal, 2) }}</td>
         </tr>
     </table>
 
     <!-- Footer -->
     <div class="footer">
-        <div class="footer-section">
-            <div class="footer-cell">
-                <p style="font-weight: bold;">Thanks for your Business!</p>
-                 <p> Omega City &amp; Properties <br>
-                Office Address. <br> 30 Libreville Cres, Wuse 2, Abuja, Federal Capital Territory.</p>
-            </div>
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <!-- LEFT SIDE -->
+                <td style="width: 65%; vertical-align: top;">
+                    <p>
+                        <strong>Terms &amp; Conditions:</strong>
+                        This receipt serves as proof of payment only, and does not on its own confer ownership rights.
+                    </p>
 
-        </div>
+                    <p style="font-weight: bold;">Thanks for your Business!</p>
+
+                    <!-- Signature Block -->
+                    <div style="margin-top: 40px; width: 250px;">
+                        <div style="border-top: 3px solid #000; height: 0;"></div>
+                        <p style="margin-top: 5px; font-weight: bold; font-size: 11px; text-align: center">
+                            General Manager
+                        </p>
+                    </div>
+
+
+                </td>
+
+                <!-- RIGHT SIDE -->
+                <td style="width: 35%; vertical-align: top; text-align: right;">
+                    <p>
+                        <strong>Omega City &amp; Properties</strong><br>
+                        Tel: 07056260000.<br>
+                        Email: info@omegacityproperties.com<br>
+                        Address: 30 Libreville Crescent, Wuse 2 Abuja.
+                    </p>
+                </td>
+            </tr>
+        </table>
     </div>
+
 
 </body>
 

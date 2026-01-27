@@ -60,6 +60,8 @@ class ReceiptController extends Controller
             'commission_amount' => 'nullable|numeric|min:0',
             'discount' => 'nullable|numeric|min:0',
             'tax' => 'nullable|numeric|min:0',
+            'payment_type' => 'required|in:full_payment,installmental',
+            'amount_paid' => 'nullable|numeric|min:0',
             'items' => 'required|array|min:1',
             'items.*.description' => 'required|string',
             'items.*.quantity' => 'required|numeric|min:1',
@@ -73,6 +75,16 @@ class ReceiptController extends Controller
         $discount = $data['discount'] ?? 0;
 
         $total = ($subtotal + $taxValue) - $discount;
+        $paymentType = $data['payment_type'];
+        $amountPaid = $data['amount_paid'] ?? 0;
+
+        if ($paymentType === 'full_payment') {
+            $amountPaid = $total;
+            $balanceLeft = 0;
+        } else {
+            $balanceLeft = max($total - $amountPaid, 0);
+        }
+
 
         $commissionPercentage = $data['commission_percentage'] ?? 0;
         $commissionAmount = ($total * $commissionPercentage) / 100;
@@ -84,6 +96,9 @@ class ReceiptController extends Controller
             'discount' => $discount,
             'commission_percentage' => $commissionPercentage,
             'commission_amount' => $commissionAmount,
+            'payment_type' => $paymentType,
+            'amount_paid' => $amountPaid,
+            'balance_left' => $balanceLeft,
         ]);
 
         // Update agent's target progress automatically
@@ -144,6 +159,8 @@ class ReceiptController extends Controller
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.price' => 'required|numeric|min:0',
             'tax' => 'nullable|numeric|min:0|max:100',
+            'payment_type' => 'required|in:full_payment,installmental',
+            'amount_paid' => 'nullable|numeric|min:0',
         ]);
 
 
@@ -156,6 +173,15 @@ class ReceiptController extends Controller
         $discount = $data['discount'] ?? 0;
 
         $total = ($subtotal + $vatAmount) - $discount;
+        $paymentType = $data['payment_type'];
+        $amountPaid = $data['amount_paid'] ?? 0;
+
+        if ($paymentType === 'full_payment') {
+            $amountPaid = $total;
+            $balanceLeft = 0;
+        } else {
+            $balanceLeft = max($total - $amountPaid, 0);
+        }
 
         $commissionPercentage = $data['commission_percentage'] ?? 0;
         $commissionAmount = ($total * $commissionPercentage) / 100;
@@ -168,6 +194,9 @@ class ReceiptController extends Controller
             'discount' => $discount,
             'commission_percentage' => $commissionPercentage,
             'commission_amount' => $commissionAmount,
+            'payment_type' => $paymentType,
+            'amount_paid' => $amountPaid,
+            'balance_left' => $balanceLeft,
         ]);
 
         // Update agent's target progress automatically

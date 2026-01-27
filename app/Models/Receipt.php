@@ -18,6 +18,9 @@ class Receipt extends Model
         'discount',
         'commission_percentage',
         'commission_amount',
+        'payment_type',
+        'amount_paid',
+        'balance_left',
     ];
 
     protected $dates = [
@@ -30,10 +33,13 @@ class Receipt extends Model
         'date' => 'date:Y-m-d',
         'tax' => 'decimal:2',
         'discount' => 'decimal:2',
+        'payment_type' => 'string',
+        'amount_paid' => 'decimal:2',
+        'balance_left' => 'decimal:2',
     ];
 
 
- public function client()
+    public function client()
     {
         return $this->belongsTo(Client::class);
     }
@@ -69,5 +75,4 @@ class Receipt extends Model
 
         return round($total, 2);
     }
-
 }

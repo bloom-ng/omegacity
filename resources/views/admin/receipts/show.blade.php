@@ -4,7 +4,8 @@
     <div class="w-full px-4">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-3 sm:space-y-0">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Receipt: REC-{{ $receipt->created_at->format('Ymd') }}{{ $receipt->id }}</h1>
+                <h1 class="text-2xl font-bold text-gray-800">Receipt:
+                    REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }}</h1>
                 <div class="flex items-center">
 
                     <div class="ml-4 text-sm text-gray-500">
@@ -48,16 +49,18 @@
 
                         </div>
                     </div>
+
                     <div class="space-y-1">
                         <div class="flex justify-between">
                             <span class="text-sm font-medium text-gray-500">Receipt Number</span>
-                             <span class="text-sm font-medium text-gray-500">Date</span>
+                            <span class="text-sm font-medium text-gray-500">Date</span>
 
                         </div>
                         <div class="flex justify-between">
 
-                             <span class="text-sm text-gray-900 font-bold">REC-{{ $receipt->created_at->format('Ymd') }}{{ $receipt->id }}</span>
-                             <span class="text-sm text-gray-900 font-bold">{{ $receipt->date->format("M d, Y") }}</span>
+                            <span
+                                class="text-sm text-gray-900 font-bold">REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }}</span>
+                            <span class="text-sm text-gray-900 font-bold">{{ $receipt->date->format("M d, Y") }}</span>
                         </div>
 
 
@@ -65,26 +68,50 @@
                         <div class="flex justify-between">
 
                             <span class="text-sm font-medium text-gray-500">Commission Bonus (%)</span>
-                           <span class="text-sm font-medium text-gray-500">Commission Amount Paid</span>
+                            <span class="text-sm font-medium text-gray-500">Commission Amount Paid</span>
 
                         </div>
-                         <div class="flex justify-between">
+                        <div class="flex justify-between">
                             <span class="text-sm text-gray-900 font-bold">{{ $receipt->commission_percentage }}%</span>
-                            <span class="text-sm text-gray-900 font-bold">₦{{ number_format($receipt->commission_amount) }}</span>
+                            <span
+                                class="text-sm text-gray-900 font-bold">₦{{ number_format($receipt->commission_amount) }}</span>
                         </div>
 
                     </div>
                 </div>
             </div>
-        </div>
+            @php
+                $items = json_decode($receipt->receipt_items, true);
 
-        @php
-            $items = json_decode($receipt->receipt_items, true);
-            $subtotal = collect($items)->sum(fn($item) => $item["price"] * $item["quantity"]);
-            $discountAmount = $subtotal * ($receipt->discount / 100);
-            $taxAmount = $subtotal * ($receipt->tax / 100);
-            $total = $subtotal + $taxAmount - $discountAmount;
-        @endphp
+                $subtotal = collect($items)->sum(fn($item) => $item["price"] * $item["quantity"]);
+                $discountAmount = $subtotal * ($receipt->discount / 100);
+                $taxAmount = $subtotal * ($receipt->tax / 100);
+                $total = $subtotal + $taxAmount - $discountAmount;
+
+                $amountPaid = $receipt->amount_paid ?? $total;
+                $balanceLeft = max($total - $amountPaid, 0);
+
+                $paymentStatus = $balanceLeft <= 0 ? "PAID" : "PARTIAL";
+            @endphp
+
+
+            <div class="px-4 py-5 sm:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                            <h3 class="text-lg font-medium text-gray-900">
+                                Payment Information
+                            </h3>
+                        <div class="mt-1 text-sm font-bold text-gray-900">
+                            Payment Type: {{ str_replace("_", " ", $receipt->payment_type) }} <br>
+                            Amount Paid : ₦{{ number_format($amountPaid, 2) }}<br>
+                            Balance Left: ₦{{ number_format($balanceLeft, 2) }}<br>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
