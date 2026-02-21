@@ -48,28 +48,28 @@
                                     Contacts
                                 </a>
                             @elseif ($key === "clients")
-                                <a href="{{ route("admin.users.create") }}"
+                                <a href="{{ route("admin.clients.create") }}"
                                     class="text-xs font-medium text-green-600 hover:underline">
-                                   <i class="fa-solid fa-plus"></i>
-                                   Clients
+                                    <i class="fa-solid fa-plus"></i>
+                                    Clients
                                 </a>
                             @elseif ($key === "land_listings")
                                 <a href="{{ route("admin.landlistings.create") }}"
                                     class="text-xs font-medium text-yellow-600 hover:underline">
-                                   <i class="fa-solid fa-plus"></i>
-                                   Land-listing
+                                    <i class="fa-solid fa-plus"></i>
+                                    Land-listing
                                 </a>
                             @elseif ($key === "invoices")
                                 <a href="{{ route("admin.invoices.create") }}"
                                     class="text-xs font-medium text-purple-600 hover:underline">
-                                   <i class="fa-solid fa-plus"></i>
-                                   Invoice
+                                    <i class="fa-solid fa-plus"></i>
+                                    Invoice
                                 </a>
                             @elseif ($key === "receipts")
                                 <a href="{{ route("admin.receipts.create") }}"
                                     class="text-xs font-medium text-red-600 hover:underline">
-                                  <i class="fa-solid fa-plus"></i>
-                                  Receipt
+                                    <i class="fa-solid fa-plus"></i>
+                                    Receipt
                                 </a>
                             @endif
                         </div>
@@ -82,7 +82,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
 
             {{-- RECENT ACTIVITIES --}}
-            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="lg:col-span-1 bg-white rounded-xl shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b text-center">
                     <h2 class="text-lg font-semibold">Recent Activities</h2>
                 </div>
@@ -116,18 +116,81 @@
                 </div>
             </div>
 
-            {{-- QUICK ACTIONS --}}
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+
+            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b text-center">
                     <h2 class="text-lg font-semibold">Charts</h2>
                 </div>
 
-                <div class="p-4 space-y-2">
+                <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {{-- Pie Chart --}}
+                    <div>
+                        <h3 class="text-sm font-semibold text-center mb-2">
+                            Overall Data Distribution
+                        </h3>
+                        <canvas id="pieChart" class="h-72"></canvas>
+                    </div>
 
-
+                    {{-- Histogram --}}
+                    <div>
+                        <h3 class="text-sm font-semibold text-center mb-2">
+                            This Month Activity
+                        </h3>
+                        <canvas id="barChart" class="h-72"></canvas>
+                    </div>
                 </div>
+
             </div>
+
 
         </div>
     </div>
 @endsection
+@push("scripts")
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // PIE CHART
+        const pieCtx = document.getElementById('pieChart');
+
+        new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode(array_keys($pieChartData)) !!},
+                datasets: [{
+                    data: {!! json_encode(array_values($pieChartData)) !!},
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // BAR / HISTOGRAM
+        const barCtx = document.getElementById('barChart');
+
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode(array_keys($monthlyChartData)) !!},
+                datasets: [{
+                    label: 'This Month',
+                    data: {!! json_encode(array_values($monthlyChartData)) !!},
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+@endpush

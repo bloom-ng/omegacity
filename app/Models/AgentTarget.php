@@ -12,7 +12,7 @@ class AgentTarget extends Model
     protected $fillable = [
         'user_id',
         'period_type',
-        'target_type', 
+        'target_type',
         'target_value',
         'achieved_value',
         'year',
@@ -35,7 +35,7 @@ class AgentTarget extends Model
     // Accessors
     public function getProgressPercentageAttribute()
     {
-        return $this->target_value > 0 
+        return $this->target_value > 0
             ? round(($this->achieved_value / $this->target_value) * 100, 2)
             : 0;
     }
@@ -55,16 +55,28 @@ class AgentTarget extends Model
         if ($this->target_type === 'amount') {
             return '₦' . number_format($this->target_value, 2);
         }
+
+        if ($this->target_type === 'leads') {
+            return number_format($this->target_value) . ' leads';
+        }
+
         return number_format($this->target_value) . ' sales';
     }
+
 
     public function getFormattedAchievedValueAttribute()
     {
         if ($this->target_type === 'amount') {
             return '₦' . number_format($this->achieved_value, 2);
         }
+
+        if ($this->target_type === 'leads') {
+            return number_format($this->achieved_value) . ' leads';
+        }
+
         return number_format($this->achieved_value) . ' sales';
     }
+
 
     // Scopes
     public function scopeForAgent($query, $userId)
@@ -97,16 +109,30 @@ class AgentTarget extends Model
         return $query->where('target_type', 'sales');
     }
 
+    public function scopeLeads($query)
+    {
+        return $query->where('target_type', 'leads');
+    }
+
+public function getPeriodDisplayAttribute()
+{
+    return $this->period_type === 'monthly'
+        ? \Carbon\Carbon::create($this->year, $this->month, 1)->format('F Y')
+        : $this->year;
+}
+
+
+
     public function scopeForPeriod($query, $year, $month = null)
     {
         $query->where('year', $year);
-        
+
         if ($month !== null) {
             $query->where('month', $month);
         } else {
             $query->whereNull('month');
         }
-        
+
         return $query;
     }
 }

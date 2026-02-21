@@ -10,7 +10,7 @@
                 <p class="text-gray-600">Update target value, notes, and status</p>
             </div>
             <div class="flex space-x-3">
-                <a href="{{ route('admin.targets.show', $agent) }}"
+                <a href="{{ route("admin.targets.show", $agent) }}"
                     class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
                     <i class="fas fa-arrow-left mr-2"></i> Back to Targets
                 </a>
@@ -26,7 +26,8 @@
                         <div>
                             <p class="text-sm font-medium text-gray-600">Period Type</p>
                             <p class="text-base font-semibold text-gray-900 mt-1">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                     {{ ucfirst($target->period_type) }}
                                 </span>
                             </p>
@@ -34,8 +35,17 @@
                         <div>
                             <p class="text-sm font-medium text-gray-600">Target Type</p>
                             <p class="text-base font-semibold text-gray-900 mt-1">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                    @if($target->target_type === 'amount') bg-blue-100 text-blue-800 @else bg-green-100 text-green-800 @endif">
+                                @php
+                                    $typeClasses = match ($target->target_type) {
+                                        "amount" => "bg-blue-100 text-blue-800",
+                                        "sales" => "bg-green-100 text-green-800",
+                                        "leads" => "bg-purple-100 text-purple-800",
+                                        default => "bg-gray-100 text-gray-800",
+                                    };
+                                @endphp
+
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $typeClasses }}">
                                     {{ ucfirst($target->target_type) }}
                                 </span>
                             </p>
@@ -43,8 +53,8 @@
                         <div>
                             <p class="text-sm font-medium text-gray-600">Period</p>
                             <p class="text-base font-semibold text-gray-900 mt-1">
-                                @if($target->period_type === 'monthly')
-                                    {{ \Carbon\Carbon::create()->month($target->month)->format('F') }} {{ $target->year }}
+                                @if ($target->period_type === "monthly")
+                                    {{ \Carbon\Carbon::create()->month($target->month)->format("F") }} {{ $target->year }}
                                 @else
                                     {{ $target->year }}
                                 @endif
@@ -61,19 +71,30 @@
                     <div class="mt-4 pt-4 border-t border-gray-200">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-gray-600">Achieved Value</span>
-                            <span class="text-sm font-semibold text-gray-900">{{ $target->formatted_achieved_value }}</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900">{{ $target->formatted_achieved_value }}</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-3">
-                            <div class="bg-blue-600 h-3 rounded-full transition-all duration-300"
+                            @php
+                                $progressColor = match ($target->target_type) {
+                                    "amount" => "bg-blue-600",
+                                    "sales" => "bg-green-600",
+                                    "leads" => "bg-purple-600",
+                                    default => "bg-gray-600",
+                                };
+                            @endphp
+
+                            <div class="{{ $progressColor }} h-3 rounded-full transition-all duration-300"
                                 style="width: {{ min(100, $target->progress_percentage) }}%"></div>
+
                         </div>
                     </div>
                 </div>
 
                 <!-- Edit Form -->
-                <form action="{{ route('admin.targets.update', [$agent, $target]) }}" method="POST" class="space-y-6">
+                <form action="{{ route("admin.targets.update", [$agent, $target]) }}" method="POST" class="space-y-6">
                     @csrf
-                    @method('PUT')
+                    @method("PUT")
 
                     <!-- Target Value -->
                     <div>
@@ -81,18 +102,19 @@
                             Target Value <span class="text-red-500">*</span>
                         </label>
                         <input type="number" name="target_value" id="target_value" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black @error('target_value') border-red-500 @enderror"
-                            placeholder="Enter target value"
-                            min="0" step="0.01"
-                            value="{{ old('target_value', $target->target_value) }}">
-                        @error('target_value')
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black @error("target_value") border-red-500 @enderror"
+                            placeholder="Enter target value" value="{{ old("target_value", $target->target_value) }}"
+                            @if ($target->target_type === "amount") min="0.01" step="0.01" @else min="1" step="1" @endif>
+                        @error("target_value")
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                         <p class="mt-1 text-xs text-gray-500">
-                            @if($target->target_type === 'amount')
+                            @if ($target->target_type === "amount")
                                 Enter the target amount in Naira (e.g., 500000 for ₦500,000)
-                            @else
-                                Enter the target sales count (e.g., 10 for 10 sales)
+                            @elseif($target->target_type === "sales")
+                                Enter the target sales count (e.g., 10 sales)
+                            @elseif($target->target_type === "leads")
+                                Enter the target leads count (e.g., 50 leads)
                             @endif
                         </p>
                     </div>
@@ -103,13 +125,17 @@
                             Status <span class="text-red-500">*</span>
                         </label>
                         <select name="status" id="status" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black @error('status') border-red-500 @enderror">
-                            <option value="active" {{ old('status', $target->status) === 'active' ? 'selected' : '' }}>Active</option>
-                            <option value="achieved" {{ old('status', $target->status) === 'achieved' ? 'selected' : '' }}>Achieved</option>
-                            <option value="missed" {{ old('status', $target->status) === 'missed' ? 'selected' : '' }}>Missed</option>
-                            <option value="cancelled" {{ old('status', $target->status) === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black @error("status") border-red-500 @enderror">
+                            <option value="active" {{ old("status", $target->status) === "active" ? "selected" : "" }}>
+                                Active</option>
+                            <option value="achieved" {{ old("status", $target->status) === "achieved" ? "selected" : "" }}>
+                                Achieved</option>
+                            <option value="missed" {{ old("status", $target->status) === "missed" ? "selected" : "" }}>
+                                Missed</option>
+                            <option value="cancelled"
+                                {{ old("status", $target->status) === "cancelled" ? "selected" : "" }}>Cancelled</option>
                         </select>
-                        @error('status')
+                        @error("status")
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                         <p class="mt-1 text-xs text-gray-500">
@@ -123,20 +149,19 @@
                             Notes (Optional)
                         </label>
                         <textarea name="notes" id="notes" rows="4"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black @error('notes') border-red-500 @enderror"
-                            placeholder="Any additional notes about this target..."
-                            maxlength="500">{{ old('notes', $target->notes) }}</textarea>
-                        @error('notes')
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black @error("notes") border-red-500 @enderror"
+                            placeholder="Any additional notes about this target..." maxlength="500">{{ old("notes", $target->notes) }}</textarea>
+                        @error("notes")
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                         <p class="mt-1 text-xs text-gray-500">
-                            Maximum 500 characters. <span id="notes_counter">{{ strlen($target->notes ?? '') }}</span>/500
+                            Maximum 500 characters. <span id="notes_counter">{{ strlen($target->notes ?? "") }}</span>/500
                         </p>
                     </div>
 
                     <!-- Submit Buttons -->
                     <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-                        <a href="{{ route('admin.targets.show', $agent) }}"
+                        <a href="{{ route("admin.targets.show", $agent) }}"
                             class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                             Cancel
                         </a>
@@ -148,11 +173,12 @@
                 </form>
 
                 <!-- Delete Form (separate from update form) -->
-                <form method="POST" action="{{ route('admin.targets.destroy', [$agent, $target]) }}"
-                    class="mt-4" onsubmit="return confirm('Are you sure you want to delete this target? This action cannot be undone.')">
+                <form method="POST" action="{{ route("admin.targets.destroy", [$agent, $target]) }}" class="mt-4"
+                    onsubmit="return confirm('Are you sure you want to delete this target? This action cannot be undone.')">
                     @csrf
-                    @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md text-sm font-medium text-red-700 bg-white hover:bg-red-50">
+                    @method("DELETE")
+                    <button type="submit"
+                        class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md text-sm font-medium text-red-700 bg-white hover:bg-red-50">
                         <i class="fas fa-trash mr-2"></i> Delete Target
                     </button>
                 </form>
@@ -171,7 +197,8 @@
                         <ul class="list-disc list-inside space-y-1">
                             <li>The period type, target type, and time period cannot be changed after creation.</li>
                             <li>Updating the target value will automatically recalculate the progress percentage.</li>
-                            <li>The achieved value is automatically calculated from completed sales and cannot be manually edited.</li>
+                            <li>The achieved value is automatically calculated from completed sales or leads and cannot be
+                                manually edited.</li>
                             <li>Changing the status to "Achieved" or "Missed" will affect reporting and analytics.</li>
                         </ul>
                     </div>
@@ -180,24 +207,24 @@
         </div>
     </div>
 
-    @push('scripts')
-    <script>
-        // Character counter for notes
-        document.addEventListener('DOMContentLoaded', function() {
-            const notesTextarea = document.getElementById('notes');
-            const notesCounter = document.getElementById('notes_counter');
+    @push("scripts")
+        <script>
+            // Character counter for notes
+            document.addEventListener('DOMContentLoaded', function() {
+                const notesTextarea = document.getElementById('notes');
+                const notesCounter = document.getElementById('notes_counter');
 
-            notesTextarea.addEventListener('input', function() {
-                const length = this.value.length;
-                notesCounter.textContent = length;
+                notesTextarea.addEventListener('input', function() {
+                    const length = this.value.length;
+                    notesCounter.textContent = length;
 
-                if (length > 500) {
-                    notesCounter.classList.add('text-red-600');
-                } else {
-                    notesCounter.classList.remove('text-red-600');
-                }
+                    if (length > 500) {
+                        notesCounter.classList.add('text-red-600');
+                    } else {
+                        notesCounter.classList.remove('text-red-600');
+                    }
+                });
             });
-        });
-    </script>
+        </script>
     @endpush
 @endsection

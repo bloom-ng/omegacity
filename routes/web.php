@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ReceiptController;
+use App\Http\Controllers\Admin\UpdateReceiptController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AgentTargetController;
@@ -115,6 +116,13 @@ Route::get('forms/download/{id}/{type}', [App\Http\Controllers\Admin\FormsContro
         ->name('receipts.pdf');
 
 
+    // Updated Receipts
+    Route::resource('update-receipts', UpdateReceiptController::class);
+    Route::post('update-receipts/{update_receipt}/mark-as-paid', [UpdateReceiptController::class, 'markAsPaid'])
+        ->name('update-receipts.markAsPaid');
+
+    Route::get('update-receipts/{update_receipt}/pdf', [UpdateReceiptController::class, 'generatereceiptPDF'])
+        ->name('update-receipts.pdf');
 
     // Clients
     Route::resource('clients', ClientController::class);

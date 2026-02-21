@@ -33,7 +33,8 @@
                         <div class="flex flex-col items-center justify-center text-center p-4">
 
                             <!-- Top Image -->
-                            <img src="{{ asset("assets/images/Omega-City.png") }}" alt="Document Image" class="w-24 h-24 object-cover mb-4">
+                            <img src="{{ asset("assets/images/Omega-City.png") }}" alt="Document Image"
+                                class="w-24 h-24 object-cover mb-4">
 
                             <!-- Message -->
                             <p class="font-semibold text-lg">
@@ -53,6 +54,22 @@
                             This document is NOT verified.❌ ❌
                         </p>
                     @endif
+
+                    <div class="mt-6 items-center justify-center text-center p-4">
+                        @foreach ($invoices as $invoice)
+                            <a href="{{ route("admin.invoices.show", $invoice->id) }}"
+                                class="bg-black shadow-md hover:scale-110 transition-transform duration-200 text-white text-sm font-medium py-2 px-4 rounded-lg">
+                                View Invoice
+                            </a>
+                        @endforeach
+
+                        @foreach ($receipts as $receipt)
+                            <a href="{{ route("admin.receipts.show", $receipt->id) }}"
+                                class="bg-black shadow-md hover:scale-110 transition-transform duration-200 text-white text-sm font-medium py-2 px-4 rounded-lg">
+                                View Receipt
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             @endif
 

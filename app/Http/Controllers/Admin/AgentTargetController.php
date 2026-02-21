@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\AgentTarget;
-use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Role;
-use App\Services\AgentTargetService;
+use App\Models\User;
+use App\Models\AgentTarget;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\AgentTargetService;
 
 class AgentTargetController extends Controller
 {
@@ -84,7 +85,7 @@ class AgentTargetController extends Controller
 
         $validated = $request->validate([
             'targets.0.period_type' => 'required|in:monthly,yearly',
-            'targets.0.target_type' => 'required|in:amount,sales',
+            'targets.0.target_type' => 'required|in:amount,sales,leads',
             'targets.0.target_value' => 'required|numeric|min:0.01',
             'targets.0.year' => 'required|integer|min:2020|max:2050',
             'targets.0.month' => 'nullable|integer|min:1|max:12',
@@ -92,6 +93,13 @@ class AgentTargetController extends Controller
         ]);
 
         $targetData = $validated['targets'][0];
+
+        if ($targetData['target_type'] === 'leads') {
+            $request->validate([
+                'targets.0.target_value' => 'required|integer|min:1',
+            ]);
+        }
+
 
         // Validate month requirement for monthly targets
         if ($targetData['period_type'] === 'monthly') {
@@ -125,18 +133,30 @@ class AgentTargetController extends Controller
         );
 
         // Format success message
-        $periodDisplay = $targetData['period_type'] === 'monthly'
-            ? \Carbon\Carbon::create($targetData['year'], $targetData['month'], 1)->format('F Y')
-            : $targetData['year'];
+        switch ($targetData['target_type']) {
+            case 'amount':
+                $typeDisplay = 'Revenue';
+                $valueDisplay = '₦' . number_format($targetData['target_value'], 0);
+                break;
 
-        $typeDisplay = $targetData['target_type'] === 'amount' ? 'Revenue' : 'Sales';
+            case 'sales':
+                $typeDisplay = 'Sales';
+                $valueDisplay = number_format($targetData['target_value'], 0) . ' sales';
+                break;
 
-        $valueDisplay = $targetData['target_type'] === 'amount'
-            ? '₦' . number_format($targetData['target_value'], 0)
-            : number_format($targetData['target_value'], 0) . ' sales';
+            case 'leads':
+                $typeDisplay = 'Leads';
+                $valueDisplay = number_format($targetData['target_value'], 0) . ' leads';
+                break;
+        }
 
-        return redirect()->route('admin.targets.show', $agent)
-            ->with('success', "Successfully set {$typeDisplay} target for {$periodDisplay}: {$valueDisplay}");
+
+       $periodDisplay = $targetData['period_type'] === 'monthly'
+    ? Carbon::create($targetData['year'], $targetData['month'], 1)->format('F Y')
+    : $targetData['year'];
+
+return redirect()->route('admin.targets.show', $agent)
+    ->with('success', "Successfully set {$typeDisplay} target for {$periodDisplay}: {$valueDisplay}");
     }
 
     /**
@@ -193,7 +213,9 @@ class AgentTargetController extends Controller
         }
 
         $validated = $request->validate([
-            'target_value' => 'required|numeric|min:0',
+            'target_value' => $target->target_type === 'leads'
+                ? 'required|integer|min:1'
+                : 'required|numeric|min:0.01',
             'notes' => 'nullable|string|max:500',
             'status' => 'required|in:active,achieved,missed,cancelled',
         ]);

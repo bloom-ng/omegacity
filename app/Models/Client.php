@@ -52,6 +52,11 @@ class Client extends Model
         return $this->hasMany(Receipt::class);
     }
 
+    public function updateReceipts()
+    {
+        return $this->hasMany(UpdateReceipt::class);
+    }
+
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);

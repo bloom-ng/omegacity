@@ -241,6 +241,18 @@ $userRole = auth()->user()->role->name;
             </a>
             @endif
 
+            <!-- UpdateReceipt -->
+              @if(in_array($userRole, ['Admin','Accountant']))
+            <a href="{{ route('admin.update-receipts.index') }}"
+                class="{{ request()->routeIs('admin.update-receipts.*')
+                    ? 'flex items-center py-[12px] px-5 bg-black text-white rounded-l ml-6 shadow-md mt-7 mr-4 font-sans'
+                    : 'flex items-center gap-3 py-2 px-8 h-12 text-gray-800 mt-7 font-sans hover:scale-110 transition-transform duration-200 rounded-l ml-6 mr-4'
+                }}">
+                <img src="{{ asset('assets/images/receipt-alt.svg') }}" class="w-6 h-6 {{ request()->routeIs('admin.update-receipts.*') ? 'filter invert' : '' }}" alt="receipt-icon">
+                <span class="text-[14px] font-sans ml-2 mr-4  {{ request()->routeIs('admin.update-receipts.*') ? 'text-white' : 'text-[#222222B2]' }}">Updated Receipt</span>
+            </a>
+            @endif
+
             <!-- Blog -->
             @if(in_array($userRole, ['Admin','Accountant']))
             <a href="{{ route('admin.blogs.index') }}"

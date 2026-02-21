@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Receipt : REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }}</title>
+    <title>Receipt : REC-{{ $update_receipt->created_at->format("Ymd") }}{{ $update_receipt->id }}</title>
     <style>
         @page {
             margin: 0;
@@ -81,25 +81,25 @@
         <div style="display: table-row;">
             <div style="display: table-cell; width: 33%; padding: 5px; vertical-align: top;">
                 Receipt To <br>
-                <strong>Name:</strong> {{ $receipt->client->first_name }} {{ $receipt->client->last_name }} <br>
-                <strong>Tel:</strong> {{ $receipt->client->phone }} <br>
-                <strong>Address:</strong> {{ $receipt->client->address }} <br>
-                <strong>Email:</strong> {{ $receipt->client->email }} <br>
+                <strong>Name:</strong> {{ $update_receipt->client->first_name }} {{ $update_receipt->client->last_name }} <br>
+                <strong>Tel:</strong> {{ $update_receipt->client->phone }} <br>
+                <strong>Address:</strong> {{ $update_receipt->client->address }} <br>
+                <strong>Email:</strong> {{ $update_receipt->client->email }} <br>
             </div>
             <div style="display: table-cell; width: 33%; padding: 5px; vertical-align: top;">
 
             </div>
             <div style="display: table-cell; width: 33%; padding: 5px; text-align: right;">
-                <div style="background-color: #000; color: #fff; font-weight: bold; font-size: 12px; padding: 5px;">RECEIPT NO: REC-{{ $receipt->created_at->format("Ymd") }}{{ $receipt->id }}</div>
-                <strong>Invoice Date:</strong> {{ \Carbon\Carbon::parse($receipt->date)->format("jS F Y") }}<br>
-                <strong>Payment Type:</strong> {{ $receipt->payment_type }}<br>
+                <div style="background-color: #000; color: #fff; font-weight: bold; font-size: 12px; padding: 5px;">RECEIPT NO: REC-{{ $update_receipt->created_at->format("Ymd") }}{{ $update_receipt->id }}</div>
+                <strong>Invoice Date:</strong> {{ \Carbon\Carbon::parse($update_receipt->date)->format("jS F Y") }}<br>
+                <strong>Payment Type:</strong> {{ $update_receipt->payment_type }}<br>
                 <div style="font-weight: bold; font-size: 15px; margin-top: 15px;">
                     Payment option
                 </div>
 
                 @php
-                    $isFull = strtolower($receipt->payment_type) === "full_payment";
-                    $isInstallment = strtolower($receipt->payment_type) === "installmental";
+                    $isFull = strtolower($update_receipt->payment_type) === "full_payment";
+                    $isInstallment = strtolower($update_receipt->payment_type) === "installment";
                 @endphp
 
                 <div style="font-size: 14px; margin-top: 5px;">
@@ -116,21 +116,21 @@
         style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
                 width: 600px; opacity: 0.05; z-index: -1; pointer-events: none;">
 
-    @php
-        $items = json_decode($receipt->receipt_items, true);
-        $subtotal = collect($items)->sum(fn($item) => $item["price"] * $item["quantity"]);
-        $discount = $receipt->discount ?? 0;
-        $discountValue = $subtotal * ($discount / 100);
-        $vatPercent = $receipt->tax ?? 0;
-        $taxValue = $subtotal * ($vatPercent / 100);
+   @php
+    $items = is_array($update_receipt->receipt_items) 
+                ? $update_receipt->receipt_items 
+                : json_decode($update_receipt->receipt_items, true);
+    $subtotal = collect($items)->sum(fn($item) => $item['price'] * $item['quantity']);
 
-        $total = $subtotal + $taxValue - $discountValue;
+    $grandTotal = $update_receipt->grand_total ?? 0;
 
-        $amountPaid = $receipt->amount_paid ?? 0;
-        $balanceDue = max($total - $amountPaid, 0);
+    $discountPercent = $update_receipt->discount ?? 0;
+    $vatPercent = $update_receipt->tax ?? 0;
 
-        $grandTotal = $total - $balanceDue;
-    @endphp
+    $discountValue = $subtotal * ($discountPercent / 100);
+    $vatValue = $subtotal * ($vatPercent / 100);
+    $balanceDue = max($grandTotal - $subtotal, 0);
+@endphp
 
 
     <!-- Items Table -->
@@ -139,9 +139,9 @@
             <tr>
                 <th style="background-color: #000; color: #fff;">No.</th>
                 <th style="background-color: #ffcc00; color: #000;">Item Description</th>
-                <th style="background-color: #000; color: #fff;">Unit Price (₦)</th>
+                <th style="background-color: #000; color: #fff;">Unit Price</th>
                 <th style="background-color: #ffcc00; color: #000;">Quantity</th>
-                <th style="background-color: #000; color: #fff; text-align: center;">Total (₦)</th>
+                <th style="background-color: #000; color: #fff; text-align: center;">Total </th>
             </tr>
         </thead>
         <tbody>
@@ -149,8 +149,8 @@
                 <tr style="background-color: {{ $loop->even ? "#FACF071A" : "transparent" }};">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item["description"] }}</td>
-                    <td>₦{{ number_format($item["price"], 2) }}</td>
                     <td>{{ $item["quantity"] }}</td>
+                    <td>₦{{ number_format($item["price"], 2) }}</td>
                     <td style="text-align: center;">₦{{ number_format($item["price"] * $item["quantity"], 2) }}</td>
                 </tr>
             @endforeach
@@ -158,33 +158,34 @@
     </table>
 
     <!-- Totals -->
-    <table class="totals-table">
-        <tr>
-            <td style="font-weight: bold;">Sub Total</td>
-            <td></td>
-            <td style="text-align: right;">₦{{ number_format($subtotal, 2) }}</td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold;">Discount ({{ $discount }}%)</td>
-            <td></td>
-            <td style="text-align: right;">₦{{ number_format($discountValue, 2) }}</td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold;">VAT ({{ $vatPercent }}%)</td>
-            <td></td>
-            <td style="text-align: right;">₦{{ number_format($taxValue, 2) }}</td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold;">Balance Due</td>
-            <td></td>
-            <td style="text-align: right;">₦{{ number_format($balanceDue, 2) }}</td>
-        </tr>
-        <tr style="background-color: #ffcc00; font-weight: bold;">
-            <td>Grand Total</td>
-            <td></td>
-            <td style="text-align: right;">₦{{ number_format($grandTotal, 2) }}</td>
-        </tr>
-    </table>
+   <table class="totals-table">
+    <tr>
+        <td style="font-weight: bold;">Subtotal</td>
+        <td></td>
+        <td style="text-align: right;">₦{{ number_format($subtotal, 2) }}</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Discount ({{ $discountPercent }}%)</td>
+        <td></td>
+        <td style="text-align: right;">₦{{ number_format($discountValue, 2) }}</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">VAT ({{ $vatPercent }}%)</td>
+        <td></td>
+        <td style="text-align: right;">₦{{ number_format($vatValue, 2) }}</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Balance Due</td>
+        <td></td>
+        <td style="text-align: right;">₦{{ number_format($balanceDue, 2) }}</td>
+    </tr>
+    <tr style="background-color: #ffcc00; font-weight: bold;">
+        <td>Grand Total</td>
+        <td></td>
+        <td style="text-align: right;">₦{{ number_format($grandTotal, 2) }}</td>
+    </tr>
+</table>
+
 
     <!-- Footer -->
     <div class="footer">
