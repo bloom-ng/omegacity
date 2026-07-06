@@ -72,8 +72,6 @@ class UpdateReceiptController extends Controller
             'discount' => $data['discount'] ?? 0,
             'payment_type' => $data['payment_type'],
             'grand_total' => $data['grand_total'],
-            'amount_paid' => $data['amount_paid'] ?? $data['grand_total'],
-            'balance_due' => max(0, $data['grand_total'] - ($data['amount_paid'] ?? $data['grand_total'])),
         ]);
 
         // Update agent target
@@ -135,10 +133,9 @@ class UpdateReceiptController extends Controller
             'items.*.description' => 'required|string',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.price' => 'required|numeric|min:0',
-            'grand_total' => 'required|numeric|min:0',
-            'amount_paid' => 'nullable|numeric|min:0',
         ]);
 
+        // Keep grand_total unchanged
         $update_receipt->update([
             'client_id' => $data['client_id'],
             'date' => $data['date'],
@@ -146,9 +143,6 @@ class UpdateReceiptController extends Controller
             'tax' => $data['tax'] ?? 0,
             'discount' => $data['discount'] ?? 0,
             'payment_type' => $data['payment_type'],
-            'grand_total' => $data['grand_total'],
-            'amount_paid' => $data['amount_paid'] ?? $data['grand_total'],
-            'balance_due' => max(0, $data['grand_total'] - ($data['amount_paid'] ?? $data['grand_total'])),
         ]);
 
         // Update agent target if needed

@@ -55,7 +55,7 @@
                 <div id="receipt-items" class="space-y-4">
                     <!-- Item Row Template -->
                     <div class="grid grid-cols-12 gap-4 items-end">
-                        <div class="col-span-6">
+                        <div class="col-span-5">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
                             <input type="text" name="items[0][description]" required
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
@@ -65,17 +65,20 @@
                             <input type="number" name="items[0][quantity]" value="1" min="1" required
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                         </div>
-                        <div class="col-span-3">
+                        <div class="col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>
                             <div class="relative rounded-md shadow-sm">
-                                <input type="number" name="items[0][price]" min="0" step="0.01" required
-                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+
+                                </div>
+                                <input type="number" name="items[0][price]" required
+                                    class="w-full border border-gray-300 rounded-md pl-7 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                             </div>
                         </div>
 
                         <div class="col-span-1 flex items-end">
                             <button type="button" onclick="removeItem(this)"
-                                class="text-red-600 hover:text-red-800 focus:outline-none mb-2">
+                                class="text-red-600 hover:text-red-800 focus:outline-none">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -125,24 +128,8 @@
                         <input type="number" name="grand_total" id="grand_total" step="0.01" min="0"
                             value="{{ old('grand_total', 0) }}"
                             class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
-                        <p class="text-sm text-gray-500 mt-1">Enter the total manually.</p>
-                    </div>
-
-                    <!-- Amount Paid -->
-                    <div id="amount_paid_wrapper">
-                        <label for="amount_paid" class="block text-sm font-medium text-gray-700 mb-1">Amount Paid</label>
-                        <input type="number" name="amount_paid" id="amount_paid" step="0.01" min="0"
-                            value="{{ old('amount_paid', 0) }}"
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
-                        <p class="text-sm text-gray-500 mt-1">Enter the amount paid (especially for installments).</p>
-                    </div>
-
-                    <!-- Balance Due -->
-                    <div id="balance_due_wrapper">
-                        <label for="balance_due" class="block text-sm font-medium text-gray-700 mb-1">Balance Due</label>
-                        <input type="number" name="balance_due" id="balance_due" step="0.01" min="0"
-                            value="0" readonly
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black bg-gray-50">
+                        <p class="text-sm text-gray-500 mt-1">Enter the total manually. It will not calculate automatically.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -188,7 +175,7 @@
                 const newItem = document.createElement('div');
                 newItem.className = 'grid grid-cols-12 gap-4 items-end';
                 newItem.innerHTML = `
-                <div class="col-span-6">
+                <div class="col-span-5">
                     <input type="text" name="items[${itemCount}][description]" required
                         class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                 </div>
@@ -196,59 +183,26 @@
                     <input type="number" name="items[${itemCount}][quantity]" value="1" min="1" required
                         class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-2">
                     <input type="number" name="items[${itemCount}][price]" min="0" step="0.01" required
                         class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                 </div>
                 <div class="col-span-1 flex items-end">
                     <button type="button" onclick="removeItem(this)"
-                        class="text-red-600 hover:text-red-800 focus:outline-none mb-2">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+                        class="text-red-600 hover:text-red-800 focus:outline-none">
+                        ✕
                     </button>
                 </div>`;
                 container.appendChild(newItem);
                 itemCount++;
-                calculateGrandTotal();
             }
 
             function removeItem(button) {
                 const itemsContainer = document.getElementById('receipt-items');
                 if (itemsContainer.children.length > 1) {
                     button.closest('.grid').remove();
-                    calculateGrandTotal();
                 }
             }
-
-            function calculateBalanceDue() {
-                const grandTotalInput = document.getElementById('grand_total');
-                let grandTotal = parseFloat(grandTotalInput.value);
-                if (isNaN(grandTotal)) {
-                    grandTotal = 0;
-                }
-
-                const amountPaidInput = document.getElementById('amount_paid');
-                let amountPaid = parseFloat(amountPaidInput.value);
-                if (isNaN(amountPaid)) {
-                    amountPaid = 0;
-                }
-
-                const balanceDue = Math.max(0, grandTotal - amountPaid);
-                document.getElementById('balance_due').value = balanceDue.toFixed(2);
-            }
-
-            document.addEventListener('input', function(e) {
-                if (e.target.matches('#grand_total, #amount_paid')) {
-                    calculateBalanceDue();
-                }
-            });
-
-            // Initial calculation
-            document.addEventListener('DOMContentLoaded', function() {
-                calculateBalanceDue();
-            });
 
         </script>
     @endpush
