@@ -123,9 +123,9 @@
                     <div>
                         <label for="grand_total" class="block text-sm font-medium text-gray-700 mb-1">Grand Total</label>
                         <input type="number" name="grand_total" id="grand_total" step="0.01" min="0"
-                            value="{{ old('grand_total', 0) }}" readonly
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black bg-gray-50">
-                        <p class="text-sm text-gray-500 mt-1">Calculates automatically from items, tax, and discount.</p>
+                            value="{{ old('grand_total', 0) }}"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
+                        <p class="text-sm text-gray-500 mt-1">Enter the total manually.</p>
                     </div>
 
                     <!-- Amount Paid -->
@@ -222,28 +222,15 @@
                 }
             }
 
-            function calculateGrandTotal() {
-                let subtotal = 0;
-                const items = document.querySelectorAll('#receipt-items .grid');
-                items.forEach(item => {
-                    const qty = parseFloat(item.querySelector('input[name$="[quantity]"]')?.value) || 0;
-                    const price = parseFloat(item.querySelector('input[name$="[price]"]')?.value) || 0;
-                    subtotal += qty * price;
-                });
-
-                const discountPercent = parseFloat(document.getElementById('discount').value) || 0;
-                const taxPercent = parseFloat(document.getElementById('tax_percentage').value) || 0;
-
-                const discountValue = subtotal * (discountPercent / 100);
-                const taxValue = subtotal * (taxPercent / 100);
-
-                const grandTotal = subtotal - discountValue + taxValue;
-                document.getElementById('grand_total').value = grandTotal.toFixed(2);
+            function calculateBalanceDue() {
+                const grandTotalInput = document.getElementById('grand_total');
+                let grandTotal = parseFloat(grandTotalInput.value);
+                if (isNaN(grandTotal)) {
+                    grandTotal = 0;
+                }
 
                 const amountPaidInput = document.getElementById('amount_paid');
                 let amountPaid = parseFloat(amountPaidInput.value);
-                
-                // If amount paid is not typed yet or is higher than grand total (e.g. they lowered items), adjust
                 if (isNaN(amountPaid)) {
                     amountPaid = 0;
                 }
@@ -253,34 +240,15 @@
             }
 
             document.addEventListener('input', function(e) {
-                if (e.target.matches('input[name$="[quantity]"], input[name$="[price]"], #discount, #tax_percentage, #amount_paid')) {
-                    calculateGrandTotal();
+                if (e.target.matches('#grand_total, #amount_paid')) {
+                    calculateBalanceDue();
                 }
             });
 
             // Initial calculation
             document.addEventListener('DOMContentLoaded', function() {
-                calculateGrandTotal();
-                togglePaymentFields();
+                calculateBalanceDue();
             });
-
-            const paymentTypeSelect = document.getElementById('payment_type');
-            const amountPaidWrapper = document.getElementById('amount_paid_wrapper');
-            const balanceDueWrapper = document.getElementById('balance_due_wrapper');
-
-            function togglePaymentFields() {
-                if (paymentTypeSelect && paymentTypeSelect.value === 'installment') {
-                    amountPaidWrapper.style.display = 'block';
-                    balanceDueWrapper.style.display = 'block';
-                } else {
-                    amountPaidWrapper.style.display = 'none';
-                    balanceDueWrapper.style.display = 'none';
-                }
-            }
-
-            if (paymentTypeSelect) {
-                paymentTypeSelect.addEventListener('change', togglePaymentFields);
-            }
 
         </script>
     @endpush

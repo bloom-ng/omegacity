@@ -175,7 +175,6 @@
         <td></td>
         <td style="text-align: right;">₦{{ number_format($vatValue, 2) }}</td>
     </tr>
-      @if(strtolower($update_receipt->payment_type) === 'installment')
     <tr>
         <td style="font-weight: bold;">Amount Paid</td>
         <td></td>
@@ -186,7 +185,6 @@
         <td></td>
         <td style="text-align: right; color: {{ ($update_receipt->balance_due ?? $balanceDue) > 0 ? 'red' : 'black' }};">₦{{ number_format($update_receipt->balance_due ?? $balanceDue, 2) }}</td>
     </tr>
-    @endif
     <tr style="background-color: #ffcc00; font-weight: bold;">
         <td>Grand Total</td>
         <td></td>
