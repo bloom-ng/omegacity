@@ -12,7 +12,7 @@
         body {
             font-family: 'DejaVu Sans', sans-serif;
             margin: 0;
-            padding: 40px;
+            padding: 20px;
             font-size: 12px;
             color: #000;
             background-color: #fff;
@@ -39,7 +39,7 @@
 
         .footer {
             clear: both;
-            margin-top: 50px;
+            margin-top: 20px;
             border-top: 1px solid #000;
             padding-top: 8px;
             font-size: 11px;
@@ -149,17 +149,18 @@
                 <tr style="background-color: {{ $loop->even ? "#FACF071A" : "transparent" }};">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item["description"] }}</td>
-                    <td>{{ $item["quantity"] }}</td>
                     <td>₦{{ number_format($item["price"], 2) }}</td>
+                    <td>{{ $item["quantity"] }}</td>
                     <td style="text-align: center;">₦{{ number_format($item["price"] * $item["quantity"], 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    <!-- Totals -->
-   <table class="totals-table">
-    <tr>
+    <!-- Totals and Footer Group -->
+    <div style="page-break-inside: avoid;">
+        <table class="totals-table">
+            <tr>
         <td style="font-weight: bold;">Subtotal</td>
         <td></td>
         <td style="text-align: right;">₦{{ number_format($subtotal, 2) }}</td>
@@ -174,16 +175,24 @@
         <td></td>
         <td style="text-align: right;">₦{{ number_format($vatValue, 2) }}</td>
     </tr>
+      @if(strtolower($update_receipt->payment_type) === 'installment')
+    <tr>
+        <td style="font-weight: bold;">Amount Paid</td>
+        <td></td>
+        <td style="text-align: right;">₦{{ number_format($update_receipt->amount_paid ?? $grandTotal, 2) }}</td>
+    </tr>
     <tr>
         <td style="font-weight: bold;">Balance Due</td>
         <td></td>
-        <td style="text-align: right;">₦{{ number_format($balanceDue, 2) }}</td>
+        <td style="text-align: right; color: {{ ($update_receipt->balance_due ?? $balanceDue) > 0 ? 'red' : 'black' }};">₦{{ number_format($update_receipt->balance_due ?? $balanceDue, 2) }}</td>
     </tr>
+    @endif
     <tr style="background-color: #ffcc00; font-weight: bold;">
         <td>Grand Total</td>
         <td></td>
         <td style="text-align: right;">₦{{ number_format($grandTotal, 2) }}</td>
     </tr>
+  
 </table>
 
 
@@ -224,7 +233,6 @@
             </tr>
         </table>
     </div>
-
 
 </body>
 

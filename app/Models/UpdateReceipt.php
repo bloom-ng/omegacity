@@ -19,6 +19,8 @@ class UpdateReceipt extends Model
         'discount',
         'payment_type',
         'grand_total',
+        'amount_paid',
+        'balance_due',
     ];
 
     protected $casts = [
@@ -27,6 +29,8 @@ class UpdateReceipt extends Model
         'tax' => 'decimal:2',
         'discount' => 'decimal:2',
         'grand_total' => 'decimal:2',
+        'amount_paid' => 'decimal:2',
+        'balance_due' => 'decimal:2',
     ];
 
     public function client()
